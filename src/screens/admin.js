@@ -16,6 +16,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Editor } from '@tinymce/tinymce-react';
 import { BrowserRouter as Router, Switch, Route, Link, useLocation, useParams, Redirect } from "react-router-dom";
+import { useRef } from 'react';
 
 const useStyles = makeStyles((theme) => ({
     icon: {
@@ -65,21 +66,20 @@ function Admin() {
     useEffect(() => {
     }, [])
     const addPosts = async () => {
+        console.log(editorRef.current.getContent())
         const title = document.getElementById("title").value;
         const url = document.getElementById("photo").value;
-        const content = document.getElementById("content").value;
+        const content = editorRef.current.getContent();
         // ამატებს ახალ დოკუმენტს ავტომატურად დაგენერირებული ID-ით
         await firestore.collection("posts").add({
             title: title,
             url: url,
             content: content
         }).then(() => {
-            document.getElementById("title").value = "";
-            document.getElementById("photo").value = "";
-            document.getElementById("content").value = "";
+            
         })
     }
-    
+    const editorRef = useRef(null)
     return (
         <Router>
             <div className="admin-news">
@@ -98,6 +98,7 @@ function Admin() {
                         <br />
                         <Editor
                             // initialValue="<p>Initial content</p>"
+                            onInit={(evt, editor) => editorRef.current = editor}
                             init={{
                             height: 500,
                             menubar: false,
@@ -112,21 +113,15 @@ function Admin() {
                                 alignleft aligncenter alignright | \
                                 bullist numlist outdent indent | help'
                             }}
+
                             id="content"
                         />
-                        {/* <TextField
-                            label="პოსტი"
-                            multiline
-                            rows={5}
-                            variant="filled"
-                            style={{width: "100%"}}
-                            id="content"
-                        /> */}
                         <Button variant="contained" color="primary" onClick={() => addPosts()} style={{textAlign: "center"}}>პოსტის დამატება</Button>
                     </form>
                 </div>
                 <br />
                 <br />
+                <Link to="/single">
                 <Container className={classes.cardGrid} maxWidth="md">
                     <Grid container spacing={4}>
                         <Grid item xs={12} sm={6} md={4}>
@@ -146,7 +141,7 @@ function Admin() {
                             </CardContent>
                             <CardActions>
                                 <Button size="small" color="primary">
-                                    View
+                                    სრულად ნახვა
                                 </Button>
                                 <Button size="small" color="primary">
                                     Edit
@@ -156,6 +151,7 @@ function Admin() {
                         </Grid>
                     </Grid>
                 </Container>
+                </Link>
                 <Switch>
                     <Route path="/single">
                         <SinglePage />
@@ -165,7 +161,7 @@ function Admin() {
         </Router>
     )
     function SinglePage() {
-        return "კი";
+        return "Test";
     }
 }
 

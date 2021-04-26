@@ -133,6 +133,9 @@ function Header() {
                     <Route path="/login">
                         <SecretLogin />
                     </Route>
+                    <Route path="/single">
+                        <SinglePage />
+                    </Route>
                     <Route path="/" exact>
                         <Home />
                     </Route>
@@ -186,6 +189,10 @@ function Header() {
     
     function NotFound() {
         return <><Error /></>
+    }
+
+    function SinglePage() {
+        return "კი";
     }
 
     function OurNews() {
