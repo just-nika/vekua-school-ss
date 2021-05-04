@@ -172,29 +172,31 @@ div.contact {
 
 .mission-background {
   width: 100%;
-  height: 400px;
+  height: 500px;
   background-image: url(./components/mission.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
 }
 
 .contact-background {
   width: 100%;
-  height: 400px;
+  height: 500px;
   background-image: url(./components/contact.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
 }
 
 .pupils-background {
   width: 100%;
-  height: 400px;
+  height: 500px;
   background-image: url(./components/pupils.jpeg);
-  background-position: bottom;
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
 }
 
 div.history {
@@ -243,10 +245,16 @@ div.main-text {
 }
 
 #curator-feed-default-feed-layout {
-  width: 1000px;
+  /* width: 1000px; */
   margin: auto;
   padding-top: 70px;
   padding-bottom: 70px;
+}
+
+.crt-feed {
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
 }
 
 div.facebook {
@@ -448,6 +456,84 @@ border-radius:50%;box-shadow:0 0 14px 4px white;margin-top:-2px}
     100% { transform: rotate(-6deg); }
 }
 
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  -webkit-animation-name: fadeIn; /* Fade in the background */
+  -webkit-animation-duration: 0.4s;
+  animation-name: fadeIn;
+  animation-duration: 0.4s
+}
+
+/* Modal Content */
+.modal-content {
+  position: fixed;
+  bottom: 0;
+  background-color: #fefefe;
+  width: 100%;
+  -webkit-animation-name: slideIn;
+  -webkit-animation-duration: 0.4s;
+  animation-name: slideIn;
+  animation-duration: 0.4s
+}
+
+/* The Close Button */
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+
+.modal-body {padding: 2px 16px;}
+
+.modal-footer {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+
+/* Add Animation */
+@-webkit-keyframes slideIn {
+  from {bottom: -300px; opacity: 0} 
+  to {bottom: 0; opacity: 1}
+}
+
+@keyframes slideIn {
+  from {bottom: -300px; opacity: 0}
+  to {bottom: 0; opacity: 1}
+}
+
+@-webkit-keyframes fadeIn {
+  from {opacity: 0} 
+  to {opacity: 1}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0} 
+  to {opacity: 1}
+}
 
 
 form.add-post {
@@ -478,4 +564,173 @@ form.add-post {
 
 div.post-content {
   min-width: 50%;
+}
+
+svg.svg-inline--fa.fa-bars.fa-w-14.menu {
+  display: none;
+}
+
+.responsive-icon {
+  display: flex;
+  display: none;
+}
+
+div.content {
+  padding-left: 70px;
+  padding-bottom: 30px;
+  padding-right: 70px;
+}
+
+img.footer-logo {
+  width: 200px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-around;
+  background-color: #efefef;
+  padding: 30px;
+}
+
+.links {
+  display: flex;
+  justify-content: space-between;
+  text-align: start;
+}
+
+.third-column {
+  width: calc(100% / 4);
+}
+
+.copyright {
+  background-color: #f7941d;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.svg-inline--fa.fa-facebook.fa-w-16 {
+  font-size: 25px;
+  color: black;
+}
+
+.svg-inline--fa.fa-instagram.fa-w-14 {
+  font-size: 25px;
+  color: black;
+}
+
+.svg-inline--fa.fa-youtube.fa-w-18 {
+  font-size: 25px;
+  color: black;
+}
+
+@media screen and (max-width:1075px) {
+  ul.routes {
+    display: none;
+  }
+
+  nav {
+    justify-content: space-between;
+  }
+
+  svg.svg-inline--fa.fa-bars.fa-w-14.menu {
+    font-size: 40px;
+    display: block;
+  }
+
+  .responsive-icon {
+    display: flex;
+  }
+
+  .covid-plan {
+    display: block !important;
+  }
+
+  .covid-link {
+    margin-top: 0 !important;
+    padding-top: 10px;
+  }
+
+  div.covid-title {
+    margin-top: 0;
+    padding-top: 10px;
+  }
+
+  .crt-feed {
+    margin: auto;
+    display: block;
+  }
+
+  div.main-text {
+    background: #dbf3fc;
+    text-align: start;
+    padding: 15px;
+  }
+
+  div.mission {
+    padding: 15px;
+  }
+
+  div.history {
+    padding: 15px;
+  }
+
+  div.content {
+    padding: 10px;
+    width: 100%;
+  }
+
+  div.about-that {
+    padding: 10px;
+  }
+
+  div.child-links {
+    flex-direction: column;
+  }
+
+  div.quick-links {
+    padding-top: 25px;
+    padding-bottom: 25px;
+  }
+
+  img.link {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  div.contact {
+    width: 95%;
+  }
+
+  div.map iframe {
+    width: 95%;
+  }
+
+  form.add-post {
+    width: 100%;
+    padding: 10px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .login {
+    width: 100% !important;
+  }
+
+  .footer {
+    flex-direction: column;
+  }
+
+  .third-column {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .links {
+    width: auto
+  }
+
+  .covid-plan {
+    height: 170px !important;
+  }
 }

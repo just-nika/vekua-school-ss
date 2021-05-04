@@ -38,10 +38,11 @@ function Contact() {
                     </div>
                     <div className="send-message" style={{marginTop: "10px"}}>
                         <Fragment>
-                            <div className="flex">
-                                <TextField className="half" label="სახელი" id="name" variant="filled" style={{width:"50%"}} required />
-                                <TextField className="half" label="ელექტრონული ფოსტა" id="email" variant="filled" style={{width:"50%", paddingLeft: "5px"}} required />
-                            </div>
+                                <TextField className="half" label="სახელი" id="name" variant="filled" style={{width: "100%"}} required />
+                                <br />
+                                <br />
+                                <TextField className="half" label="ელექტრონული ფოსტა" id="email" variant="filled" style={{width: "100%"}} required />
+                                <br />
                             <br />
                             <TextField label="სათაური" id="title" variant="filled" style={{width:"100%"}} required />
                             <br />

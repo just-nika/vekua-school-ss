@@ -6,7 +6,7 @@ function laws() {
     return (
         <div className="">
         <div className="text-about">
-            <div className="content" style={{paddingLeft: "70px", paddingBottom: "30px", paddingRight: "70px"}}>
+            <div className="content" style={{}}>
                 <br />
                 <h2><b>სსიპ აკადემიკოს ილია ვეკუას სახელობის ფიზიკა-მათემატიკის ქალაქ თბილისის #42 საჯარო სკოლის</b></h2><br />
                 <h3 ><strong>შინაგანაწესი</strong></h3>
@@ -30,7 +30,7 @@ function laws() {
                 <p>ე) ანაზღაურების გარეშე შვებულების ხანგრძლივობა და მიცემის წესი;</p>
                 <p>ვ) შრომის პირობების დაცვის წესები;</p>
                 <p>ზ) წახალისებისა და პასუხისმგებლობის სახე და გამოყენების წესი;</p>
-                <p>თ) მატერიალური პასუხისმგებლობა;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                <p>თ) მატერიალური პასუხისმგებლობა;&nbsp;</p>
                 <p>ი) განცხადების/საჩივრის განხილვის წესი;</p>
                 <p>კ) სასწავლო პროცესის მარეგულირებელი ზოგადი ნორმები;</p>
                 <p>ლ) სკოლაში ჩაცმულობის წესი.</p>
