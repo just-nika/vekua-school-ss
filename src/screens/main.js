@@ -10,7 +10,7 @@ import Covid from './covid';
 function Main() {
     return (
         <div className="page-container">
-            <div id="carouselExampleCaptions" className="carousel slide" data-bs-ride="carousel" style={{maxHeight: "calc(100vh - 125px)"}}>
+            <div id="carouselExampleCaptions" className="carousel slide" data-bs-ride="carousel" style={{maxHeight: "calc(100vh - 125px)", color: "white"}}>
             <div className="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
                 <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -21,28 +21,28 @@ function Main() {
                 <div className="carousel-item active" style={{maxHeight: "calc(100vh - 125px)"}}>
                     <img src="1947-2.jpg" className="d-block w-100 h-100" alt="..." />
                     <div className="carousel-caption d-none d-md-block">
-                        <h5>სსიპ აკადემიკოს ილია ვეკუას სახელობის ფიზიკა-მათემატიკის ქალაქ თბილისის N 42 საჯარო სკოლა</h5>
+                        <h3>სსიპ აკადემიკოს ილია ვეკუას სახელობის ფიზიკა-მათემატიკის ქალაქ თბილისის N 42 საჯარო სკოლა</h3>
                     </div>
                 </div>
                 <div className="carousel-item" style={{maxHeight: "calc(100vh - 125px)"}}>
                     <img src="cos.jpg" className="d-block w-100 h-100" alt="..." />
                     <div className="carousel-caption d-none d-md-block">
-                        <h5>სწავლება</h5>
-                        <p>აქ ყველა პირობაა შექმნილი იმისათვის, რომ მოსწავლეებმა გაიღრმავონ მათემატიკისა და ფიზიკის ცოდნა, დაეუფლონ უმაღლესი მათემატიკის ელემენტებს.</p>
+                        <h3>სწავლება</h3>
+                        <h6>აქ ყველა პირობაა შექმნილი იმისათვის, რომ მოსწავლეებმა გაიღრმავონ მათემატიკისა და ფიზიკის ცოდნა, დაეუფლონ უმაღლესი მათემატიკის ელემენტებს.</h6>
                     </div>
                 </div>
                 <div className="carousel-item" style={{maxHeight: "calc(100vh - 125px)"}}>
                     <img src="carousel.jpg" className="d-block w-100 h-100" alt="..." />
                     <div className="carousel-caption d-none d-md-block">
-                        <h5 style={{color: "rgb(212, 200, 200)"}}>ჩვენ გვჯერა!</h5>
-                        <p style={{color: "rgb(212, 200, 200)"}}>ჩვენი ქვეყანა გაძლიერდება, როდესაც თითოეულ ახალ ვეკუელს შეუძლია ხელი შეუწყოს ჩვენს კეთილდღეობასა და ინოვაციას მათემატიკისა და მეცნიერების საშუალებებით.</p>
+                        <h3 style={{color: "rgb(212, 200, 200)"}}>ჩვენ გვჯერა!</h3>
+                        <h6 style={{color: "rgb(212, 200, 200)"}}>ჩვენი ქვეყანა გაძლიერდება, როდესაც თითოეულ ახალ ვეკუელს შეუძლია ხელი შეუწყოს ჩვენს კეთილდღეობასა და ინოვაციას მათემატიკისა და მეცნიერების საშუალებებით.</h6>
                     </div>
                 </div>
                 <div className="carousel-item" style={{maxHeight: "calc(100vh - 125px)"}}>
                     <img src="chess.jpg" className="d-block w-100 h-100" alt="..."/>
                     <div className="carousel-caption d-none d-md-block">
-                        <h5>ყოველ დღე</h5>
-                        <p>ჩვენ ვხსნით შესაძლებლობების კარს და ვხელმძღვანელობთ ჩვენს მოსწავლეებს, რადგან ისინი წარმოადგენენ ჩვენი საერთო მომავლის შესაძლებლობებს.</p>
+                        <h3>ყოველ დღე</h3>
+                        <h6>ჩვენ ვხსნით შესაძლებლობების კარს და ვხელმძღვანელობთ ჩვენს მოსწავლეებს, რადგან ისინი წარმოადგენენ ჩვენი საერთო მომავლის შესაძლებლობებს.</h6>
                     </div>
                 </div>
             </div>

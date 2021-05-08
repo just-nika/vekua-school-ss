@@ -15,6 +15,7 @@ function App() {
     <div className="App">
       <Header />
       <Footer />
+      <MessengerCustomerChat pageId="106917272717592" appId="240837167793277" />
     </div>
   );
 }

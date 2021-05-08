@@ -23,7 +23,6 @@ function Footer() {
                     <p>ელექტრონული ფოსტა - <a href="mailto: tbilisi42@mes.gov.ge" target="_blank">tbilisi42@mes.gov.ge</a></p>
                     <p>ნომერი - <a href="tel:0322-99-82-10">(995) 0322 99 82 10</a></p>
                 </div>
-                <br />
                 <div className="third-column">
                     <h4>გამოსადეგარი ლინკები</h4>
                     <br />

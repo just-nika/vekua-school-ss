@@ -30,7 +30,7 @@ function Contact() {
             <div className="contact-background"></div>
             <div className="content">
                 <br />
-                <h2>კონტაქტი</h2>
+                <h1>კონტაქტი</h1>
                 <br />
                 <div className="contact">
                     <div className="map">

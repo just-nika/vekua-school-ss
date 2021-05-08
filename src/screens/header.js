@@ -49,6 +49,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import Hidden from '@material-ui/core/Hidden';
 import Fade from '@material-ui/core/Fade';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import Covid from './covid';
 
 
 function Header() {
@@ -443,7 +444,10 @@ function Header() {
 
     
     function Projects() {
-        return <h2>პროექტები/პროგრამები</h2>;
+        return <>
+            <h2>პროექტები/პროგრამები</h2>
+            <Covid />
+        </>;
     }
     
     function OurAchievements() {
