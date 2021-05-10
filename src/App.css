@@ -69,8 +69,10 @@ div.login {
   margin: auto;
   border: 1px solid black;
   border-radius: 4.5%;
-  box-shadow: 10px 10px 5px grey;
-}
+  box-shadow: 0 0 26px grey;
+  margin-bottom: 50px;
+  margin-top: 50px;
+  }
 
 .MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary {
   margin-top: 50px;

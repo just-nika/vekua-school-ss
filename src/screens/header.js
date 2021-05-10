@@ -50,6 +50,7 @@ import Hidden from '@material-ui/core/Hidden';
 import Fade from '@material-ui/core/Fade';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 import Covid from './covid';
+import Footer from './footer';
 
 
 function Header() {
@@ -419,9 +420,10 @@ function Header() {
                         <NotFound />
                     </Route>
                 </Switch>
+                <Footer />
             </div>
-        </Router>
-    )
+            </Router>
+         ) 
     function Home() {
         return <><Main /></>;
     }
