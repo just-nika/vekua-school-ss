@@ -78,16 +78,16 @@ function Footer() {
                         <br />
                         <div className="links">
                             <div className="first-link-column">
-                                <p><Link to="/history">ჩვენს შესახებ</Link></p>
-                                <p><Link to="/news">სიახლეები</Link></p>
-                                <p><Link to="/projects">პროგრამები და პროექტები</Link></p>
-                                <p><Link to="/teachers">დირექცია და მასწავლებლები</Link></p>
+                                <p><a href="/history">ჩვენს შესახებ</a></p>
+                                <p><a href="/news">სიახლეები</a></p>
+                                <p><a href="/projects">პროგრამები და პროექტები</a></p>
+                                <p><a href="/teachers">დირექცია და მასწავლებლები</a></p>
                             </div>
                             <div className="second-link-column">
-                                <p><Link to="/laws">შინაგანწესი</Link></p>
-                                <p><Link to="/achievements">მიღწევები</Link></p>
-                                <p><Link to="/contact">კონტაქტი</Link></p>
-                                <p><Link to="/login">შესვლა</Link></p>
+                                <p><a href="/laws">შინაგანწესი</a></p>
+                                <p><a href="/achievements">მიღწევები</a></p>
+                                <p><a href="/contact">კონტაქტი</a></p>
+                                <p><a href="/login">შესვლა</a></p>
                             </div>
                         </div>
                     </div>

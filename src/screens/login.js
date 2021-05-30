@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import {
     auth,
+    firestore,
     firebase
 } from '../firebase/firebase.config';
 import {
@@ -26,6 +27,9 @@ function Login() {
             history.push("/");
         })
     }
+    firestore.collection("posts").get().then(function(querySnapshot) {      
+        console.log(querySnapshot.size); 
+    });
     return (
     <div className="login-container">
         <div className="login">

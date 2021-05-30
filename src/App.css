@@ -1,6 +1,6 @@
 @import url("https://cdn.web-fonts.ge/fonts/alk-rounded-mtav-med/css/alk-rounded-mtav-med.min.css");
-@import url("//cdn.web-fonts.ge/fonts/bpg-nino-elite-round-cond/css/bpg-nino-elite-round-cond.min.css");
-
+@import url("https://cdn.web-fonts.ge/fonts/bpg-nino-elite-round-cond/css/bpg-nino-elite-round-cond.min.css");
+@import url("https://cdn.web-fonts.ge/fonts/arial-geo/css/arial-geo.min.css");
 
 .App {
   text-align: center;
@@ -42,7 +42,7 @@
 }
 
 div {
-  font-family: "BPG Nino Elite Round Cond", sans-serif;
+  font-family: "Arial GEO", sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {

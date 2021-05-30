@@ -19,6 +19,9 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Login from './login';
 import Main from './main';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
 import History from './history';
 import Laws from './laws';
 import Achievements from './achievements';
@@ -51,7 +54,17 @@ import Fade from '@material-ui/core/Fade';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 import Covid from './covid';
 import Footer from './footer';
-
+import Avatar from '@material-ui/core/Avatar';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import IconButton from '@material-ui/core/IconButton';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
+import { useForm, Controller } from "react-hook-form";
+import { Helmet } from "react-helmet";
 
 function Header() {
     const useStyles = makeStyles({
@@ -276,13 +289,13 @@ function Header() {
                                 </ListItem>
                             </List>
                         </a>
-                        <a href="https://www.vekua.gfca.ge" target="_blank">
+                        <Link to="/exams">
                             <List>
                                 <ListItem button>
-                                    საშაბათოების რეგისტრაცია
+                                    მისაღები გამოცდებისათვის რეგისტრაცია
                                 </ListItem>
                             </List>
-                        </a>
+                        </Link>
                         <Link to="/contact">
                             <List>
                                 <ListItem button>
@@ -358,7 +371,7 @@ function Header() {
                                 <a href="http://vekua42.edu.ge/obiblio/home/index.php" target="_blank"><Button aria-controls="simple-menu" aria-haspopup="true">ბიბლიოთეკა</Button></a>
                             </li>
                             <li className="header-link">
-                                <a href="https://www.vekua.gfca.ge" target="_blank"><Button aria-controls="simple-menu" aria-haspopup="true">საშაბათოების რეგისტრაცია</Button></a>
+                                <Link to="/exams"><Button aria-controls="simple-menu" aria-haspopup="true">მისაღები გამოცდები</Button></Link>
                             </li>
                             <li className="header-link">
                                 <Link to="/contact"><Button aria-controls="simple-menu" aria-haspopup="true">კონტაქტი</Button></Link>
@@ -412,6 +425,9 @@ function Header() {
                     <Route path="/login">
                         <SecretLogin />
                     </Route>
+                    <Route path="/exams">
+                        <ExamsReg />
+                    </Route>
                     <Route path="/single/:id" render={(props) => <Single {...props} />}/> 
                     <Route path="/" exact>
                         <Home />
@@ -425,39 +441,76 @@ function Header() {
             </Router>
          ) 
     function Home() {
-        return <><Main /></>;
+        return <>
+            <Helmet>
+                <title>სსიპ აკადემიკოს ილია ვეკუას სახელობის ფიზიკა-მათემატიკის ქალაქ თბილისის N 42 საჯარო სკოლა</title>
+            </Helmet>
+            <Main />
+        </>;
     }
     
     function OurHistory() {
-        return <><History /></>;
+        return <>
+            <Helmet>
+                <title>ისტორია და მისია</title>
+            </Helmet>
+            <History />
+        </>;
    }
     
     function OurLaws() {
-        return <><Laws /></>
+        return <>
+            <Helmet>
+                <title>შინაგანაწესი</title>
+            </Helmet>
+            <Laws />
+        </>
     }
     
     function Teachers() {
-        return <h2>დირექცია/მასწავლებლები</h2>;
+        return <>
+            <Helmet>
+                <title>დირექცია/მასწავლებლები</title>
+            </Helmet>
+            <h2>დირექცია/მასწავლებლები</h2>
+        </>
     }
     
     function OurPupils() {
-        return <><Pupils /></>;
+        return <>
+            <Helmet>
+                <title>სკოლის თვითმმართველობა</title>
+            </Helmet>
+            <Pupils />
+        </>;
     }
 
-    
     function Projects() {
         return <>
+            <Helmet>
+                  <title>პროექტები/პროგრამები</title>
+            </Helmet>
             <h2>პროექტები/პროგრამები</h2>
             <Covid />
         </>;
     }
     
     function OurAchievements() {
-        return <><Achievements /></>;
+        return <>
+            <Helmet>
+              <title>მიღწევები</title>
+            </Helmet>
+            <Achievements />
+        </>;
     }
     
     function ContactUs() {
-        return <><Contact /></>;
+        return <>
+                <Helmet>
+                  <title>კონტაქტი</title>
+                </Helmet>
+                <Contact />
+            </>;
     }
     
     function TV() {
@@ -465,11 +518,21 @@ function Header() {
     }
     
     function SecretLogin() {
-        return <><Login /></>
+        return <>
+                <Helmet>
+                  <title>სისტემაში შესვლა</title>
+                </Helmet>
+                <Login />
+            </>
     }
     
     function NotFound() {
-        return <><Error /></>
+        return <>
+                <Helmet>
+                    <title>გვერდი ვერ მოიძებნა 404</title>
+                </Helmet>
+                <Error />
+            </>
     }
 
     function OurNews() {
@@ -567,6 +630,9 @@ function Header() {
         }
         return (
                 <div className="admin-news">
+                    <Helmet>
+                  <title>სიახლეების Admin გვერდი</title>
+                </Helmet>
                     <br/>
                     <Button variant="contained" color="secondary" onClick={signOut}>გასვლა</Button>
                     <div className="post-form">
@@ -667,14 +733,242 @@ function Header() {
                     </Grid>
                     </div>
                     <br/>
+                    <Covid />
                 </div>
         )
         OurNews.propTypes = {
             post: PropTypes.object,
           };
         } else {
-            return (<News />);
+            return (
+            <div>
+                <Helmet>
+                  <title>სიახლეები</title>
+                </Helmet>
+                <News />
+                <Covid />
+            </div>
+            );
         }
+    }
+    function ExamsReg() {
+        const { register, formState: { errors }, handleSubmit } = useForm();
+        const onSubmit = data => console.log(data);
+        const { control } = useForm();
+        const useStyles = makeStyles((theme) => ({
+            paper: {
+              marginTop: theme.spacing(8),
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            },
+            avatar: {
+              margin: theme.spacing(1),
+              backgroundColor: theme.palette.secondary.main,
+            },
+            form: {
+              width: '100%', // Fix IE 11 issue.
+              marginTop: theme.spacing(3),
+            },
+            submit: {
+              margin: theme.spacing(3, 0, 2),
+            },
+            input: {
+                display: 'none',
+            },
+          }));
+          const [age, setAge] = React.useState('');
+
+          const handleChange = (event) => {
+            setAge(event.target.value);
+          };
+            const classes = useStyles();
+          
+            return (
+            <div>
+              <Container component="main" maxWidth="md">
+                <Helmet>
+                  <title>მოსწავლის მისაღები გამოცდებისათვის რეგისტრაცია</title>
+                </Helmet>
+                <CssBaseline />
+                <div className={classes.paper}>
+                  <Avatar className={classes.avatar}>
+                    <PersonAddIcon />
+                  </Avatar>
+                  <Typography component="h1" variant="h5">
+                    მოსწავლის მისაღები გამოცდებისათვის რეგისტრაცია
+                  </Typography>
+                  <br />
+                  <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          autoComplete="fname"
+                          name="firstName"
+                          variant="standard"
+                          required
+                          fullWidth
+                          id="firstName"
+                          label="მოსწავლის სახელი"
+                          autoFocus
+                          />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          variant="standard"
+                          required
+                          fullWidth
+                          id="lastName"
+                          label="მოსწავლის გვარი"
+                          name="lastName"
+                          autoComplete="lname"
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                        // error
+                        // helperText="Incorrect entry."
+                          variant="standard"
+                          required
+                          fullWidth
+                          id="FatherName"
+                          label="მამის სახელი"
+                          name="FatherName"
+                          autoComplete="FatherName"
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          autoComplete="fname"
+                          name="ParentfirstName"
+                          variant="standard"
+                          required
+                          fullWidth
+                          id="ParentFirstName"
+                          label="მშობლის სახელი"
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          variant="standard"
+                          required
+                          fullWidth
+                          id="ParentLastName"
+                          label="მშობლის გვარი"
+                          name="ParentLastName"
+                          autoComplete="lname"
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                        // error
+                        // helperText="Incorrect entry."
+                          variant="standard"
+                          required
+                          fullWidth
+                          id="idNumber"
+                          label="პირადი ნომერი"
+                          type="number"
+                          name="idNumber"
+                          autoComplete="id"
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                        // error
+                        // helperText="Incorrect entry."
+                          variant="standard"
+                          required
+                          fullWidth
+                          id="oldSchool"
+                          label="სკოლა საიდანაც გადმოდიხართ"
+                          name="oldSchool"
+                          autoComplete="oldSchool"
+                        />
+                      </Grid>
+                      <Grid item xs={12} lg={12}>
+                        <TextField
+                        // error
+                        // helperText="Incorrect entry."
+                          variant="standard"
+                          required
+                          fullWidth
+                          id="mobileNumber"
+                          type="number"
+                          label="მშობლის ტელეფონის ნომერი"
+                          name="mobileNumber"
+                          autoComplete="mobileNumber"
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <FormControl className={classes.formControl} fullWidth required>
+                            <InputLabel>მიუთითეთ კლასი, რომელშიც გადადიხართ</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="class"
+                                onChange={handleChange}
+                                fullWidth
+                                required
+                            >
+                                <MenuItem value={7}>7</MenuItem>
+                                <MenuItem value={8}>8</MenuItem>
+                                <MenuItem value={9}>9</MenuItem>
+                                <MenuItem value={10}>10</MenuItem>
+                                <MenuItem value={11}>11</MenuItem>
+                            </Select>
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <FormControl className={classes.formControl} fullWidth required>
+                            <InputLabel>მეორე უცხო ენა, რომელსაც სწავლობთ</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="language"
+                                onChange={handleChange}
+                                fullWidth
+                                required
+                            >
+                                <MenuItem value="რუსული">რუსული</MenuItem>
+                                <MenuItem value="გერმანული">გერმანული</MenuItem>
+                            </Select>
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12} lg={12}>
+                        <p style={{textAlign: "start"}}>ატვირთეთ მოსწავლის ფოტო</p>
+                        <input accept="image/*" className={classes.input} required id="icon-button-file" type="file" />
+                        <label htmlFor="icon-button-file">
+                            <IconButton color="primary" aria-label="upload picture" component="span">
+                            <PhotoCamera />
+                            </IconButton>
+                        </label>
+                      </Grid>
+                      <Grid item xs={12} lg={12}>
+                        <p style={{textAlign: "start"}}>ცნობა სკოლიდან სწავლის შესახებ</p>
+                        <input accept="image/*" className={classes.input} required id="icon-button-file" type="file" />
+                        <label htmlFor="icon-button-file">
+                            <IconButton color="primary" aria-label="upload picture" component="span">
+                            <AttachFileIcon />
+                            </IconButton>
+                        </label>
+                      </Grid>
+                    </Grid>
+                    <Button
+                      type="submit"
+                      fullWidth
+                      variant="contained"
+                      color="secondary"
+                      className={classes.submit}
+                      fullWidth
+                    >
+                      რეგისტრაცია
+                    </Button>
+                  </form>
+                <br />
+                </div>
+              </Container>
+                <Covid />
+                </div>
+            );
     }
     // function SinglePage() {
     //     return (props) => <Single {...props} />
