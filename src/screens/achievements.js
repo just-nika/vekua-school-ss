@@ -17,6 +17,9 @@ function Achievements() {
                         <p className="years"><a href="./2014-2015.pdf" target="_blank">2014-2015 სასწავლო წლის მიღწევები</a></p>
                         <p className="years"><a href="./2015-2016.pdf" target="_blank">2015-2016 სასწავლო წლის მიღწევები</a></p>
                         <p className="years"><a href="./2016-2017.pdf" target="_blank">2016-2017 სასწავლო წლის მიღწევები</a></p>
+                        <p className="years"><a href="./2017-2018.pdf" target="_blank">2017-2018 სასწავლო წლის მიღწევები</a></p>
+                        <p className="years"><a href="./2018-2019.pdf" target="_blank">2018-2019 სასწავლო წლის მიღწევები</a></p>
+                        <p className="years"><a href="./2019-2020.pdf" target="_blank">2019-2020 სასწავლო წლის მიღწევები</a></p>
                     </div>
                 </div>
             </div>
