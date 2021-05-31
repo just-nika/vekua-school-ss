@@ -14,10 +14,12 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 const firestore = firebase.firestore();
 const auth = firebase.auth();
+const storage = firebase.storage();
 
 export {
     firebaseConfig,
     firestore,
     auth,
+    storage,
     firebase
 }

@@ -11,7 +11,7 @@ import MuiAccordion from '@material-ui/core/Accordion';
 import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
 import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
-import { firebase, auth, firestore } from '../firebase/firebase.config';
+import { firebase, auth, firestore, storage } from '../firebase/firebase.config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
@@ -65,6 +65,9 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import { useForm, Controller } from "react-hook-form";
 import { Helmet } from "react-helmet";
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormLabel from '@material-ui/core/FormLabel';
 
 function Header() {
     const useStyles = makeStyles({
@@ -752,9 +755,31 @@ function Header() {
         }
     }
     function ExamsReg() {
-        const { register, formState: { errors }, handleSubmit } = useForm();
-        const onSubmit = data => console.log(data);
-        const { control } = useForm();
+        const [pupils7, setPupils7] = useState([]);
+        const [pupils8, setPupils8] = useState([]);
+        const [pupils9, setPupils9] = useState([]);
+        const [pupils10, setPupils10] = useState([]);
+        const [pupils11, setPupils11] = useState([]);
+        const [value, setValue] = useState("");
+        const selectClass = e => setValue(e.target.value);
+        const [language, setLanguage] = useState("");
+        const selectLanguage = e => setLanguage(e.target.language);
+        useEffect(() => {
+            getPupils7();
+            getPupils8();
+            getPupils9();
+            getPupils10();
+            getPupils11();
+          }, [])
+        const {
+            register,
+            handleSubmit,
+            formState: { errors }
+          } = useForm();
+        
+          const onSubmit = (data) => {
+            console.log(data);
+          };
         const useStyles = makeStyles((theme) => ({
             paper: {
               marginTop: theme.spacing(8),
@@ -782,8 +807,55 @@ function Header() {
           const handleChange = (event) => {
             setAge(event.target.value);
           };
+          const getPupils7 = async () => {
+            const data = await firestore.collection("7").get();
+            setPupils7(data.docs.map(doc => ({
+              ...doc.data(),
+              id: doc.id
+            })))
+          }
+          const getPupils8 = async () => {
+            const data = await firestore.collection("8").get();
+            setPupils8(data.docs.map(doc => ({
+              ...doc.data(),
+              id: doc.id
+            })))
+          }
+          const getPupils9 = async () => {
+            const data = await firestore.collection("9").get();
+            setPupils9(data.docs.map(doc => ({
+              ...doc.data(),
+              id: doc.id
+            })))
+          }
+          const getPupils10 = async () => {
+            const data = await firestore.collection("10").get();
+            setPupils10(data.docs.map(doc => ({
+              ...doc.data(),
+              id: doc.id
+            })))
+          }
+          const getPupils11 = async () => {
+            const data = await firestore.collection("11").get();
+            setPupils11(data.docs.map(doc => ({
+              ...doc.data(),
+              id: doc.id
+            })))
+          }
             const classes = useStyles();
-          
+            const addPupil = async () => {
+                
+            }
+            // const handleUpload = async () => {
+            //     const storageRef = storage.ref();
+            //     const fileRef = storageRef.child(image.name);
+            //     await fileRef.put(image);
+            //     firestore.collection("albums").add({
+            //         name: image.name,
+            //         desc: document.getElementById("postDesc").value,
+            //         url: await fileRef.getDownloadURL()
+            //     })
+            // }
             return (
             <div>
               <Container component="main" maxWidth="md">
@@ -796,117 +868,136 @@ function Header() {
                     <PersonAddIcon />
                   </Avatar>
                   <Typography component="h1" variant="h5">
-                    მოსწავლის მისაღები გამოცდებისათვის რეგისტრაცია
+                    მოსწავლის მისაღები გამოცდებისათვის რეგისტრაცია {value} {language}
                   </Typography>
                   <br />
-                  <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+                  <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
                     <Grid container spacing={2}>
                       <Grid item xs={12} sm={6}>
                         <TextField
-                          autoComplete="fname"
-                          name="firstName"
-                          variant="standard"
-                          required
-                          fullWidth
-                          id="firstName"
-                          label="მოსწავლის სახელი"
-                          autoFocus
+                            {...register("firstName", { required: true })}
+                            error={errors.firstName}
+                            helperText={errors.firstName && "მოსწავლის სახელი აუცილებელია"}
+                            autoComplete="fname"
+                            name="firstName"
+                            variant="standard"
+                            required
+                            fullWidth
+                            id="firstName"
+                            label="მოსწავლის სახელი"
+                            autoFocus
                           />
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <TextField
-                          variant="standard"
-                          required
-                          fullWidth
-                          id="lastName"
-                          label="მოსწავლის გვარი"
-                          name="lastName"
-                          autoComplete="lname"
+                            {...register("lastName", { required: true })}
+                            error={errors.lastName}
+                            helperText={errors.lastName && "მოსწავლის გვარი აუცილებელია"}
+                            variant="standard"
+                            required
+                            fullWidth
+                            id="lastName"
+                            label="მოსწავლის გვარი"
+                            name="lastName"
+                            autoComplete="lname"
                         />
                       </Grid>
                       <Grid item xs={12}>
                         <TextField
-                        // error
-                        // helperText="Incorrect entry."
-                          variant="standard"
-                          required
-                          fullWidth
-                          id="FatherName"
-                          label="მამის სახელი"
-                          name="FatherName"
-                          autoComplete="FatherName"
+                            {...register("idRequired", { required: true, minLength: 11, maxLength: 11 })}
+                            error={errors.idRequired}
+                            helperText={errors.idRequired && "მოსწავლის პირადი ნომერი უნდა შეიცავდეს 11 ციფრს"}
+                            variant="standard"
+                            required
+                            fullWidth
+                            id="idNumber"
+                            label="მოსწავლის პირადი ნომერი"
+                            type="number"
+                            name="idRequired"
+                            autoComplete="id"
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                            {...register("fatherName", { required: true  })}
+                            error={errors.fatherName}
+                            helperText={errors.fatherName && "მამის სახელი აუცილებელია"}
+                            variant="standard"
+                            required
+                            fullWidth
+                            id="FatherName"
+                            label="მამის სახელი"
+                            name="FatherName"
+                            autoComplete="FatherName"
                         />
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <TextField
-                          autoComplete="fname"
-                          name="ParentfirstName"
-                          variant="standard"
-                          required
-                          fullWidth
-                          id="ParentFirstName"
-                          label="მშობლის სახელი"
+                            {...register("parentName", { required: true  })}
+                            error={errors.parentName}
+                            helperText={errors.parentName && "მშობლის სახელი აუცილებელია"}
+                            autoComplete="fname"
+                            name="ParentfirstName"
+                            variant="standard"
+                            required
+                            fullWidth
+                            id="ParentFirstName"
+                            label="მშობლის სახელი"
                         />
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <TextField
-                          variant="standard"
-                          required
-                          fullWidth
-                          id="ParentLastName"
-                          label="მშობლის გვარი"
-                          name="ParentLastName"
-                          autoComplete="lname"
+                            {...register("parentLastName", { required: true })}
+                            error={errors.parentLastName}
+                            helperText={errors.parentLastName && "მშობლის გვარი აუცილებელია"}
+                            variant="standard"
+                            required
+                            fullWidth
+                            id="ParentLastName"
+                            label="მშობლის გვარი"
+                            name="ParentLastName"
+                            autoComplete="lname"
                         />
                       </Grid>
                       <Grid item xs={12}>
                         <TextField
-                        // error
-                        // helperText="Incorrect entry."
-                          variant="standard"
-                          required
-                          fullWidth
-                          id="idNumber"
-                          label="პირადი ნომერი"
-                          type="number"
-                          name="idNumber"
-                          autoComplete="id"
-                        />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <TextField
-                        // error
-                        // helperText="Incorrect entry."
-                          variant="standard"
-                          required
-                          fullWidth
-                          id="oldSchool"
-                          label="სკოლა საიდანაც გადმოდიხართ"
-                          name="oldSchool"
-                          autoComplete="oldSchool"
+                            {...register("oldSchool", { required: true })}
+                            error={errors.oldSchool}
+                            helperText={errors.oldSchool && "გთხოვთ მიუთითოთ სკოლა სადაც მოსწავლე ამჟამად სწავლობს"}
+                            variant="standard"
+                            required
+                            fullWidth
+                            id="oldSchool"
+                            label="სკოლა საიდანაც გადმოდიხართ"
+                            name="oldSchool"
+                            autoComplete="oldSchool"
                         />
                       </Grid>
                       <Grid item xs={12} lg={12}>
                         <TextField
-                        // error
-                        // helperText="Incorrect entry."
-                          variant="standard"
-                          required
-                          fullWidth
-                          id="mobileNumber"
-                          type="number"
-                          label="მშობლის ტელეფონის ნომერი"
-                          name="mobileNumber"
-                          autoComplete="mobileNumber"
+                            {...register("mobileNumber", { required: true })}
+                            error={errors.mobileNumber}
+                            helperText={errors.mobileNumber && "მშობლის ტელეფონის ნომრის მითითება აუცილებელია"}
+                            variant="standard"
+                            required
+                            fullWidth
+                            id="mobileNumber"
+                            type="number"
+                            label="მშობლის ტელეფონის ნომერი"
+                            name="mobileNumber"
+                            autoComplete="mobileNumber"
                         />
                       </Grid>
                       <Grid item xs={12}>
                         <FormControl className={classes.formControl} fullWidth required>
                             <InputLabel>მიუთითეთ კლასი, რომელშიც გადადიხართ</InputLabel>
                             <Select
+                                {...register("class", { required: true })}
+                                error={errors.class}
+                                helperText={errors.class && "მშობლის ტელეფონის ნომრის მითითება აუცილებელია"}
                                 labelId="demo-simple-select-label"
                                 id="class"
-                                onChange={handleChange}
+                                onChange={selectClass}
                                 fullWidth
                                 required
                             >
@@ -918,13 +1009,15 @@ function Header() {
                             </Select>
                         </FormControl>
                       </Grid>
-                      <Grid item xs={12}>
-                        <FormControl className={classes.formControl} fullWidth required>
+                      <Grid item xs={12} id="language">
+                        <FormControl className={classes.formControl} fullWidth required >
                             <InputLabel>მეორე უცხო ენა, რომელსაც სწავლობთ</InputLabel>
                             <Select
+                                {...register("language", { required: true })}
+                                error={errors.language}
+                                helperText={errors.language && "მეორე უცხო ენის მითითება აუცილებელია"}
                                 labelId="demo-simple-select-label"
-                                id="language"
-                                onChange={handleChange}
+                                onChange={selectLanguage}
                                 fullWidth
                                 required
                             >
@@ -959,6 +1052,7 @@ function Header() {
                       color="secondary"
                       className={classes.submit}
                       fullWidth
+                      onClick={() => addPupil()}
                     >
                       რეგისტრაცია
                     </Button>
