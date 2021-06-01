@@ -68,6 +68,7 @@ import { Helmet } from "react-helmet";
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormLabel from '@material-ui/core/FormLabel';
+import swal from 'sweetalert';
 
 function Header() {
     const useStyles = makeStyles({
@@ -755,15 +756,19 @@ function Header() {
         }
     }
     function ExamsReg() {
+        // const [language, setLanguage] = useState("");
+        // const selectLanguage = (event) => {
+        //     setLanguage(event.target.language)
+        // };
         const [pupils7, setPupils7] = useState([]);
         const [pupils8, setPupils8] = useState([]);
         const [pupils9, setPupils9] = useState([]);
         const [pupils10, setPupils10] = useState([]);
         const [pupils11, setPupils11] = useState([]);
-        const [value, setValue] = useState("");
+        const [value, setValue ] = useState("");
+        const [image, setImage] = useState(null)
+        const [file, setFile] = useState(null)
         const selectClass = e => setValue(e.target.value);
-        const [language, setLanguage] = useState("");
-        const selectLanguage = e => setLanguage(e.target.language);
         useEffect(() => {
             getPupils7();
             getPupils8();
@@ -774,12 +779,15 @@ function Header() {
         const {
             register,
             handleSubmit,
+            getValues,
             formState: { errors }
           } = useForm();
-        
-          const onSubmit = (data) => {
-            console.log(data);
-          };
+        const fileUpload = (e) => {
+            setFile(e.target.files[0])
+        }
+        const imgUpload = (e) => {
+            setImage(e.target.files[0])
+        }
         const useStyles = makeStyles((theme) => ({
             paper: {
               marginTop: theme.spacing(8),
@@ -842,9 +850,107 @@ function Header() {
               id: doc.id
             })))
           }
+          
             const classes = useStyles();
+            const onSubmit = (data) => {
+                const language = data.language;
+                // console.log(language)
+    
+                console.log(data);
+            };
             const addPupil = async () => {
-                
+                pupils7.map((pupil7, index) => {
+                    pupils8.map((pupil8, index) => {
+                        pupils9.map((pupil9, index) => {
+                            pupils10.map((pupil10, index) => {
+                                pupils11.map((pupil11, index) => {
+                                    const firstName = document.getElementById("firstName").value;
+                                    const lastName = document.getElementById("lastName").value;
+                                    const idNumber = document.getElementById("idNumber").value;
+                                    const FatherName = document.getElementById("FatherName").value;
+                                    const ParentFirstName = document.getElementById("ParentFirstName").value;
+                                    const ParentLastName = document.getElementById("ParentLastName").value;
+                                    const oldSchool = document.getElementById("oldSchool").value;
+                                    const mobileNumber = document.getElementById("mobileNumber").value;
+                                    const language = getValues("language");
+                                    console.log(language)
+                                    console.log(value)
+                                    const Class = `pupil${value}`;
+                                    console.log(Class);
+                                    if (value == 7) {
+                                        if (pupil7.idNumber == idNumber) {
+                                            swal("მოსწავლე უკვე რეგისტრირებულია!", "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.", "error");
+                                        }else {
+                                            swal("მოსწავლე წარმატებულად დარეგისტრირდა!", "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.", "success");
+                                        }
+                                    }
+                                    if (value == 8) {
+                                        if (pupil8.idNumber == idNumber) {
+                                            swal("მოსწავლე უკვე რეგისტრირებულია!", "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.", "error");
+                                        }else {
+                                            swal("მოსწავლე წარმატებულად დარეგისტრირდა!", "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.", "success");
+                                        }
+                                    }
+                                    if (value == 9) {
+                                        if (pupil9.idNumber == idNumber) {
+                                            swal("მოსწავლე უკვე რეგისტრირებულია!", "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.", "error");
+                                        }else {
+                                            swal("მოსწავლე წარმატებულად დარეგისტრირდა!", "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.", "success");
+                                        }
+                                    }
+                                    if (value == 10) {
+                                        if (pupil10.idNumber == idNumber) {
+                                            swal("მოსწავლე უკვე რეგისტრირებულია!", "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.", "error");
+                                        }else {
+                                            const imgRef = storage.ref();
+                                            const imageRef = imgRef.child(image.name);
+                                            const img = image.name;
+                                            const storageRef = storage.ref();
+                                            const fileRef = storageRef.child(image.name);
+                                            const file = file.name;
+                                            db.collection("10").get().then(function(querySnapshot) {     
+                                                await fileRef.put(image);
+                                                console.log(querySnapshot.size);
+                                                const id = querySnapshot.size; 
+                                                firestore.collection("10").doc(id).set({
+                                                    firstName: firstName,
+                                                    lastName: lastName,
+                                                    imgName: image.name,
+                                                    idNumber: idNumber,
+                                                    FatherName: FatherName,
+                                                    ParentFirstName: ParentFirstName,
+                                                    ParentLastName: ParentLastName,
+                                                    oldSchool: oldSchool,
+                                                    mobileNumber: mobileNumber,
+                                                    language: language,
+                                                    url: await fileRef.getDownloadURL()
+                                                }).then(() => {
+                                                    document.getElementById("firstName").value = "";
+                                                    document.getElementById("lastName").value = "";
+                                                    document.getElementById("idNumber").value = "";
+                                                    document.getElementById("FatherName").value = "";
+                                                    document.getElementById("ParentFirstName").value = "";
+                                                    document.getElementById("ParentLastName").value = "";
+                                                    document.getElementById("oldSchool").value = "";
+                                                    document.getElementById("mobileNumber").value = "";
+                                                    swal("მოსწავლე წარმატებულად დარეგისტრირდა!", "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.", "success");
+                                                })
+                                            });
+
+                                        }
+                                    }
+                                    if (value == 11) {
+                                        if (pupil11.idNumber == idNumber) {
+                                            swal("მოსწავლე უკვე რეგისტრირებულია!", "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.", "error");
+                                        }else {
+                                            swal("მოსწავლე წარმატებულად დარეგისტრირდა!", "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.", "success");
+                                        }
+                                    }
+                                })
+                            })
+                        })
+                    })
+                })
             }
             // const handleUpload = async () => {
             //     const storageRef = storage.ref();
@@ -868,7 +974,7 @@ function Header() {
                     <PersonAddIcon />
                   </Avatar>
                   <Typography component="h1" variant="h5">
-                    მოსწავლის მისაღები გამოცდებისათვის რეგისტრაცია {value} {language}
+                    მოსწავლის მისაღები გამოცდებისათვის რეგისტრაცია
                   </Typography>
                   <br />
                   <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -888,7 +994,7 @@ function Header() {
                             autoFocus
                           />
                       </Grid>
-                      <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={6}>
                         <TextField
                             {...register("lastName", { required: true })}
                             error={errors.lastName}
@@ -919,44 +1025,44 @@ function Header() {
                       </Grid>
                       <Grid item xs={12}>
                         <TextField
-                            {...register("fatherName", { required: true  })}
+                            {...register("fatherName", { required: true })}
                             error={errors.fatherName}
-                            helperText={errors.fatherName && "მამის სახელი აუცილებელია"}
+                            helperText={errors.fatherName && "მამის სახელის მითითება აუცილებელია"}
                             variant="standard"
                             required
                             fullWidth
                             id="FatherName"
-                            label="მამის სახელი"
-                            name="FatherName"
-                            autoComplete="FatherName"
+                            label="მოსწავლის მამის სახელი"
+                            name="fatherName"
+                            autoComplete="fatherName"
                         />
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <TextField
-                            {...register("parentName", { required: true  })}
+                            {...register("parentName", { required: true })}
                             error={errors.parentName}
-                            helperText={errors.parentName && "მშობლის სახელი აუცილებელია"}
-                            autoComplete="fname"
-                            name="ParentfirstName"
+                            helperText={errors.parentName && "მოსწავლის მშობლის სახელის მითითება აუცილებელია"}
                             variant="standard"
                             required
                             fullWidth
                             id="ParentFirstName"
-                            label="მშობლის სახელი"
+                            label="მოსწავლის მშობლის სახელი"
+                            name="parentName"
+                            autoComplete="parentName"
                         />
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <TextField
                             {...register("parentLastName", { required: true })}
                             error={errors.parentLastName}
-                            helperText={errors.parentLastName && "მშობლის გვარი აუცილებელია"}
+                            helperText={errors.parentLastName && "მოსწავლის მშობლის გვარის მითითება აუცილებელია"}
                             variant="standard"
                             required
                             fullWidth
                             id="ParentLastName"
-                            label="მშობლის გვარი"
-                            name="ParentLastName"
-                            autoComplete="lname"
+                            label="მოსწავლის მშობლის გვარი"
+                            name="parentLastName"
+                            autoComplete="parentLastName"
                         />
                       </Grid>
                       <Grid item xs={12}>
@@ -995,7 +1101,6 @@ function Header() {
                                 {...register("class", { required: true })}
                                 error={errors.class}
                                 helperText={errors.class && "მშობლის ტელეფონის ნომრის მითითება აუცილებელია"}
-                                labelId="demo-simple-select-label"
                                 id="class"
                                 onChange={selectClass}
                                 fullWidth
@@ -1009,15 +1114,15 @@ function Header() {
                             </Select>
                         </FormControl>
                       </Grid>
-                      <Grid item xs={12} id="language">
+                      <Grid item xs={12}>
                         <FormControl className={classes.formControl} fullWidth required >
                             <InputLabel>მეორე უცხო ენა, რომელსაც სწავლობთ</InputLabel>
                             <Select
+                                // onChange={selectLanguage}
                                 {...register("language", { required: true })}
                                 error={errors.language}
                                 helperText={errors.language && "მეორე უცხო ენის მითითება აუცილებელია"}
-                                labelId="demo-simple-select-label"
-                                onChange={selectLanguage}
+                                id="language"
                                 fullWidth
                                 required
                             >
@@ -1026,23 +1131,25 @@ function Header() {
                             </Select>
                         </FormControl>
                       </Grid>
-                      <Grid item xs={12} lg={12}>
+                      <Grid item xs={12} lg={12} style={{textAlign: "start"}}>
                         <p style={{textAlign: "start"}}>ატვირთეთ მოსწავლის ფოტო</p>
-                        <input accept="image/*" className={classes.input} required id="icon-button-file" type="file" />
+                        <input accept="image/*" className={classes.input} onChange={imgUpload} {...register("img", { required: true })} required id="icon-button-file" type="file" />
                         <label htmlFor="icon-button-file">
                             <IconButton color="primary" aria-label="upload picture" component="span">
                             <PhotoCamera />
                             </IconButton>
                         </label>
+                        <p style={{color: "red", textAlign: "start"}}>{errors.img?.type === 'required' && "First name is required"}</p>
                       </Grid>
-                      <Grid item xs={12} lg={12}>
-                        <p style={{textAlign: "start"}}>ცნობა სკოლიდან სწავლის შესახებ</p>
-                        <input accept="image/*" className={classes.input} required id="icon-button-file" type="file" />
+                      <Grid item xs={12} lg={12} style={{textAlign: "start"}}>
+                        <p style={{textAlign: "start"}}>ცნობა სკოლიდან სწავლის შესახებ <small>(სკოლის მიერ დამოწმებული საბუთი, რომ მოსწავლემ ნამდვილად დაამთავრა წინა კლასები)</small></p>
+                        <input accept="image/*" className={classes.input} onChange={fileUpload} {...register("file", { required: true })} required id="icon-button-file" type="file" />
                         <label htmlFor="icon-button-file">
                             <IconButton color="primary" aria-label="upload picture" component="span">
                             <AttachFileIcon />
                             </IconButton>
                         </label>
+                        <p style={{color: "red", textAlign: "start"}}>{errors.file?.type === 'required' && "First name is required"}</p>
                       </Grid>
                     </Grid>
                     <Button
