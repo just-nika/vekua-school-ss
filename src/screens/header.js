@@ -860,19 +860,20 @@ function Header() {
                 setFile(e.target.files[0])
             }
             const addPupil = async () => {
-                const fileName = document.getElementById("icon-button-files").value;
-                const imgName = document.getElementById("icon-button-file").value;
-                // const imgStorageRef = storage.ref();
-                // const imgRef = imgStorageRef.child(imgName);
-                // await imgRef.put(image);
+                const imageName = document.getElementById("icon-button-file").files[0];
+                const fileName = document.getElementById("icon-button-files").files[0];
+                // // const imgStorageRef = storage.ref();
+                // // const imgRef = imgStorageRef.child(imgName);
+                // // await imgRef.put(image);
+                const storageRef = storage.ref();
+                const fileRef = storageRef.child(imageName.name);
+                await fileRef.put(imageName);
                 
-                // const storageRef = storage.ref();
-                // const fileRef = storageRef.child(fileName);
-                // await fileRef.put(image);
-                storage.ref(`/images/${fileName}`).put(image);
-                storage.ref(`/file/${imgName}`).put(file);
-                // const img = await imgRef.getDownloadURL();
-                // const fileUrl = await fileRef.getDownloadURL();
+                const imageRef = storageRef.child(fileName.name);
+                await imageRef.put(fileName);
+                const img = await fileRef.getDownloadURL();
+                const fileUrl = await imageRef.getDownloadURL();
+                console.log(img)
                 pupils7.map((pupil7, index) => {
                     pupils8.map((pupil8, index) => {
                         pupils9.map((pupil9, index) => {
@@ -914,37 +915,33 @@ function Header() {
                                         if (pupil10.idNumber == idNumber) {
                                             swal("მოსწავლე უკვე რეგისტრირებულია!", "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.", "error");
                                         } else {
-
-                                            // firestore.collection("10").get().then(function(querySnapshot) {     
-                                            //             console.log(querySnapshot.size);
-                                            //             const id = querySnapshot.size; 
-                                            //             firestore.collection("10").doc(id).set({
-                                            //                 firstName: firstName,
-                                            //                 lastName: lastName,
-                                            //                 // imgName: img,
-                                            //                 // fileName: file,
-                                            //                 idNumber: idNumber,
-                                            //                 FatherName: FatherName,
-                                            //                 ParentFirstName: ParentFirstName,
-                                            //                 ParentLastName: ParentLastName,
-                                            //                 oldSchool: oldSchool,
-                                            //                 mobileNumber: mobileNumber,
-                                            //                 language: language,
-                                            //                 // imgUrl: img,
-                                            //                 // fileUrl: fileUrl
-                                            //             }).then(() => {
-                                            //                 // document.getElementById("firstName").value = "";
-                                            //                 // document.getElementById("lastName").value = "";
-                                            //                 // document.getElementById("idNumber").value = "";
-                                            //                 // document.getElementById("FatherName").value = "";
-                                            //                 // document.getElementById("ParentFirstName").value = "";
-                                            //                 // document.getElementById("ParentLastName").value = "";
-                                            //                 // document.getElementById("oldSchool").value = "";
-                                            //                 // document.getElementById("mobileNumber").value = "";
-                                                            swal("მოსწავლე წარმატებულად დარეგისტრირდა!", "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.", "success");
-                                            //             })
-                                            // });
-
+                                            firestore.collection("10").get().then(function(querySnapshot) {   
+                                                console.log(querySnapshot.size);
+                                                const id = querySnapshot.size; 
+                                                firestore.collection("10").doc(id).set({
+                                                    firstName: firstName,
+                                                    lastName: lastName,
+                                                    idNumber: idNumber,
+                                                    FatherName: FatherName,
+                                                    ParentFirstName: ParentFirstName,
+                                                    ParentLastName: ParentLastName,
+                                                    oldSchool: oldSchool,
+                                                    mobileNumber: mobileNumber,
+                                                    language: language,
+                                                    imgUrl: img,
+                                                    fileUrl: fileUrl
+                                                }).then(() => {
+                                                    document.getElementById("firstName").value = "";
+                                                    document.getElementById("lastName").value = "";
+                                                    document.getElementById("idNumber").value = "";
+                                                    document.getElementById("FatherName").value = "";
+                                                    document.getElementById("ParentFirstName").value = "";
+                                                    document.getElementById("ParentLastName").value = "";
+                                                    document.getElementById("oldSchool").value = "";
+                                                    document.getElementById("mobileNumber").value = "";
+                                                    swal("მოსწავლე წარმატებულად დარეგისტრირდა!", "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.", "success");
+                                                })
+                                            });
                                         }
                                     }
                                     if (value == 11) {
