@@ -766,8 +766,7 @@ function Header() {
         const [pupils10, setPupils10] = useState([]);
         const [pupils11, setPupils11] = useState([]);
         const [value, setValue ] = useState("");
-        const [image, setImage] = useState(null)
-        const [file, setFile] = useState(null)
+        
         const selectClass = e => setValue(e.target.value);
         useEffect(() => {
             getPupils7();
@@ -782,12 +781,6 @@ function Header() {
             getValues,
             formState: { errors }
           } = useForm();
-        const fileUpload = (e) => {
-            setFile(e.target.files[0])
-        }
-        const imgUpload = (e) => {
-            setImage(e.target.files[0])
-        }
         const useStyles = makeStyles((theme) => ({
             paper: {
               marginTop: theme.spacing(8),
@@ -858,7 +851,28 @@ function Header() {
     
                 console.log(data);
             };
+            const [image, setImage] = useState(null)
+            const [file, setFile] = useState(null)
+            const imgUpload = (e) => {
+                setImage(e.target.files[0])
+            }
+            const fileUpload = (e) => {
+                setFile(e.target.files[0])
+            }
             const addPupil = async () => {
+                const fileName = document.getElementById("icon-button-files").value;
+                const imgName = document.getElementById("icon-button-file").value;
+                // const imgStorageRef = storage.ref();
+                // const imgRef = imgStorageRef.child(imgName);
+                // await imgRef.put(image);
+                
+                // const storageRef = storage.ref();
+                // const fileRef = storageRef.child(fileName);
+                // await fileRef.put(image);
+                storage.ref(`/images/${fileName}`).put(image);
+                storage.ref(`/file/${imgName}`).put(file);
+                // const img = await imgRef.getDownloadURL();
+                // const fileUrl = await fileRef.getDownloadURL();
                 pupils7.map((pupil7, index) => {
                     pupils8.map((pupil8, index) => {
                         pupils9.map((pupil9, index) => {
@@ -875,8 +889,6 @@ function Header() {
                                     const language = getValues("language");
                                     console.log(language)
                                     console.log(value)
-                                    const Class = `pupil${value}`;
-                                    console.log(Class);
                                     if (value == 7) {
                                         if (pupil7.idNumber == idNumber) {
                                             swal("მოსწავლე უკვე რეგისტრირებულია!", "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.", "error");
@@ -901,41 +913,37 @@ function Header() {
                                     if (value == 10) {
                                         if (pupil10.idNumber == idNumber) {
                                             swal("მოსწავლე უკვე რეგისტრირებულია!", "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.", "error");
-                                        }else {
-                                            const imgRef = storage.ref();
-                                            const imageRef = imgRef.child(image.name);
-                                            const img = image.name;
-                                            const storageRef = storage.ref();
-                                            const fileRef = storageRef.child(image.name);
-                                            const file = file.name;
-                                            db.collection("10").get().then(function(querySnapshot) {     
-                                                await fileRef.put(image);
-                                                console.log(querySnapshot.size);
-                                                const id = querySnapshot.size; 
-                                                firestore.collection("10").doc(id).set({
-                                                    firstName: firstName,
-                                                    lastName: lastName,
-                                                    imgName: image.name,
-                                                    idNumber: idNumber,
-                                                    FatherName: FatherName,
-                                                    ParentFirstName: ParentFirstName,
-                                                    ParentLastName: ParentLastName,
-                                                    oldSchool: oldSchool,
-                                                    mobileNumber: mobileNumber,
-                                                    language: language,
-                                                    url: await fileRef.getDownloadURL()
-                                                }).then(() => {
-                                                    document.getElementById("firstName").value = "";
-                                                    document.getElementById("lastName").value = "";
-                                                    document.getElementById("idNumber").value = "";
-                                                    document.getElementById("FatherName").value = "";
-                                                    document.getElementById("ParentFirstName").value = "";
-                                                    document.getElementById("ParentLastName").value = "";
-                                                    document.getElementById("oldSchool").value = "";
-                                                    document.getElementById("mobileNumber").value = "";
-                                                    swal("მოსწავლე წარმატებულად დარეგისტრირდა!", "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.", "success");
-                                                })
-                                            });
+                                        } else {
+
+                                            // firestore.collection("10").get().then(function(querySnapshot) {     
+                                            //             console.log(querySnapshot.size);
+                                            //             const id = querySnapshot.size; 
+                                            //             firestore.collection("10").doc(id).set({
+                                            //                 firstName: firstName,
+                                            //                 lastName: lastName,
+                                            //                 // imgName: img,
+                                            //                 // fileName: file,
+                                            //                 idNumber: idNumber,
+                                            //                 FatherName: FatherName,
+                                            //                 ParentFirstName: ParentFirstName,
+                                            //                 ParentLastName: ParentLastName,
+                                            //                 oldSchool: oldSchool,
+                                            //                 mobileNumber: mobileNumber,
+                                            //                 language: language,
+                                            //                 // imgUrl: img,
+                                            //                 // fileUrl: fileUrl
+                                            //             }).then(() => {
+                                            //                 // document.getElementById("firstName").value = "";
+                                            //                 // document.getElementById("lastName").value = "";
+                                            //                 // document.getElementById("idNumber").value = "";
+                                            //                 // document.getElementById("FatherName").value = "";
+                                            //                 // document.getElementById("ParentFirstName").value = "";
+                                            //                 // document.getElementById("ParentLastName").value = "";
+                                            //                 // document.getElementById("oldSchool").value = "";
+                                            //                 // document.getElementById("mobileNumber").value = "";
+                                                            swal("მოსწავლე წარმატებულად დარეგისტრირდა!", "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.", "success");
+                                            //             })
+                                            // });
 
                                         }
                                     }
@@ -953,14 +961,14 @@ function Header() {
                 })
             }
             // const handleUpload = async () => {
-            //     const storageRef = storage.ref();
-            //     const fileRef = storageRef.child(image.name);
-            //     await fileRef.put(image);
-            //     firestore.collection("albums").add({
-            //         name: image.name,
-            //         desc: document.getElementById("postDesc").value,
-            //         url: await fileRef.getDownloadURL()
-            //     })
+                // const storageRef = storage.ref();
+                // const fileRef = storageRef.child(image.name);
+                // await fileRef.put(image);
+                // firestore.collection("albums").add({
+                //     name: image.name,
+                //     desc: document.getElementById("postDesc").value,
+                //     url: await fileRef.getDownloadURL()
+                // })
             // }
             return (
             <div>
@@ -1133,23 +1141,23 @@ function Header() {
                       </Grid>
                       <Grid item xs={12} lg={12} style={{textAlign: "start"}}>
                         <p style={{textAlign: "start"}}>ატვირთეთ მოსწავლის ფოტო</p>
-                        <input accept="image/*" className={classes.input} onChange={imgUpload} {...register("img", { required: true })} required id="icon-button-file" type="file" />
+                        <input accept="image/*" className={classes.input} onChange={(e)=>{setImage(e.target.files[0])}} {...register("img", { required: true })} required id="icon-button-file" type="file" />
                         <label htmlFor="icon-button-file">
                             <IconButton color="primary" aria-label="upload picture" component="span">
                             <PhotoCamera />
                             </IconButton>
                         </label>
-                        <p style={{color: "red", textAlign: "start"}}>{errors.img?.type === 'required' && "First name is required"}</p>
+                        <p style={{color: "red", textAlign: "start"}}>{errors.img?.type === 'required' && "მოსწავლის ფოტოს ატვირთვა აუცილებელია მოსწავლის"}</p>
                       </Grid>
                       <Grid item xs={12} lg={12} style={{textAlign: "start"}}>
-                        <p style={{textAlign: "start"}}>ცნობა სკოლიდან სწავლის შესახებ <small>(სკოლის მიერ დამოწმებული საბუთი, რომ მოსწავლემ ნამდვილად დაამთავრა წინა კლასები)</small></p>
-                        <input accept="image/*" className={classes.input} onChange={fileUpload} {...register("file", { required: true })} required id="icon-button-file" type="file" />
-                        <label htmlFor="icon-button-file">
-                            <IconButton color="primary" aria-label="upload picture" component="span">
+                        <p style={{textAlign: "start"}}>ცნობა სკოლიდან მოსწავლის შესახებ <small>(სკოლის მიერ დამოწმებული საბუთი)</small></p>
+                        <input accept="image/*" className={classes.input} onChange={(e)=>{setImage(e.target.files[0])}} {...register("file", { required: true })} required id="icon-button-files" type="file" />
+                        <label htmlFor="icon-button-files">
+                            <IconButton color="primary" aria-label="upload file" component="span">
                             <AttachFileIcon />
                             </IconButton>
                         </label>
-                        <p style={{color: "red", textAlign: "start"}}>{errors.file?.type === 'required' && "First name is required"}</p>
+                        <p style={{color: "red", textAlign: "start"}}>{errors.file?.type === 'required' && "სკოლის მიერ დამოწმებული საბუთის ატვირთვა აუცილებელია"}</p>
                       </Grid>
                     </Grid>
                     <Button
@@ -1159,7 +1167,7 @@ function Header() {
                       color="secondary"
                       className={classes.submit}
                       fullWidth
-                      onClick={() => addPupil()}
+                      onClick={addPupil}
                     >
                       რეგისტრაცია
                     </Button>
