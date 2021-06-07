@@ -48,22 +48,12 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormLabel from '@material-ui/core/FormLabel';
 import swal from 'sweetalert';
+import CheckPupil from '../utils/CheckPupil';
 
 function Check() {
-    const [pupils7, setPupils7] = useState([]);
-        const [pupils8, setPupils8] = useState([]);
-        const [pupils9, setPupils9] = useState([]);
-        const [pupils10, setPupils10] = useState([]);
-        const [pupils11, setPupils11] = useState([]);
-        const [forCard, setPupilCard] = useState([]);
-        useEffect(() => {
-            getPupils7();
-            getPupils8();
-            getPupils9();
-            getPupils10();
-            getPupils11();
-            pupilCard();
-        }, [])
+
+        const [forCard, setPupilCard] = useState(null);
+
         const useStyles = makeStyles((theme) => ({
             paper: {
               marginTop: theme.spacing(8),
@@ -96,116 +86,83 @@ function Check() {
 
             console.log(data);
         };
-        const getPupils7 = async () => {
-            const data = await firestore.collection("7").get();
-            setPupils7(data.docs.map(doc => ({
-              ...doc.data(),
-              docId: doc.id
-            })))
-          }
-          const getPupils8 = async () => {
-            const data = await firestore.collection("8").get();
-            setPupils8(data.docs.map(doc => ({
-              ...doc.data(),
-              docId: doc.id
-            })))
-          }
-          const getPupils9 = async () => {
-            const data = await firestore.collection("9").get();
-            setPupils9(data.docs.map(doc => ({
-              ...doc.data(),
-              docId: doc.id
-            })))
-          }
-          const getPupils10 = async () => {
-            const data = await firestore.collection("10").get();
-            setPupils10(data.docs.map(doc => ({
-              ...doc.data(),
-              docId: doc.id
-            })))
-          }
-          const getPupils11 = async () => {
-            const data = await firestore.collection("11").get();
-            setPupils11(data.docs.map(doc => ({
-              ...doc.data(),
-              docId: doc.id
-            })))
-          }
-        const pupilClass = getValues("class");
-        const pupilCard = async () => {
-            const data = await firestore.collection(`${pupilClass}`).get();
-            setPupilCard(data.docs.map(doc => ({
-              ...doc.data(),
-              docId: doc.id
-            })))
-        }
-        const checkPupil = async () => {
+        const handleCheck = async () => {
             const idNumberForm = document.getElementById("idNumber").value;
-            pupils7.map((pupil7, index) => {
-                pupils8.map((pupil8, index) => {
-                    pupils9.map((pupil9, index) => {
-                        pupils10.map((pupil10, index) => {
-                            pupils11.map((pupil11, index) => {
-                                if (pupilClass == 7) {
-                                    if (pupil7.idNumber = idNumberForm) {
-                                        swal("მოსწავლე წარმატებულად მოიძებნა!", "გთხოვთ იხილით თანდართული მოსწავლის ტესტირების ბარათი, რომელიც აუცილებელია თან იქონიოს მოსწავლემ მისაღების გამოცდის წერისას.", "success");
-                                        document.getElementById("idNumber").value = "";
-                                    }else {
-                                        swal("ასეთი მოსწავლე ვერ მოიძება!", "თუ თვლით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ამ გვერდზე მოცემულ ნომერზე ან ელ. ფოსტაზე.", "error");
-                                        document.getElementById("idNumber").value = "";
-                                    }
-                                }
-                                if (pupilClass == 8) {
-                                    if (pupil8.idNumber = idNumberForm) {
-                                        swal("მოსწავლე წარმატებულად მოიძებნა!", "გთხოვთ იხილით თანდართული მოსწავლის ტესტირების ბარათი, რომელიც აუცილებელია თან იქონიოს მოსწავლემ მისაღების გამოცდის წერისას.", "success");
-                                        document.getElementById("idNumber").value = "";
-                                    }else {
-                                        swal("ასეთი მოსწავლე ვერ მოიძება!", "თუ თვლით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ამ გვერდზე მოცემულ ნომერზე ან ელ. ფოსტაზე.", "error");
-                                        document.getElementById("idNumber").value = "";
-                                    }
-                                }
-                                if (pupilClass == 9) {
-                                    if (pupil9.idNumber = idNumberForm) {
-                                        swal("მოსწავლე წარმატებულად მოიძებნა!", "გთხოვთ იხილით თანდართული მოსწავლის ტესტირების ბარათი, რომელიც აუცილებელია თან იქონიოს მოსწავლემ მისაღების გამოცდის წერისას.", "success");
-                                        document.getElementById("idNumber").value = "";
-                                    }else {
-                                        swal("ასეთი მოსწავლე ვერ მოიძება!", "თუ თვლით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ამ გვერდზე მოცემულ ნომერზე ან ელ. ფოსტაზე.", "error");
-                                        document.getElementById("idNumber").value = "";
-                                    }
-                                }
-                                if (pupilClass == 10) {
-                                    if (pupil10.idNumber == idNumberForm) {
-                                        swal("მოსწავლე წარმატებულად მოიძებნა!", "გთხოვთ იხილით თანდართული მოსწავლის ტესტირების ბარათი, რომელიც აუცილებელია თან იქონიოს მოსწავლემ მისაღების გამოცდის წერისას.", "success");
-                                        document.getElementById("idNumber").value = "";
-                                    }else {
-                                        swal("ასეთი მოსწავლე ვერ მოიძება!", "თუ თვლით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ამ გვერდზე მოცემულ ნომერზე ან ელ. ფოსტაზე.", "error");
-                                        document.getElementById("idNumber").value = "";
-                                    }
-                                }
-                                if (pupilClass == 11) {
-                                    if (pupil11.idNumber = idNumberForm) {
-                                        swal("მოსწავლე წარმატებულად მოიძებნა!", "გთხოვთ იხილით თანდართული მოსწავლის ტესტირების ბარათი, რომელიც აუცილებელია თან იქონიოს მოსწავლემ მისაღების გამოცდის წერისას.", "success");
-                                        document.getElementById("idNumber").value = "";
-                                    }else {
-                                        swal("ასეთი მოსწავლე ვერ მოიძება!", "თუ თვლით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ამ გვერდზე მოცემულ ნომერზე ან ელ. ფოსტაზე.", "error");
-                                        document.getElementById("idNumber").value = "";
-                                    }
-                                }
-                            })
-                        })
-                    })
-                })
+            CheckPupil(idNumberForm).then(response => {
+                if(response.status){
+                    setPupilCard(response.data)
+                }
             })
+            // pupils7.map((pupil7, index) => {
+            //     pupils8.map((pupil8, index) => {
+            //         pupils9.map((pupil9, index) => {
+            //             pupils10.map((pupil10, index) => {
+            //                 pupils11.map((pupil11, index) => {
+            //                     if (pupilClass == 7) {
+            //                         if (pupil7.idNumber = idNumberForm) {
+            //                             swal("მოსწავლე წარმატებულად მოიძებნა!", "გთხოვთ იხილით თანდართული მოსწავლის ტესტირების ბარათი, რომელიც აუცილებელია თან იქონიოს მოსწავლემ მისაღების გამოცდის წერისას.", "success");
+            //                             document.getElementById("idNumber").value = "";
+            //                         }else {
+            //                             swal("ასეთი მოსწავლე ვერ მოიძება!", "თუ თვლით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ამ გვერდზე მოცემულ ნომერზე ან ელ. ფოსტაზე.", "error");
+            //                             document.getElementById("idNumber").value = "";
+            //                         }
+            //                     }
+            //                     if (pupilClass == 8) {
+            //                         if (pupil8.idNumber = idNumberForm) {
+            //                             swal("მოსწავლე წარმატებულად მოიძებნა!", "გთხოვთ იხილით თანდართული მოსწავლის ტესტირების ბარათი, რომელიც აუცილებელია თან იქონიოს მოსწავლემ მისაღების გამოცდის წერისას.", "success");
+            //                             document.getElementById("idNumber").value = "";
+            //                         }else {
+            //                             swal("ასეთი მოსწავლე ვერ მოიძება!", "თუ თვლით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ამ გვერდზე მოცემულ ნომერზე ან ელ. ფოსტაზე.", "error");
+            //                             document.getElementById("idNumber").value = "";
+            //                         }
+            //                     }
+            //                     if (pupilClass == 9) {
+            //                         if (pupil9.idNumber = idNumberForm) {
+            //                             swal("მოსწავლე წარმატებულად მოიძებნა!", "გთხოვთ იხილით თანდართული მოსწავლის ტესტირების ბარათი, რომელიც აუცილებელია თან იქონიოს მოსწავლემ მისაღების გამოცდის წერისას.", "success");
+            //                             document.getElementById("idNumber").value = "";
+            //                         }else {
+            //                             swal("ასეთი მოსწავლე ვერ მოიძება!", "თუ თვლით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ამ გვერდზე მოცემულ ნომერზე ან ელ. ფოსტაზე.", "error");
+            //                             document.getElementById("idNumber").value = "";
+            //                         }
+            //                     }
+            //                     if (pupilClass == 10) {
+            //                         if (pupil10.idNumber == idNumberForm) {
+            //                             swal("მოსწავლე წარმატებულად მოიძებნა!", "გთხოვთ იხილით თანდართული მოსწავლის ტესტირების ბარათი, რომელიც აუცილებელია თან იქონიოს მოსწავლემ მისაღების გამოცდის წერისას.", "success");
+            //                             document.getElementById("idNumber").value = "";
+            //                         }else {
+            //                             swal("ასეთი მოსწავლე ვერ მოიძება!", "თუ თვლით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ამ გვერდზე მოცემულ ნომერზე ან ელ. ფოსტაზე.", "error");
+            //                             document.getElementById("idNumber").value = "";
+            //                         }
+            //                     }
+            //                     if (pupilClass == 11) {
+            //                         if (pupil11.idNumber = idNumberForm) {
+            //                             swal("მოსწავლე წარმატებულად მოიძებნა!", "გთხოვთ იხილით თანდართული მოსწავლის ტესტირების ბარათი, რომელიც აუცილებელია თან იქონიოს მოსწავლემ მისაღების გამოცდის წერისას.", "success");
+            //                             document.getElementById("idNumber").value = "";
+            //                         }else {
+            //                             swal("ასეთი მოსწავლე ვერ მოიძება!", "თუ თვლით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ამ გვერდზე მოცემულ ნომერზე ან ელ. ფოსტაზე.", "error");
+            //                             document.getElementById("idNumber").value = "";
+            //                         }
+            //                     }
+            //                 })
+            //             })
+            //         })
+            //     })
+            // })
         }
         return (
             <>
                 <div className="container">
+                <Container component="main" maxWidth="xs">
+
                     <Helmet>
                         <title>რეგისტრირებული მოსწავლის ბარათის მიღება</title>
                     </Helmet>
-                    <br />
-                    <h1>გადაამოწმეთ რეგისტრირებული მოსწავლე და ჩამოწერეთ მისი ბარათი</h1>
-                    <Container component="main" maxWidth="xs">
+                    {
+                        forCard ? (
+                            <p>{console.log(forCard)}</p>
+                        ) : (
+                            <>
+                            <h1>გადაამოწმეთ რეგისტრირებული მოსწავლე და ჩამოწერეთ მისი ბარათი</h1>
                         <CssBaseline />
                         <div className={classes.paper}>
                             <Avatar className={classes.avatar}>
@@ -258,30 +215,17 @@ function Check() {
                                 fullWidth
                                 style={{width: "100%"}}
                                 className={classes.submit}
-                                onClick={checkPupil}
+                                onClick={handleCheck}
                             >
                                 მოძებნეთ მოსწავლის ბარათი
                             </Button>
                             </form>
                         </div>
-                    </Container>
-                    <br />
-                    <br />
-                    <h2>მოსწავლის ბარათი:</h2>
-                    <br />
-                    <br />
-                    {
-                        forCard.map((card, index) => {
-                            const idNumber = document.getElementById("idNumber").value;
-                            if (card.idNumber == idNumber) {
-                                return (
-                                    <div className="pupil-card">
-                                        <p>{card.id}</p>
-                                    </div>
-                                )
-                            }
-                        })
+                        </>
+                        )
+
                     }
+                             </Container>       
                 </div>
             </>
         )

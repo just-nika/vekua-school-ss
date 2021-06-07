@@ -20,7 +20,7 @@ import AttachFileIcon from '@material-ui/icons/AttachFile';
 import { useForm, Controller } from "react-hook-form";
 import { Helmet } from "react-helmet";
 import swal from 'sweetalert';
-
+import CheckPupil from '../utils/CheckPupil';
 function Exams() {
     const [pupils7, setPupils7] = useState([]);
         const [pupils8, setPupils8] = useState([]);
@@ -30,13 +30,7 @@ function Exams() {
         const [value, setValue ] = useState("");
         
         const selectClass = e => setValue(e.target.value);
-        useEffect(() => {
-            getPupils7();
-            getPupils8();
-            getPupils9();
-            getPupils10();
-            getPupils11();
-          }, [])
+        
         const {
             register,
             handleSubmit,
@@ -70,42 +64,6 @@ function Exams() {
           const handleChange = (event) => {
             setAge(event.target.value);
           };
-          const getPupils7 = async () => {
-            const data = await firestore.collection("7").get();
-            setPupils7(data.docs.map(doc => ({
-              ...doc.data(),
-              id: doc.id
-            })))
-          }
-          const getPupils8 = async () => {
-            const data = await firestore.collection("8").get();
-            setPupils8(data.docs.map(doc => ({
-              ...doc.data(),
-              id: doc.id
-            })))
-          }
-          const getPupils9 = async () => {
-            const data = await firestore.collection("9").get();
-            setPupils9(data.docs.map(doc => ({
-              ...doc.data(),
-              id: doc.id
-            })))
-          }
-          const getPupils10 = async () => {
-            const data = await firestore.collection("10").get();
-            setPupils10(data.docs.map(doc => ({
-              ...doc.data(),
-              id: doc.id
-            })))
-          }
-          const getPupils11 = async () => {
-            const data = await firestore.collection("11").get();
-            setPupils11(data.docs.map(doc => ({
-              ...doc.data(),
-              id: doc.id
-            })))
-          }
-          
             const classes = useStyles();
             // const onSubmit = (data) => {
             //     console.log(data);
@@ -125,246 +83,275 @@ function Exams() {
                     //     });
                     // });
             // let query = firestore.collection('10').where('idNumber', '==', `${idNumber}`);
-
-            // firestore.collection("10").where("idNumber", "==", `${idNumber}`)
-            // .get()
-            // .then((querySnapshot) => {
-            //     querySnapshot.forEach((doc) => {
-            //         // doc.data() is never undefined for query doc snapshots
-            //         console.log(doc.id, " => ", doc.data());
-            //     });
-            // })
-            // .catch((error) => {
-            //     console.log("Error getting documents: ", error);
-            // });
-            const addPupil = async () => {
+            // const idNumber = document.getElementById("idNumber").value;
+            const addPupil = async (data) => {
                 // debugger
-                const imageName = document.getElementById("icon-button-file").files[0];
-                const fileName = document.getElementById("icon-button-files").files[0];
-                pupils7.map((pupil7, index) => {
-                    pupils8.map((pupil8, index) => {
-                        pupils9.map((pupil9, index) => {
-                            pupils10.map((pupil10, index) => {
-                                pupils11.map((pupil11, index) => {
-                                    const idNumber = document.getElementById("idNumber").value;
-                                    const firstName = document.getElementById("firstName").value;
-                                    const lastName = document.getElementById("lastName").value;
-                                    const FatherName = document.getElementById("FatherName").value;
-                                    const ParentFirstName = document.getElementById("ParentFirstName").value;
-                                    const ParentLastName = document.getElementById("ParentLastName").value;
-                                    const oldSchool = document.getElementById("oldSchool").value;
-                                    const mobileNumber = document.getElementById("mobileNumber").value;
-                                    const language = getValues("language");
-                                    if (value == 7) {
-                                        if (pupil7.idNumber == idNumber) {
-                                            swal("მოსწავლე უკვე რეგისტრირებულია!", "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.", "error");
-                                        }else {
-                                            firestore.collection("7").get().then(async function(querySnapshot) {   
-                                                const storageRef = storage.ref();
-                                                const fileRef = storageRef.child(imageName.name);
-                                                await fileRef.put(imageName);
-                                                const imageRef = storageRef.child(fileName.name);
-                                                await imageRef.put(fileName);
-                                                const img = await fileRef.getDownloadURL();
-                                                const fileUrl = await imageRef.getDownloadURL();
-                                                console.log(querySnapshot.size);
-                                                const id = querySnapshot.size; 
-                                                firestore.collection("7").add({
-                                                    id: id,
-                                                    firstName: firstName,
-                                                    lastName: lastName,
-                                                    idNumber: idNumber,
-                                                    FatherName: FatherName,
-                                                    ParentFirstName: ParentFirstName,
-                                                    ParentLastName: ParentLastName,
-                                                    oldSchool: oldSchool,
-                                                    mobileNumber: mobileNumber,
-                                                    language: language,
-                                                    imgUrl: img,
-                                                    fileUrl: fileUrl
-                                                }).then(() => {
-                                                    document.getElementById("firstName").value = "";
-                                                    document.getElementById("lastName").value = "";
-                                                    document.getElementById("idNumber").value = "";
-                                                    document.getElementById("FatherName").value = "";
-                                                    document.getElementById("ParentFirstName").value = "";
-                                                    document.getElementById("ParentLastName").value = "";
-                                                    document.getElementById("oldSchool").value = "";
-                                                    document.getElementById("mobileNumber").value = "";
-                                                    swal("მოსწავლე წარმატებულად დარეგისტრირდა!", "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.", "success");
-                                                })
-                                            });
-                                        }
-                                    }
-                                    if (value == 8) {
-                                        if (pupil8.idNumber == idNumber) {
-                                            swal("მოსწავლე უკვე რეგისტრირებულია!", "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.", "error");
-                                        }else {
-                                            firestore.collection("8").get().then(async function(querySnapshot) {
-                                                const storageRef = storage.ref();
-                                                const fileRef = storageRef.child(imageName.name);
-                                                await fileRef.put(imageName);
-                                                const imageRef = storageRef.child(fileName.name);
-                                                await imageRef.put(fileName);
-                                                const img = await fileRef.getDownloadURL();
-                                                const fileUrl = await imageRef.getDownloadURL();
-                                                console.log(querySnapshot.size);
-                                                const id = querySnapshot.size; 
-                                                firestore.collection("8").add({
-                                                    id: id,
-                                                    firstName: firstName,
-                                                    lastName: lastName,
-                                                    idNumber: idNumber,
-                                                    FatherName: FatherName,
-                                                    ParentFirstName: ParentFirstName,
-                                                    ParentLastName: ParentLastName,
-                                                    oldSchool: oldSchool,
-                                                    mobileNumber: mobileNumber,
-                                                    language: language,
-                                                    imgUrl: img,
-                                                    fileUrl: fileUrl
-                                                }).then(() => {
-                                                    document.getElementById("firstName").value = "";
-                                                    document.getElementById("lastName").value = "";
-                                                    document.getElementById("idNumber").value = "";
-                                                    document.getElementById("FatherName").value = "";
-                                                    document.getElementById("ParentFirstName").value = "";
-                                                    document.getElementById("ParentLastName").value = "";
-                                                    document.getElementById("oldSchool").value = "";
-                                                    document.getElementById("mobileNumber").value = "";
-                                                    swal("მოსწავლე წარმატებულად დარეგისტრირდა!", "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.", "success");
-                                                })
-                                            });
-                                        }
-                                    }
-                                    if (value == 9) {
-                                        if (pupil9.idNumber == idNumber) {
-                                            swal("მოსწავლე უკვე რეგისტრირებულია!", "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.", "error");
-                                        }else {
-                                            firestore.collection("9").get().then(async function(querySnapshot) {   
-                                                const storageRef = storage.ref();
-                                                const fileRef = storageRef.child(imageName.name);
-                                                await fileRef.put(imageName);
-                                                const imageRef = storageRef.child(fileName.name);
-                                                await imageRef.put(fileName);
-                                                const img = await fileRef.getDownloadURL();
-                                                const fileUrl = await imageRef.getDownloadURL();
-                                                console.log(querySnapshot.size);
-                                                const id = querySnapshot.size; 
-                                                firestore.collection("9").add({
-                                                    id: id,
-                                                    firstName: firstName,
-                                                    lastName: lastName,
-                                                    idNumber: idNumber,
-                                                    FatherName: FatherName,
-                                                    ParentFirstName: ParentFirstName,
-                                                    ParentLastName: ParentLastName,
-                                                    oldSchool: oldSchool,
-                                                    mobileNumber: mobileNumber,
-                                                    language: language,
-                                                    imgUrl: img,
-                                                    fileUrl: fileUrl
-                                                }).then(() => {
-                                                    document.getElementById("firstName").value = "";
-                                                    document.getElementById("lastName").value = "";
-                                                    document.getElementById("idNumber").value = "";
-                                                    document.getElementById("FatherName").value = "";
-                                                    document.getElementById("ParentFirstName").value = "";
-                                                    document.getElementById("ParentLastName").value = "";
-                                                    document.getElementById("oldSchool").value = "";
-                                                    document.getElementById("mobileNumber").value = "";
-                                                    swal("მოსწავლე წარმატებულად დარეგისტრირდა!", "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.", "success");
-                                                })
-                                            });
-                                        }
-                                    }
-                                    if (value == 10) {
-                                        if (pupil10.idNumber == idNumber) {
-                                            swal("მოსწავლე უკვე რეგისტრირებულია!", "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.", "error");
-                                        } else {
-                                            firestore.collection("10").get().then(async function(querySnapshot) {   
-                                                const storageRef = storage.ref();
-                                                const fileRef = storageRef.child(imageName.name);
-                                                await fileRef.put(imageName);
-                                                const imageRef = storageRef.child(fileName.name);
-                                                await imageRef.put(fileName);
-                                                const img = await fileRef.getDownloadURL();
-                                                const fileUrl = await imageRef.getDownloadURL();
-                                                console.log(querySnapshot.size);
-                                                const id = querySnapshot.size; 
-                                                firestore.collection("10").add({
-                                                    id: id,
-                                                    firstName: firstName,
-                                                    lastName: lastName,
-                                                    idNumber: idNumber,
-                                                    FatherName: FatherName,
-                                                    ParentFirstName: ParentFirstName,
-                                                    ParentLastName: ParentLastName,
-                                                    oldSchool: oldSchool,
-                                                    mobileNumber: mobileNumber,
-                                                    language: language,
-                                                    imgUrl: img,
-                                                    fileUrl: fileUrl
-                                                }).then(() => {
-                                                    document.getElementById("firstName").value = "";
-                                                    document.getElementById("lastName").value = "";
-                                                    document.getElementById("idNumber").value = "";
-                                                    document.getElementById("FatherName").value = "";
-                                                    document.getElementById("ParentFirstName").value = "";
-                                                    document.getElementById("ParentLastName").value = "";
-                                                    document.getElementById("oldSchool").value = "";
-                                                    document.getElementById("mobileNumber").value = "";
-                                                    swal("მოსწავლე წარმატებულად დარეგისტრირდა!", "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.", "success");
-                                                })
-                                            });
-                                        }
-                                    }
-                                    if (value == 11) {
-                                        if (pupil11.idNumber == idNumber) {
-                                            swal("მოსწავლე უკვე რეგისტრირებულია!", "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.", "error");
-                                        }else {
-                                            firestore.collection("11").get().then(async function(querySnapshot) {   
-                                                const storageRef = storage.ref();
-                                                const fileRef = storageRef.child(imageName.name);
-                                                await fileRef.put(imageName);
-                                                const imageRef = storageRef.child(fileName.name);
-                                                await imageRef.put(fileName);
-                                                const img = await fileRef.getDownloadURL();
-                                                const fileUrl = await imageRef.getDownloadURL();
-                                                console.log(querySnapshot.size);
-                                                const id = querySnapshot.size; 
-                                                firestore.collection("11").add({
-                                                    id: id,
-                                                    firstName: firstName,
-                                                    lastName: lastName,
-                                                    idNumber: idNumber,
-                                                    FatherName: FatherName,
-                                                    ParentFirstName: ParentFirstName,
-                                                    ParentLastName: ParentLastName,
-                                                    oldSchool: oldSchool,
-                                                    mobileNumber: mobileNumber,
-                                                    language: language,
-                                                    imgUrl: img,
-                                                    fileUrl: fileUrl
-                                                }).then(() => {
-                                                    document.getElementById("firstName").value = "";
-                                                    document.getElementById("lastName").value = "";
-                                                    document.getElementById("idNumber").value = "";
-                                                    document.getElementById("FatherName").value = "";
-                                                    document.getElementById("ParentFirstName").value = "";
-                                                    document.getElementById("ParentLastName").value = "";
-                                                    document.getElementById("oldSchool").value = "";
-                                                    document.getElementById("mobileNumber").value = "";
-                                                    swal("მოსწავლე წარმატებულად დარეგისტრირდა!", "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.", "success");
-                                                })
-                                            });
-                                        }
-                                    }
-                                })
-                            })
+                // const imageName = document.getElementById("icon-button-file").files[0];
+                // const fileName = document.getElementById("icon-button-files").files[0];
+                const storageRef = storage.ref();
+                
+                const fileRef = storageRef.child(data.img[0].name);
+                await fileRef.put(data.img);
+
+                const imageRef = storageRef.child(data.file[0].name);
+                await imageRef.put(data.file);
+                
+                const imgUrl = await fileRef.getDownloadURL();
+                const fileUrl = await imageRef.getDownloadURL();
+              CheckPupil(data.idRequired).then(response => {
+                if(response.status){
+                  return swal("მოსწავლე უკვე რეგისტრირებულია!", "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.", "error");
+                }else{
+ 
+                  firestore.collection(`${data.class}`).get().then(async function(querySnapshot) {   
+                        
+                       const id = querySnapshot.size; 
+                    console.log(data)
+                        firestore.collection(`${data.class}`).add({
+                          id: id,
+                          firstName: data.firstName,
+                          lastName: data.lastName,
+                          idNumber: data.idRequired,
+                          FatherName: data.fatherName,
+                          ParentFirstName: data.parentName,
+                          ParentLastName: data.parentLastName,
+                          oldSchool: data.oldSchool,
+                          mobileNumber: data.mobileNumber,
+                          language: data.language,
+                          imgUrl: imgUrl,
+                          fileUrl: fileUrl
+                        }).then(() => {
+                            document.getElementById("firstName").value = "";
+                            document.getElementById("lastName").value = "";
+                            document.getElementById("idNumber").value = "";
+                            document.getElementById("FatherName").value = "";
+                            document.getElementById("ParentFirstName").value = "";
+                            document.getElementById("ParentLastName").value = "";
+                            document.getElementById("oldSchool").value = "";
+                            document.getElementById("mobileNumber").value = "";
+                            swal("მოსწავლე წარმატებულად დარეგისტრირდა!", "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.", "success");
                         })
-                    })
-                })
+                    });
+                }
+              })
+
+                // pupils7.map((pupil7, index) => {
+                //     pupils8.map((pupil8, index) => {
+                //         pupils9.map((pupil9, index) => {
+                //             pupils10.map((pupil10, index) => {
+                //                 pupils11.map((pupil11, index) => {
+                                    
+                                    
+                //                     if (value == 7) {
+                //                         if (pupil7.idNumber == idNumber) {
+                //                             swal("მოსწავლე უკვე რეგისტრირებულია!", "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.", "error");
+                //                         }else {
+                //                             firestore.collection("7").get().then(async function(querySnapshot) {   
+                //                                 const storageRef = storage.ref();
+                //                                 const fileRef = storageRef.child(imageName.name);
+                //                                 await fileRef.put(imageName);
+                //                                 const imageRef = storageRef.child(fileName.name);
+                //                                 await imageRef.put(fileName);
+                //                                 const img = await fileRef.getDownloadURL();
+                //                                 const fileUrl = await imageRef.getDownloadURL();
+                //                                 console.log(querySnapshot.size);
+                //                                 const id = querySnapshot.size; 
+                //                                 firestore.collection("7").add({
+                //                                     id: id,
+                //                                     firstName: firstName,
+                //                                     lastName: lastName,
+                //                                     idNumber: idNumber,
+                //                                     FatherName: FatherName,
+                //                                     ParentFirstName: ParentFirstName,
+                //                                     ParentLastName: ParentLastName,
+                //                                     oldSchool: oldSchool,
+                //                                     mobileNumber: mobileNumber,
+                //                                     language: language,
+                //                                     imgUrl: img,
+                //                                     fileUrl: fileUrl
+                //                                 }).then(() => {
+                //                                     document.getElementById("firstName").value = "";
+                //                                     document.getElementById("lastName").value = "";
+                //                                     document.getElementById("idNumber").value = "";
+                //                                     document.getElementById("FatherName").value = "";
+                //                                     document.getElementById("ParentFirstName").value = "";
+                //                                     document.getElementById("ParentLastName").value = "";
+                //                                     document.getElementById("oldSchool").value = "";
+                //                                     document.getElementById("mobileNumber").value = "";
+                //                                     swal("მოსწავლე წარმატებულად დარეგისტრირდა!", "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.", "success");
+                //                                 })
+                //                             });
+                //                         }
+                //                     }
+                //                     if (value == 8) {
+                //                         if (pupil8.idNumber == idNumber) {
+                //                             swal("მოსწავლე უკვე რეგისტრირებულია!", "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.", "error");
+                //                         }else {
+                //                             firestore.collection("8").get().then(async function(querySnapshot) {
+                //                                 const storageRef = storage.ref();
+                //                                 const fileRef = storageRef.child(imageName.name);
+                //                                 await fileRef.put(imageName);
+                //                                 const imageRef = storageRef.child(fileName.name);
+                //                                 await imageRef.put(fileName);
+                //                                 const img = await fileRef.getDownloadURL();
+                //                                 const fileUrl = await imageRef.getDownloadURL();
+                //                                 console.log(querySnapshot.size);
+                //                                 const id = querySnapshot.size; 
+                //                                 firestore.collection("8").add({
+                //                                     id: id,
+                //                                     firstName: firstName,
+                //                                     lastName: lastName,
+                //                                     idNumber: idNumber,
+                //                                     FatherName: FatherName,
+                //                                     ParentFirstName: ParentFirstName,
+                //                                     ParentLastName: ParentLastName,
+                //                                     oldSchool: oldSchool,
+                //                                     mobileNumber: mobileNumber,
+                //                                     language: language,
+                //                                     imgUrl: img,
+                //                                     fileUrl: fileUrl
+                //                                 }).then(() => {
+                //                                     document.getElementById("firstName").value = "";
+                //                                     document.getElementById("lastName").value = "";
+                //                                     document.getElementById("idNumber").value = "";
+                //                                     document.getElementById("FatherName").value = "";
+                //                                     document.getElementById("ParentFirstName").value = "";
+                //                                     document.getElementById("ParentLastName").value = "";
+                //                                     document.getElementById("oldSchool").value = "";
+                //                                     document.getElementById("mobileNumber").value = "";
+                //                                     swal("მოსწავლე წარმატებულად დარეგისტრირდა!", "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.", "success");
+                //                                 })
+                //                             });
+                //                         }
+                //                     }
+                //                     if (value == 9) {
+                //                         if (pupil9.idNumber == idNumber) {
+                //                             swal("მოსწავლე უკვე რეგისტრირებულია!", "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.", "error");
+                //                         }else {
+                //                             firestore.collection("9").get().then(async function(querySnapshot) {   
+                //                                 const storageRef = storage.ref();
+                //                                 const fileRef = storageRef.child(imageName.name);
+                //                                 await fileRef.put(imageName);
+                //                                 const imageRef = storageRef.child(fileName.name);
+                //                                 await imageRef.put(fileName);
+                //                                 const img = await fileRef.getDownloadURL();
+                //                                 const fileUrl = await imageRef.getDownloadURL();
+                //                                 console.log(querySnapshot.size);
+                //                                 const id = querySnapshot.size; 
+                //                                 firestore.collection("9").add({
+                //                                     id: id,
+                //                                     firstName: firstName,
+                //                                     lastName: lastName,
+                //                                     idNumber: idNumber,
+                //                                     FatherName: FatherName,
+                //                                     ParentFirstName: ParentFirstName,
+                //                                     ParentLastName: ParentLastName,
+                //                                     oldSchool: oldSchool,
+                //                                     mobileNumber: mobileNumber,
+                //                                     language: language,
+                //                                     imgUrl: img,
+                //                                     fileUrl: fileUrl
+                //                                 }).then(() => {
+                //                                     document.getElementById("firstName").value = "";
+                //                                     document.getElementById("lastName").value = "";
+                //                                     document.getElementById("idNumber").value = "";
+                //                                     document.getElementById("FatherName").value = "";
+                //                                     document.getElementById("ParentFirstName").value = "";
+                //                                     document.getElementById("ParentLastName").value = "";
+                //                                     document.getElementById("oldSchool").value = "";
+                //                                     document.getElementById("mobileNumber").value = "";
+                //                                     swal("მოსწავლე წარმატებულად დარეგისტრირდა!", "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.", "success");
+                //                                 })
+                //                             });
+                //                         }
+                //                     }
+                //                     if (value == 10) {
+                //                         if (pupil10.idNumber == idNumber) {
+                //                             swal("მოსწავლე უკვე რეგისტრირებულია!", "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.", "error");
+                //                         } else {
+                //                             firestore.collection("10").get().then(async function(querySnapshot) {   
+                //                                 const storageRef = storage.ref();
+                //                                 const fileRef = storageRef.child(imageName.name);
+                //                                 await fileRef.put(imageName);
+                //                                 const imageRef = storageRef.child(fileName.name);
+                //                                 await imageRef.put(fileName);
+                //                                 const img = await fileRef.getDownloadURL();
+                //                                 const fileUrl = await imageRef.getDownloadURL();
+                //                                 console.log(querySnapshot.size);
+                //                                 const id = querySnapshot.size; 
+                //                                 firestore.collection("10").add({
+                //                                     id: id,
+                //                                     firstName: firstName,
+                //                                     lastName: lastName,
+                //                                     idNumber: idNumber,
+                //                                     FatherName: FatherName,
+                //                                     ParentFirstName: ParentFirstName,
+                //                                     ParentLastName: ParentLastName,
+                //                                     oldSchool: oldSchool,
+                //                                     mobileNumber: mobileNumber,
+                //                                     language: language,
+                //                                     imgUrl: img,
+                //                                     fileUrl: fileUrl
+                //                                 }).then(() => {
+                //                                     document.getElementById("firstName").value = "";
+                //                                     document.getElementById("lastName").value = "";
+                //                                     document.getElementById("idNumber").value = "";
+                //                                     document.getElementById("FatherName").value = "";
+                //                                     document.getElementById("ParentFirstName").value = "";
+                //                                     document.getElementById("ParentLastName").value = "";
+                //                                     document.getElementById("oldSchool").value = "";
+                //                                     document.getElementById("mobileNumber").value = "";
+                //                                     swal("მოსწავლე წარმატებულად დარეგისტრირდა!", "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.", "success");
+                //                                 })
+                //                             });
+                //                         }
+                //                     }
+                //                     if (value == 11) {
+                //                         if (pupil11.idNumber == idNumber) {
+                //                             swal("მოსწავლე უკვე რეგისტრირებულია!", "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.", "error");
+                //                         }else {
+                //                             firestore.collection("11").get().then(async function(querySnapshot) {   
+                //                                 const storageRef = storage.ref();
+                //                                 const fileRef = storageRef.child(imageName.name);
+                //                                 await fileRef.put(imageName);
+                //                                 const imageRef = storageRef.child(fileName.name);
+                //                                 await imageRef.put(fileName);
+                //                                 const img = await fileRef.getDownloadURL();
+                //                                 const fileUrl = await imageRef.getDownloadURL();
+                //                                 console.log(querySnapshot.size);
+                //                                 const id = querySnapshot.size; 
+                //                                 firestore.collection("11").add({
+                //                                     id: id,
+                //                                     firstName: firstName,
+                //                                     lastName: lastName,
+                //                                     idNumber: idNumber,
+                //                                     FatherName: FatherName,
+                //                                     ParentFirstName: ParentFirstName,
+                //                                     ParentLastName: ParentLastName,
+                //                                     oldSchool: oldSchool,
+                //                                     mobileNumber: mobileNumber,
+                //                                     language: language,
+                //                                     imgUrl: img,
+                //                                     fileUrl: fileUrl
+                //                                 }).then(() => {
+                //                                     document.getElementById("firstName").value = "";
+                //                                     document.getElementById("lastName").value = "";
+                //                                     document.getElementById("idNumber").value = "";
+                //                                     document.getElementById("FatherName").value = "";
+                //                                     document.getElementById("ParentFirstName").value = "";
+                //                                     document.getElementById("ParentLastName").value = "";
+                //                                     document.getElementById("oldSchool").value = "";
+                //                                     document.getElementById("mobileNumber").value = "";
+                //                                     swal("მოსწავლე წარმატებულად დარეგისტრირდა!", "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.", "success");
+                //                                 })
+                //                             });
+                //                         }
+                //                     }
+                //                 })
+                //             })
+                //         })
+                //     })
+                // })
             }
             // const handleUpload = async () => {
                 // const storageRef = storage.ref();
