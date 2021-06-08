@@ -25,6 +25,7 @@ import Single from './single';
 import NewsAdmin from './newsAdmin';
 import Exams from './exams';
 import Check from './check';
+import SchoolTeachers from './teachers';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import Covid from './covid';
@@ -386,7 +387,7 @@ function Header() {
             <Helmet>
                 <title>დირექცია/მასწავლებლები</title>
             </Helmet>
-            <h2>დირექცია/მასწავლებლები</h2>
+            <SchoolTeachers />
         </>
     }
     
