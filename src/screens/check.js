@@ -93,76 +93,21 @@ function Check() {
                     setPupilCard(response.data)
                 }
             })
-            // pupils7.map((pupil7, index) => {
-            //     pupils8.map((pupil8, index) => {
-            //         pupils9.map((pupil9, index) => {
-            //             pupils10.map((pupil10, index) => {
-            //                 pupils11.map((pupil11, index) => {
-            //                     if (pupilClass == 7) {
-            //                         if (pupil7.idNumber = idNumberForm) {
-            //                             swal("მოსწავლე წარმატებულად მოიძებნა!", "გთხოვთ იხილით თანდართული მოსწავლის ტესტირების ბარათი, რომელიც აუცილებელია თან იქონიოს მოსწავლემ მისაღების გამოცდის წერისას.", "success");
-            //                             document.getElementById("idNumber").value = "";
-            //                         }else {
-            //                             swal("ასეთი მოსწავლე ვერ მოიძება!", "თუ თვლით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ამ გვერდზე მოცემულ ნომერზე ან ელ. ფოსტაზე.", "error");
-            //                             document.getElementById("idNumber").value = "";
-            //                         }
-            //                     }
-            //                     if (pupilClass == 8) {
-            //                         if (pupil8.idNumber = idNumberForm) {
-            //                             swal("მოსწავლე წარმატებულად მოიძებნა!", "გთხოვთ იხილით თანდართული მოსწავლის ტესტირების ბარათი, რომელიც აუცილებელია თან იქონიოს მოსწავლემ მისაღების გამოცდის წერისას.", "success");
-            //                             document.getElementById("idNumber").value = "";
-            //                         }else {
-            //                             swal("ასეთი მოსწავლე ვერ მოიძება!", "თუ თვლით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ამ გვერდზე მოცემულ ნომერზე ან ელ. ფოსტაზე.", "error");
-            //                             document.getElementById("idNumber").value = "";
-            //                         }
-            //                     }
-            //                     if (pupilClass == 9) {
-            //                         if (pupil9.idNumber = idNumberForm) {
-            //                             swal("მოსწავლე წარმატებულად მოიძებნა!", "გთხოვთ იხილით თანდართული მოსწავლის ტესტირების ბარათი, რომელიც აუცილებელია თან იქონიოს მოსწავლემ მისაღების გამოცდის წერისას.", "success");
-            //                             document.getElementById("idNumber").value = "";
-            //                         }else {
-            //                             swal("ასეთი მოსწავლე ვერ მოიძება!", "თუ თვლით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ამ გვერდზე მოცემულ ნომერზე ან ელ. ფოსტაზე.", "error");
-            //                             document.getElementById("idNumber").value = "";
-            //                         }
-            //                     }
-            //                     if (pupilClass == 10) {
-            //                         if (pupil10.idNumber == idNumberForm) {
-            //                             swal("მოსწავლე წარმატებულად მოიძებნა!", "გთხოვთ იხილით თანდართული მოსწავლის ტესტირების ბარათი, რომელიც აუცილებელია თან იქონიოს მოსწავლემ მისაღების გამოცდის წერისას.", "success");
-            //                             document.getElementById("idNumber").value = "";
-            //                         }else {
-            //                             swal("ასეთი მოსწავლე ვერ მოიძება!", "თუ თვლით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ამ გვერდზე მოცემულ ნომერზე ან ელ. ფოსტაზე.", "error");
-            //                             document.getElementById("idNumber").value = "";
-            //                         }
-            //                     }
-            //                     if (pupilClass == 11) {
-            //                         if (pupil11.idNumber = idNumberForm) {
-            //                             swal("მოსწავლე წარმატებულად მოიძებნა!", "გთხოვთ იხილით თანდართული მოსწავლის ტესტირების ბარათი, რომელიც აუცილებელია თან იქონიოს მოსწავლემ მისაღების გამოცდის წერისას.", "success");
-            //                             document.getElementById("idNumber").value = "";
-            //                         }else {
-            //                             swal("ასეთი მოსწავლე ვერ მოიძება!", "თუ თვლით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ამ გვერდზე მოცემულ ნომერზე ან ელ. ფოსტაზე.", "error");
-            //                             document.getElementById("idNumber").value = "";
-            //                         }
-            //                     }
-            //                 })
-            //             })
-            //         })
-            //     })
-            // })
         }
         return (
             <>
                 <div className="container">
-                <Container component="main" maxWidth="xs">
-
                     <Helmet>
                         <title>რეგისტრირებული მოსწავლის ბარათის მიღება</title>
                     </Helmet>
                     {
                         forCard ? (
-                            <p>{console.log(forCard)}</p>
+                            <p>{forCard.class}-{forCard.id}</p>
                         ) : (
                             <>
                             <h1>გადაამოწმეთ რეგისტრირებული მოსწავლე და ჩამოწერეთ მისი ბარათი</h1>
+                <Container component="main" maxWidth="xs">
+
                         <CssBaseline />
                         <div className={classes.paper}>
                             <Avatar className={classes.avatar}>
@@ -188,26 +133,6 @@ function Check() {
                                     autoFocus
                                 />
                                 <br />
-                                <br />
-                                <Grid item xs={12}>
-                                <FormControl className={classes.formControl} fullWidth required>
-                                    <InputLabel>მიუთითეთ კლასი, რომელშიც გადადიხართ</InputLabel>
-                                    <Select
-                                        {...register("class", { required: true })}
-                                        error={errors.class}
-                                        helperText={errors.class && "მშობლის ტელეფონის ნომრის მითითება აუცილებელია"}
-                                        id="class"
-                                        fullWidth
-                                        required
-                                    >
-                                        <MenuItem value={7}>7</MenuItem>
-                                        <MenuItem value={8}>8</MenuItem>
-                                        <MenuItem value={9}>9</MenuItem>
-                                        <MenuItem value={10}>10</MenuItem>
-                                        <MenuItem value={11}>11</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Grid>
                             <Button
                                 type="submit"
                                 variant="contained"
@@ -221,11 +146,11 @@ function Check() {
                             </Button>
                             </form>
                         </div>
+                             </Container>       
                         </>
                         )
 
                     }
-                             </Container>       
                 </div>
             </>
         )
