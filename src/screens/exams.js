@@ -93,10 +93,10 @@ function Exams() {
  
                   firestore.collection(`${data.class}`).get().then(async function(querySnapshot) {   
                         
-                       const id = querySnapshot.size; 
+                       const code = querySnapshot.size; 
                     console.log(data)
                         firestore.collection(`${data.class}`).add({
-                          id: id,
+                          code: code,
                           firstName: data.firstName,
                           lastName: data.lastName,
                           idNumber: data.idRequired,

@@ -49,6 +49,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormLabel from '@material-ui/core/FormLabel';
 import swal from 'sweetalert';
 import CheckPupil from '../utils/CheckPupil';
+import ReactToPrint from "react-to-print";
 
 function Check() {
 
@@ -94,6 +95,33 @@ function Check() {
                 }
             })
         }
+        class ComponentToPrint extends React.Component {
+            render() {
+              return (
+                <div className="pupil-card">
+                    <p style={{fontSize: "30px"}}><strong> {forCard.class}-{forCard.code}</strong></p>
+                    <div className="first">
+                        <div className="img">
+                            <img src={`https://i.postimg.cc/sxDjRGT5/191355209-3975473862528561-1082419064806638690-n.jpg`} alt="" />
+                        </div>
+                        <div className="pupil-info">
+                            <p style={{textAlign: "start"}}>სახელი: <b>{forCard.firstName}</b></p>
+                            <p style={{textAlign: "start"}}>გვარი: <b>{forCard.lastName}</b></p>
+                            <p style={{textAlign: "start"}}>პირადი ნომერი: <b>{forCard.idNumber}</b></p>
+                            <p style={{textAlign: "start"}}>მამის სახელი: <b>{forCard.FatherName}</b></p>
+                        </div>
+                        <div className="card-logo">
+                            <img src="logo.png" alt="logo" />
+                        </div>
+                    </div>
+                    <div className="second">
+                        <br />
+                        <i style={{textAlign: "start"}}>ინფორმაცია მისაღები გამოცდების წესებისა და ტესტირების თარიღების შესახებ დაიდება სიახლეების ველში.</i>
+                    </div>
+                </div>
+            );
+        }
+      }
         return (
             <>
                 <div className="container">
@@ -102,7 +130,13 @@ function Check() {
                     </Helmet>
                     {
                         forCard ? (
-                            <p>{forCard.class}-{forCard.id}</p>
+                            <div>
+                                <ReactToPrint
+                                    trigger={() => <button>ამობეჭვდა</button>}
+                                    content={() => this.componentRef}
+                                />
+                                <ComponentToPrint ref={(el) => (this.componentRef = el)} />
+                            </div>
                         ) : (
                             <>
                             <h1>გადაამოწმეთ რეგისტრირებული მოსწავლე და ჩამოწერეთ მისი ბარათი</h1>

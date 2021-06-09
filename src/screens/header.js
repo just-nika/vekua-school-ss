@@ -23,6 +23,7 @@ import Single from './single';
 import NewsAdmin from './newsAdmin';
 import Exams from './exams';
 import Check from './check';
+import Data from './classesScroll';
 import SchoolTeachers from './teachers';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
@@ -44,6 +45,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
+import PupilsData from './pupilsData';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Hidden from '@material-ui/core/Hidden';
 import Fade from '@material-ui/core/Fade';
@@ -899,7 +901,7 @@ function Header() {
     function ExamsReg() {
         var user = firebase.auth().currentUser;
         if (user) {
-            return <Exams />
+            return <><Data /><Exams /></>
         }else {
             return <NoExams />
         }
