@@ -48,6 +48,8 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import Hidden from '@material-ui/core/Hidden';
 import Fade from '@material-ui/core/Fade';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import TextField from '@material-ui/core/TextField';
+import { Editor } from '@tinymce/tinymce-react';
 
 function Header() {
     const useStyles = makeStyles({
@@ -563,18 +565,56 @@ function Header() {
         };
         let { path, url } = useRouteMatch();
         var user = firebase.auth().currentUser;
+        const signOut = async () => {
+            firebase.auth().signOut().then(() => {<Redirect path="/" />}).catch((error) => {})
+        }
         if (user) {
-            return <NewsAdmin />
-            OurNews.propTypes = {
-                post: PropTypes.object,
-            };
-        }else {
             return (
-            <div>
+                <>
+                <div>
                 <Router>
                 <Helmet>
-                  <title>სიახლეები</title>
+                  <title>სიახლეების Admin გვერდი</title>
                 </Helmet>
+                <br/>
+                <Button variant="contained" color="secondary" onClick={signOut}>გასვლა</Button>
+                <div className="post-form">
+                    <form action="" className="add-post">
+                        <br />
+                        <br />
+                        <h2 style={{textAlign: "center"}}>პოსტის დამატება</h2>
+                        <br />
+                        <br />
+                        <TextField id="title" label="სათაური" variant="filled" style={{width: "100%"}}/>
+                        <br />
+                        <br />
+                        <TextField id="photo" label="ფოტოს ლინკი" variant="filled" style={{width: "100%"}}/>
+                        <br />
+                        <br />
+                        <Editor
+                            // initialValue="<p>Initial content</p>"
+                            onInit={(evt, editor) => editorRef.current = editor}
+                            init={{
+                                height: 500,
+                                menubar: false,
+                                plugins: [
+                                    'advlist autolink lists link image charmap print preview anchor',
+                                    'searchreplace visualblocks code fullscreen',
+                                    'insertdatetime media table paste code help wordcount'
+                                ],
+                                toolbar: 'undo redo | formatselect | ' +
+                                'bold italic backcolor | alignleft aligncenter ' +
+                                'alignright alignjustify | bullist numlist outdent indent | ' +
+                                'removeformat | help',
+                                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                            }}
+                            
+                            id="content"
+                            />
+                        <Button variant="contained" color="primary" onClick={() => addPosts()} style={{textAlign: "center"}}>პოსტის დამატება</Button>
+                    </form>
+                </div>
+                <br />
                     <br/>
                     <h2>სიახლეები</h2>
                     <br/>
@@ -586,7 +626,7 @@ function Header() {
                         posts.map((post, index) => {
                             const html = `${post.content}`;
                             return (
-                            <Grid item xs={12} md={6} key={index}>
+                                <Grid item xs={12} md={6} key={index}>
                                 <Link to={`${url}/${post.id}`}>
                                     <CardActionArea component="a" style={{height:"200px"}} onClick={handleOpen}>
                                         <Card className={classes.card} style={{height:"200px"}}>
@@ -636,13 +676,101 @@ function Header() {
                                 closeAfterTransition
                                 BackdropComponent={Backdrop}
                                 BackdropProps={{
-                                timeout: 500,
+                                    timeout: 500,
                                 }}
-                            >
+                                >
                                 <Fade in={open}>
                                 <div className={classes.paper}>
-                                    <h2 id="transition-modal-title">{post.title}</h2>
-                                    <p id="transition-modal-description">{ ReactHtmlParser(html) }</p>
+                                <h2 id="transition-modal-title">{post.title}</h2>
+                                <p id="transition-modal-description">{ ReactHtmlParser(html) }</p>
+                                </div>
+                                </Fade>
+                            </Modal> */}
+                <br/>
+                </div>
+                <Covid />
+                </Router>
+                </div>
+                </>
+            );
+            OurNews.propTypes = {
+                post: PropTypes.object,
+            };
+        }else {
+            return (
+                <div>
+                <Router>
+                <Helmet>
+                  <title>სიახლეები</title>
+                </Helmet>
+                    <br/>
+                    <h2>სიახლეები</h2>
+                    <br/>
+                    <br/>
+                <div className="post-container">
+                    <div className="feed">
+                    <Container className={classes.cardGrid} maxWidth="lg">
+                    {
+                        posts.map((post, index) => {
+                            const html = `${post.content}`;
+                            return (
+                                <Grid item xs={12} md={6} key={index}>
+                                <Link to={`${url}/${post.id}`}>
+                                    <CardActionArea component="a" style={{height:"200px"}} onClick={handleOpen}>
+                                        <Card className={classes.card} style={{height:"200px"}}>
+                                        <div className={classes.cardDetails}>
+                                            <CardContent>
+                                            <Typography component="h2" variant="h5">
+                                                {post.title}
+                                            </Typography>
+                                            <Typography variant="subtitle1" color="textSecondary">
+                                                {post.date}
+                                            </Typography>
+                                            <Typography variant="subtitle1" paragraph>
+
+                                            </Typography>
+                                            <Typography variant="subtitle1" color="primary">
+                                                მეტი
+                                            </Typography>
+                                            </CardContent>
+                                        </div>
+                                        <Hidden xsDown>
+                                            <CardMedia className={classes.cardMedia} image={post.url} title={post.title} />
+                                        </Hidden>
+                                        </Card>
+                                    </CardActionArea>
+                                </Link>
+                            </Grid>
+                            )
+                        })
+                    }   
+                    </Container>
+                    </div>
+                    <div className="single-post">
+                        <Switch>
+                            <Route exact path="/">
+                                </Route>
+                            <Route path={`${path}/:id`}>
+                                <SinglePost />
+                            </Route>
+                        </Switch>
+                    </div>
+                            {/* <Modal
+                                aria-labelledby="transition-modal-title"
+                                aria-describedby="transition-modal-description"
+                                className={classes.modal}
+                                open={open}
+                                onClose={handleClose}
+                                closeAfterTransition
+                                BackdropComponent={Backdrop}
+                                BackdropProps={{
+                                    timeout: 500,
+                                }}
+                                >
+                                <Fade in={open}>
+                                <div className={classes.paper}>
+                                <h2 id="transition-modal-title">{post.title}</h2>
+                                <p id="transition-modal-description">{ ReactHtmlParser(html) }</p>
                                 </div>
                                 </Fade>
                             </Modal> */}
@@ -673,28 +801,99 @@ function Header() {
             })))
             console.log(data);
         }
-        return (
-          <div>
-{
-                        posts.map((post, index) => {
-                            const html = `${post.content}`;
-                            if (post.id == id) {
-                                return (
-                                    <div className="full">
-                                        <div style={{backgroundImage: `url(${post.url})`, width: "100%", height: "300px", backgroundSize: "cover", backgroundPosition: "center"}}></div>
-                                        <h2>{post.title}</h2>
-                                        <br />
-                                        <p style={{textAlign: "start"}}>{ ReactHtmlParser(html) }</p>
-                                        <br />
-                                        <br />
-                                        <p style={{textAlign: "start"}}><i style={{textAlign: "start"}}>{post.date}</i></p>
-                                    </div>
-                                    )
-                                }
-                        })
-                    }  
-          </div>
-        );
+        const editorRef = useRef(null)
+        var user = firebase.auth().currentUser;
+        const updatePost = async (id) => {
+            const year = new Date().getFullYear();
+            const month = new Date().getMonth();
+            const day = new Date().getDate();
+            const hour = new Date().getHours();
+            const minutes = new Date().getMinutes();
+            const title = document.getElementById("headline").value;
+            const url = document.getElementById("url").value;
+            const content = editorRef.current.getContent();
+            const date = `${day}.${month}.${year} წ (${hour}:${minutes} სთ)`
+            await firestore.collection("posts").doc(id).update({
+              title: title,
+              url: url,
+              date: date,
+              content: content
+            }).then(() => getPosts());
+          }
+        if (user) {
+            return (
+            <div>
+    {
+                          posts.map((post, index) => {
+                              const html = `${post.content}`;
+                              if (post.id == id) {
+                                  return (
+                                      <div className="full">
+                                          <div style={{backgroundImage: `url(${post.url})`, width: "100%", height: "300px", backgroundSize: "cover", backgroundPosition: "center"}}></div>
+                                          <form action="">
+                                            <TextField id="headline" defaultValue={`${post.title}`} label="სათაური" variant="filled" style={{width: "100%"}}/>
+                                            <br />
+                                            <br />
+                                            <TextField id="url" label="ფოტოს ლინკი" defaultValue={`${post.url}`} variant="filled" style={{width: "100%"}}/>
+                                            <br />
+                                            <br />
+                                            <Editor
+                                                onInit={(evt, editor) => editorRef.current = editor}
+                                                initialValue={`${html}`}
+                                                init={{
+                                                height: 500,
+                                                menubar: false,
+                                                plugins: [
+                                                    'advlist autolink lists link image charmap print preview anchor',
+                                                    'searchreplace visualblocks code fullscreen',
+                                                    'insertdatetime media table paste code help wordcount'
+                                                ],
+                                                toolbar: 'undo redo | formatselect | ' +
+                                                'bold italic backcolor | alignleft aligncenter ' +
+                                                'alignright alignjustify | bullist numlist outdent indent | ' +
+                                                'removeformat | help',
+                                                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                                                }}
+                                            />
+                                                {/* { ReactHtmlParser(html) } */}
+                                            <Button variant="contained" fullWidth color="primary" onClick={() => updatePost(post.id)} style={{textAlign: "center"}}>პოსტის ჩასწორება</Button>
+                                          </form>
+                                          <br />
+                                          <br />
+                                          <p style={{textAlign: "start"}}><i style={{textAlign: "start"}}>{post.date}</i></p>
+                                      </div>
+                                      )
+                                  }
+                          })
+                      }  
+            </div>
+          );
+            
+        }else {
+            return (
+              <div>
+        {
+                            posts.map((post, index) => {
+                                const html = `${post.content}`;
+                                if (post.id == id) {
+                                    return (
+                                        <div className="full">
+                                            <div style={{backgroundImage: `url(${post.url})`, width: "100%", height: "300px", backgroundSize: "cover", backgroundPosition: "center"}}></div>
+                                            <h2>{post.title}</h2>
+                                            <br />
+                                            <p style={{textAlign: "start"}}>{ ReactHtmlParser(html) }</p>
+                                            <br />
+                                            <br />
+                                            <p style={{textAlign: "start"}}><i style={{textAlign: "start"}}>{post.date}</i></p>
+                                        </div>
+                                        )
+                                    }
+                            })
+                        }  
+              </div>
+            );
+
+        }
       }
     
     function ExamsReg() {

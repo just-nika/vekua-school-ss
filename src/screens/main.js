@@ -34,15 +34,15 @@ function Main() {
                 <div className="carousel-item" style={{maxHeight: "calc(100vh - 125px)"}}>
                     <img src="carousel.jpg" className="d-block w-100 h-100" alt="..." />
                     <div className="carousel-caption d-none d-md-block">
-                        <h3 style={{color: "rgb(212, 200, 200)"}}>ჩვენ გვჯერა!</h3>
-                        <h6 style={{color: "rgb(212, 200, 200)"}}>ჩვენი ქვეყანა გაძლიერდება, როდესაც თითოეულ ახალ ვეკუელს შეუძლია ხელი შეუწყოს ჩვენს კეთილდღეობასა და ინოვაციას მათემატიკისა და მეცნიერების საშუალებებით.</h6>
+                        <h3 style={{color: "black"}}>ჩვენ გვჯერა!</h3>
+                        <h6 style={{color: "white"}}>ჩვენი ქვეყანა გაძლიერდება, როდესაც თითოეულ ახალ ვეკუელს შეეძლება ხელი შეუწყოს ჩვენს კეთილდღეობასა და ინოვაციას მათემატიკისა და მეცნიერების საშუალებებით.</h6>
                     </div>
                 </div>
                 <div className="carousel-item" style={{maxHeight: "calc(100vh - 125px)"}}>
                     <img src="chess.jpg" className="d-block w-100 h-100" alt="..."/>
                     <div className="carousel-caption d-none d-md-block">
                         <h3>ყოველ დღე</h3>
-                        <h6>ჩვენ ვხსნით შესაძლებლობების კარს და ვხელმძღვანელობთ ჩვენს მოსწავლეებს, რადგან ისინი წარმოადგენენ ჩვენი საერთო მომავლის შესაძლებლობებს.</h6>
+                        <h6>ჩვენ ვხსნით შესაძლებლობების კარს და ვხელმძღვანელობთ ჩვენს მოსწავლეებს, რადგან ისინი წარმოადგენენ ჩვენი საერთო მომავალს.</h6>
                     </div>
                 </div>
             </div>

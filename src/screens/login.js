@@ -33,12 +33,12 @@ function Login() {
     return (
     <div className="login-container">
         <div className="login">
-            <form className="" noValidate autoComplete="off">
+            <form className="" autoComplete="off">
                 <h2>Admin Panel-ზე შესვლა</h2>
                 <br />
-                <TextField label="ელ. ფოსტა" className="login-input" id="email" required />
+                <TextField label="ელ. ფოსტა" type="email" className="login-input" id="email" required />
                 <br />
-                <TextField label="პაროლი" className="login-input" id="password" required />
+                <TextField label="პაროლი" type="password" className="login-input" id="password" required />
                 <br/>
                 <Button variant="contained" color="primary" onClick={userPassAuth}>შესვლა</Button>
             </form>

@@ -63,8 +63,10 @@ function Contact() {
                         <br/>
                         <br/>
                         <div className="info">
-                            <p><b>ელექტრონული ფოსტა</b> - <a href="mailto: tbilisi42@mes.gov.ge" target="_blank">tbilisi42@mes.gov.ge</a></p>
                             <p><b>ნომერი</b> - <a href="tel:0322-99-82-10">(995) 0322 99 82 10</a></p>
+                            <p><b>ელექტრონული ფოსტა</b> - <a href="mailto: tbilisi42@mes.gov.ge" target="_blank">tbilisi42@mes.gov.ge</a></p>
+                            <p style={{textAlign: "start"}}><b>საიტის Admin</b> - <a href="mailto: support@vekua42.edu.ge" target="_blank">support@vekua42.edu.ge</a></p>
+                            <p style={{textAlign: "start"}}><b>სკოლის IT</b> - <a href="mailto: it@vekua42.edu.ge" target="_blank">it@vekua42.edu.ge</a></p>
                         </div>
                     </div>
                 </div>
