@@ -270,103 +270,78 @@ export default function PupilsData9() {
     console.log(data);
 }
   
-  const columns = [
-    { 
-        field: "id", 
-        headerName: "ბაზის ID", 
-        width: 130 
-    },
-    { 
-        field: "lastName", 
-        headerName: "გვარი", 
-        width: 130 
-    },
-    { 
-        field: "firstName", 
-        headerName: "სახელი", 
-        width: 130 
-    },
-    {
-        field: "father",
-        headerName: "მამის სახელი",
-        width: 130,
-    },
-    { 
-        field: "personal", 
-        headerName: "პირადი ნომერი", 
-        width: 130 
-    },
-    {
-        field: "class",
-        headerName: "კლასი",
-        width: 130,
-    },
-    {
-        field: "code",
-        headerName: "უნიკალური კოდი",
-        width: 130,
-    },
-    {
-        field: "first",
-        headerName: "მშობლის სახელი",
-        width: 130,
-    },
-    {
-        field: "last",
-        headerName: "მშობლის გვარი",
-        width: 130,
-    },
-    {
-        field: "number",
-        headerName: "მშობლის ტელეფონის ნომერი",
-        width: 130,
-    },
-    {
-        field: "old",
-        headerName: "სკოლა საიდანაც გადმოდის",
-        width: 130,
-    },
-    {
-        field: "language",
-        headerName: "მეორე ენა",
-        width: 130,
-    },
-    {
-        field: "photo",
-        headerName: "მოსწავლის ფოტო",
-        width: 130,
-    },
-    {
-        field: "file",
-        headerName: "სკოლის საბუთი",
-        width: 130,
-    },
-  ];
-  pupils.map((pupil, index) => {
-    return (
-        <>
-        <div className="inputs" key={index}>
-            <input type="hidden" id="id" value={`${pupil.id}`}/>
-            <input type="hidden" id="lastName" value={`${pupil.firstName}`}/>
-            <input type="hidden" id="firstName" value={`${pupil.lastName}`}/>
-            <input type="hidden" id="father" value={`${pupil.FatherName}`}/>
-            <input type="hidden" id="class" value={`${pupil.class}`}/>
-            <input type="hidden" id="code" value={`${pupil.code}`}/>
-            <input type="hidden" id="personal" value={`${pupil.idNumber}`}/>
-            <input type="hidden" id="old" value={`${pupil.oldSchool}`}/>
-            <input type="hidden" id="first" value={`${pupil.ParentFirstName}`}/>
-            <input type="hidden" id="last" value={`${pupil.ParentLastName}`}/>
-            <input type="hidden" id="number" value={`${pupil.mobileNumber}`}/>
-            <input type="hidden" id="language" value={`${pupil.language}`}/>
-            <input type="hidden" id="photo" value={`${pupil.imgUrl}`}/>
-            <input type="hidden" id="file" value={`${pupil.fileUrl}`}/>
-        </div>
-        </> 
-    );
-})
-    const rows = [
-        { id: `1`, lastName: `1`, firstName: `1`, father: `1`, class: `1`, code: `1`, personal: `1`, old: `1`, first: `1`, last: `1`, number: `1`, language: `1`, photo: `1`, file: `1` },
-    ];
+const columns = [
+  { 
+      field: "id", 
+      headerName: "ბაზის ID", 
+      width: 130 
+  },
+  { 
+      field: "lastName", 
+      headerName: "გვარი", 
+      width: 130 
+  },
+  { 
+      field: "firstName", 
+      headerName: "სახელი", 
+      width: 130 
+  },
+  {
+      field: "FatherName",
+      headerName: "მამის სახელი",
+      width: 130,
+  },
+  { 
+      field: "idNumber", 
+      headerName: "პირადი ნომერი", 
+      width: 130 
+  },
+  {
+      field: "class",
+      headerName: "კლასი",
+      width: 130,
+  },
+  {
+      field: "code",
+      headerName: "უნიკალური კოდი",
+      width: 130,
+  },
+  {
+      field: "ParentFirstName",
+      headerName: "მშობლის სახელი",
+      width: 130,
+  },
+  {
+      field: "ParentLastName",
+      headerName: "მშობლის გვარი",
+      width: 130,
+  },
+  {
+      field: "mobileNumber",
+      headerName: "მშობლის ტელეფონის ნომერი",
+      width: 130,
+  },
+  {
+      field: "oldSchool",
+      headerName: "სკოლა საიდანაც გადმოდის",
+      width: 130,
+  },
+  {
+      field: "language",
+      headerName: "მეორე ენა",
+      width: 130,
+  },
+  {
+      field: "imgUrl",
+      headerName: "მოსწავლის ფოტო",
+      width: 130,
+  },
+  {
+      field: "fileUrl",
+      headerName: "სკოლის საბუთი",
+      width: 130,
+  },
+];
     const { loading, data, setRowLength, loadNewData } = useDemoData({
         dataSet: type,
         rowLength: size,
@@ -437,7 +412,7 @@ export default function PupilsData9() {
                     components={{
                     Toolbar: GridToolbar,
                     }}
-                    rows={rows} 
+                    rows={pupils} 
                     columns={columns}
                     loading={loading}
                     checkboxSelection

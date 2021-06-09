@@ -287,12 +287,12 @@ export default function PupilsData() {
         width: 130 
     },
     {
-        field: "father",
+        field: "FatherName",
         headerName: "მამის სახელი",
         width: 130,
     },
     { 
-        field: "personal", 
+        field: "idNumber", 
         headerName: "პირადი ნომერი", 
         width: 130 
     },
@@ -307,22 +307,22 @@ export default function PupilsData() {
         width: 130,
     },
     {
-        field: "first",
+        field: "ParentFirstName",
         headerName: "მშობლის სახელი",
         width: 130,
     },
     {
-        field: "last",
+        field: "ParentLastName",
         headerName: "მშობლის გვარი",
         width: 130,
     },
     {
-        field: "number",
+        field: "mobileNumber",
         headerName: "მშობლის ტელეფონის ნომერი",
         width: 130,
     },
     {
-        field: "old",
+        field: "oldSchool",
         headerName: "სკოლა საიდანაც გადმოდის",
         width: 130,
     },
@@ -332,12 +332,12 @@ export default function PupilsData() {
         width: 130,
     },
     {
-        field: "photo",
+        field: "imgUrl",
         headerName: "მოსწავლის ფოტო",
         width: 130,
     },
     {
-        field: "file",
+        field: "fileUrl",
         headerName: "სკოლის საბუთი",
         width: 130,
     },
@@ -437,7 +437,7 @@ export default function PupilsData() {
                     components={{
                     Toolbar: GridToolbar,
                     }}
-                    rows={rows} 
+                    rows={pupils} 
                     columns={columns}
                     loading={loading}
                     checkboxSelection
