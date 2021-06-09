@@ -633,6 +633,25 @@ img.footer-logo {
   color: black;
 }
 
+.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-12.MuiGrid-grid-md-6 {
+  margin: auto;
+  padding-bottom: 20px;
+}
+
+.post-container {
+  width: 100%;
+  display: flex;
+}
+
+.feed {
+  width: 50%;
+}
+
+.single-post {
+  width: 50%;
+  height: 100%;
+}
+
 @media screen and (max-width:1075px) {
   ul.routes {
     display: none;

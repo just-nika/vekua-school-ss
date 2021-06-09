@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import { BrowserRouter as Router, Switch, Route, Link, useLocation, useParams, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useLocation, useRouteMatch, useParams, Redirect } from "react-router-dom";
 import { firebase, auth, firestore } from '../firebase/firebase.config';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
@@ -78,42 +78,44 @@ function News() {
   const handleClose = () => {
     setOpen(false);
   };
- 
+  let { path, url } = useRouteMatch();
   return (
   <div className="container">
     <br/>
       <h2>სიახლეები</h2>
       <br/>
       <br/>
-  <Grid item xs={12} md={6}>
   {
-      posts.map((post, index) => {
-          const html = `${post.content}`;
+    posts.map((post, index) => {
+      const html = `${post.content}`;
           return (
-          <div>
-          <CardActionArea component="a" style={{height:"200px"}}  onClick={handleOpen}>
-              <Card className={classes.card} style={{height:"200px"}}>
-              <div className={classes.cardDetails}>
-                  <CardContent>
-                  <Typography component="h2" variant="h5">
-                      {post.title}
-                  </Typography>
-                  <Typography variant="subtitle1" color="textSecondary">
-                      {post.date}
-                  </Typography>
-                  <Typography variant="subtitle1" paragraph>
-                      {post.description}
-                  </Typography>
-                  <Typography variant="subtitle1" color="primary">
-                      მეტი
-                  </Typography>
-                  </CardContent>
-              </div>
-              <Hidden xsDown>
-                  <CardMedia className={classes.cardMedia} image={post.url} title={post.title} />
-              </Hidden>
-              </Card>
-          </CardActionArea>
+            <div>
+            <Grid item xs={12} md={6}>
+            <a href={`${url}/${post.id}`}>
+            <CardActionArea component="a" style={{height:"200px"}} onClick={handleOpen}>
+                <Card className={classes.card} style={{height:"200px"}}>
+                <div className={classes.cardDetails}>
+                    <CardContent>
+                    <Typography component="h2" variant="h5">
+                        {post.title}
+                    </Typography>
+                    <Typography variant="subtitle1" color="textSecondary">
+                        {post.date}
+                    </Typography>
+                    <Typography variant="subtitle1" paragraph>
+                        {post.description}
+                    </Typography>
+                    <Typography variant="subtitle1" color="primary">
+                        მეტი
+                    </Typography>
+                    </CardContent>
+                </div>
+                <Hidden xsDown>
+                    <CardMedia className={classes.cardMedia} image={post.url} title={post.title} />
+                </Hidden>
+                </Card>
+            </CardActionArea>
+            </a>
               <Modal
                   aria-labelledby="transition-modal-title"
                   aria-describedby="transition-modal-description"
@@ -133,14 +135,15 @@ function News() {
                   </div>
                   </Fade>
               </Modal>
+  </Grid>
               </div>
                               )
                           })
                       }
-  </Grid>
   <br/>
   </div>
   )
+  
 }
 
 export default News

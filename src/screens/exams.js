@@ -31,7 +31,6 @@ function Exams() {
         const [value, setValue ] = useState("");
         
         const selectClass = e => setValue(e.target.value);
-        
         const {
             register,
             handleSubmit,
@@ -61,7 +60,6 @@ function Exams() {
             },
           }));
           const [age, setAge] = React.useState('');
-
           const handleChange = (event) => {
             setAge(event.target.value);
           };

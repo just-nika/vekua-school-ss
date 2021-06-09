@@ -82,9 +82,16 @@ const addPosts = async () => {
     const title = document.getElementById("title").value;
     const url = document.getElementById("photo").value;
     const content = editorRef.current.getContent();
+    const year = new Date().getFullYear();
+    const month = new Date().getMonth();
+    const day = new Date().getDate();
+    const hour = new Date().getHours();
+    const minutes = new Date().getMinutes();
+    const date = `${day}.${month}.${year} წ (${hour}:${minutes} სთ)`
     await firestore.collection("posts").add({
         title: title,
         url: url,
+        date: date,
         content: content
     }).then(() => {
         
