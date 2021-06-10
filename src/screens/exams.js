@@ -85,10 +85,10 @@ function Exams() {
                     const code = querySnapshot.size; 
                     const storageRef = storage.ref();
                     const fileRef = storageRef.child(data.file[0].name);
-                    await fileRef.put(data.file)
+                    await fileRef.put(data.file[0])
 
                     const imageRef = storageRef.child(data.img[0].name);
-                    await imageRef.put(data.img)
+                    await imageRef.put(data.img[0])
 
                     const imgUrl = await imageRef.getDownloadURL();
                     const fileUrl = await fileRef.getDownloadURL();
