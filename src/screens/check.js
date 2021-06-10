@@ -100,7 +100,7 @@ function Check() {
 
   const printDocument = () => {
     const input = document.getElementById("card");
-    html2canvas(input).then((canvas) => {
+    html2canvas(input, {useCORS: true}).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("landscape");
       pdf.addImage(imgData, "JPEG", 0, 0, 270, 100, "FAST");
@@ -119,7 +119,7 @@ function Check() {
         </p>
         <div className="first">
           <div className="card-logo">
-            <img src="logo.png" alt="logo" />
+            <img src={`${forCard.imgUrl}`} alt={`${forCard.firstName} ${forCard.lastName}`} />
           </div>
           <div className="pupil-info">
             <p style={{ textAlign: "start" }}>

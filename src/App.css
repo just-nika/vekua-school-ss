@@ -658,7 +658,12 @@ img.footer-logo {
 }
 
 .pupil-card {
-  height: 500px;
+  height: 450px;
+  width: 100%;
+}
+
+.view-img {
+  width: 100% !important;
 }
 
 .pupil-info {
