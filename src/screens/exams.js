@@ -76,24 +76,22 @@ function Exams() {
                 setFile(e.target.files[0])
             }
             const addPupil = async (data) => {
-                const storageRef = storage.ref();
                 
-                const fileRef = storageRef.child(data.img[0].name);
-                await fileRef.put(data.img);
-
-                const imageRef = storageRef.child(data.file[0].name);
-                await imageRef.put(data.file);
-                
-                const imgUrl = await fileRef.getDownloadURL();
-                const fileUrl = await imageRef.getDownloadURL();
               CheckPupil(data.idRequired).then(response => {
                 if(response.status){
                   return swal("მოსწავლე უკვე რეგისტრირებულია!", "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.", "error");
                 }else{
- 
-                  firestore.collection(`${data.class}`).get().then(async function(querySnapshot) {   
-                        
-                       const code = querySnapshot.size; 
+                  firestore.collection(`${data.class}`).get().then(async function(querySnapshot) {  
+                    const code = querySnapshot.size; 
+                    const storageRef = storage.ref();
+                    const fileRef = storageRef.child(data.file[0].name);
+                    await fileRef.put(data.file)
+
+                    const imageRef = storageRef.child(data.img[0].name);
+                    await imageRef.put(data.img)
+
+                    const imgUrl = await imageRef.getDownloadURL();
+                    const fileUrl = await fileRef.getDownloadURL();
                     console.log(data)
                         firestore.collection(`${data.class}`).add({
                           code: code,

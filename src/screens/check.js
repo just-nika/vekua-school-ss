@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useState, useRef} from 'react';
 import Typography from '@material-ui/core/Typography';
 import { firebase, auth, firestore, storage } from '../firebase/firebase.config';
 import Button from '@material-ui/core/Button';
@@ -20,7 +20,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Editor } from '@tinymce/tinymce-react';
-import { useRef } from 'react';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import { useSpring, animated } from 'react-spring/web.cjs';
@@ -49,7 +48,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormLabel from '@material-ui/core/FormLabel';
 import swal from 'sweetalert';
 import CheckPupil from '../utils/CheckPupil';
-import ReactToPrint from "react-to-print";
+import { useReactToPrint } from 'react-to-print';
 
 function Check() {
 
@@ -95,8 +94,11 @@ function Check() {
                 }
             })
         }
-        class ComponentToPrint extends React.Component {
-            render() {
+        const componentRef = useRef();
+        const handlePrint = useReactToPrint({
+            content: () => componentRef.current,
+        });
+        function ComponentToPrint() {
               return (
                 <div className="pupil-card">
                     <p style={{fontSize: "30px"}}><strong> {forCard.class}-{forCard.code}</strong></p>
@@ -121,7 +123,6 @@ function Check() {
                 </div>
             );
         }
-      }
         return (
             <>
                 <div className="container">
@@ -131,11 +132,8 @@ function Check() {
                     {
                         forCard ? (
                             <div>
-                                <ReactToPrint
-                                    trigger={() => <button>ამობეჭვდა</button>}
-                                    content={() => this.componentRef}
-                                />
-                                <ComponentToPrint ref={(el) => (this.componentRef = el)} />
+                                <ComponentToPrint ref={componentRef} />
+                                <button onClick={handlePrint}>Print this out!</button>
                             </div>
                         ) : (
                             <>

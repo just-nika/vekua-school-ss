@@ -371,6 +371,9 @@ function Header() {
                     <Route path={`single/:id`}>
                         <SinglePost />
                     </Route>
+                    <Route path={`projects/:id`}>
+                        <SingleProject />
+                    </Route>
                 </Switch>
                 <Footer />
             </div>
@@ -421,15 +424,15 @@ function Header() {
         </>;
     }
 
-    function Projects() {
-        return <>
-            <Helmet>
-                  <title>პროექტები/პროგრამები</title>
-            </Helmet>
-            <h2>პროექტები/პროგრამები</h2>
-            <Covid />
-        </>;
-    }
+    // function Projects() {
+    //     return <>
+    //         <Helmet>
+    //               <title>პროექტები/პროგრამები</title>
+    //         </Helmet>
+    //         <h2>პროექტები/პროგრამები</h2>
+    //         <Covid />
+    //     </>;
+    // }
     
     function OurAchievements() {
         return <>
@@ -534,7 +537,8 @@ function Header() {
             const title = document.getElementById("title").value;
             const url = document.getElementById("photo").value;
             const content = editorRef.current.getContent();
-            const date = `${day}.${month}.${year} წ (${hour}:${minutes} სთ)`
+            const mainMonth = month + 1;
+            const date = `${day}.${mainMonth}.${year} წ (${hour}:${minutes} სთ)`
             await firestore.collection("posts").add({
                 title: title,
                 url: url,
@@ -784,6 +788,432 @@ function Header() {
             );
         }
     }
+    
+    function Projects() {
+    const useStyles = makeStyles((theme) => ({
+        card: {
+            display: 'flex',
+        },
+        cardDetails: {
+            flex: 1,
+        },
+        cardMedia: {
+            width: 160,
+        },
+        modal: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+        paper: {
+            backgroundColor: theme.palette.background.paper,
+            border: '2px solid #000',
+            boxShadow: theme.shadows[5],
+            padding: theme.spacing(2, 4, 3),
+        },
+        icon: {
+            marginRight: theme.spacing(2),
+        },
+        heroContent: {
+            backgroundColor: theme.palette.background.paper,
+            padding: theme.spacing(8, 0, 6),
+        },
+        heroButtons: {
+            marginTop: theme.spacing(4),
+        },
+        cardGrid: {
+            paddingTop: theme.spacing(8),
+            paddingBottom: theme.spacing(8),
+        },
+        card: {
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+        },
+        cardContent: {
+            flexGrow: 1,
+        },
+        footer: {
+            backgroundColor: theme.palette.background.paper,
+            padding: theme.spacing(6),
+        },
+    }));
+        const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        const [posts, setPosts] = useState([]);
+        useEffect(() => {
+            getPosts();
+        }, [])
+        const year = new Date().getFullYear();
+        const month = new Date().getMonth();
+        const day = new Date().getDate();
+        const addPosts = async () => {
+            const title = document.getElementById("title").value;
+            const content = editorRef.current.getContent();
+            const mainMonth = month + 1;
+            const date = `${day}.${mainMonth}.${year} წ`
+            await firestore.collection("projects").add({
+                title: title,
+                date: date,
+                content: content
+            }).then(() => {
+                document.getElementById("title").value = "";
+            })
+        }
+        const getPosts = async () => {
+            const data = await firestore.collection("projects").get();
+            console.log(data);
+            setPosts(data.docs.map(doc => ({
+                ...doc.data(),
+                id: doc.id
+            })))
+            console.log(data);
+        }
+        const classes = useStyles();
+        const [open, setOpen] = React.useState(false);
+    
+        const editorRef = useRef(null)
+        const handleOpen = () => {
+            // setOpen(true);
+        };
+    
+        const handleClose = () => {
+        setOpen(false);
+        };
+        let { path, url } = useRouteMatch();
+        var user = firebase.auth().currentUser;
+        const signOut = async () => {
+            firebase.auth().signOut().then(() => {<Redirect path="/" />}).catch((error) => {})
+        }
+        if (user) {
+            return (
+                <>
+                <div>
+                <Router>
+                <Helmet>
+                  <title>პროექტების Admin გვერდი</title>
+                </Helmet>
+                <br/>
+                <Button variant="contained" color="secondary" onClick={signOut}>გასვლა</Button>
+                <div className="post-form">
+                    <form action="" className="add-post">
+                        <br />
+                        <br />
+                        <h2 style={{textAlign: "center"}}>პროექტის დამატება</h2>
+                        <br />
+                        <br />
+                        <TextField id="title" label="სათაური" variant="filled" style={{width: "100%"}}/>
+                        <br />
+                        <br />
+                        <Editor
+                            // initialValue="<p>Initial content</p>"
+                            onInit={(evt, editor) => editorRef.current = editor}
+                            init={{
+                                height: 500,
+                                menubar: false,
+                                plugins: [
+                                    'advlist autolink lists link image charmap print preview anchor',
+                                    'searchreplace visualblocks code fullscreen',
+                                    'insertdatetime media table paste code help wordcount'
+                                ],
+                                toolbar: 'undo redo | formatselect | ' +
+                                'bold italic backcolor | alignleft aligncenter ' +
+                                'alignright alignjustify | bullist numlist outdent indent | ' +
+                                'removeformat | help',
+                                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                            }}
+                            
+                            id="content"
+                            />
+                        <Button variant="contained" color="primary" onClick={() => addPosts()} style={{textAlign: "center"}}>პოსტის დამატება</Button>
+                    </form>
+                </div>
+                <br />
+                    <br/>
+                    <h2>პროექტები</h2>
+                    <br/>
+                    <br/>
+                <div className="post-container">
+                    <div className="feed">
+                    <Container className={classes.cardGrid} maxWidth="lg">
+                    {
+                        posts.map((post, index) => {
+                            const html = `${post.content}`;
+                            return (
+                                <Grid item xs={12} md={6} key={index}>
+                                <Link to={`${url}/${post.id}`}>
+                                    <CardActionArea component="a" style={{height:"200px"}} onClick={handleOpen}>
+                                        <Card className={classes.card} style={{height:"200px"}}>
+                                        <div className={classes.cardDetails}>
+                                            <CardContent>
+                                            <Typography component="h2" variant="h5">
+                                                {post.title}
+                                            </Typography>
+                                            <Typography variant="subtitle1" color="textSecondary">
+                                                {post.date}
+                                            </Typography>
+                                            <Typography variant="subtitle1" paragraph>
+
+                                            </Typography>
+                                            <Typography variant="subtitle1" color="primary">
+                                                მეტი
+                                            </Typography>
+                                            </CardContent>
+                                        </div>
+                                        <Hidden xsDown>
+                                            <CardMedia className={classes.cardMedia} image={post.url} title={post.title} />
+                                        </Hidden>
+                                        </Card>
+                                    </CardActionArea>
+                                </Link>
+                            </Grid>
+                            )
+                        })
+                    }   
+                    </Container>
+                    </div>
+                    <div className="single-post">
+                        <Switch>
+                            <Route exact path="/"></Route>
+                            <Route path={`${path}/:id`}>
+                                <SingleProject />
+                            </Route>
+                        </Switch>
+                    </div>
+                            {/* <Modal
+                                aria-labelledby="transition-modal-title"
+                                aria-describedby="transition-modal-description"
+                                className={classes.modal}
+                                open={open}
+                                onClose={handleClose}
+                                closeAfterTransition
+                                BackdropComponent={Backdrop}
+                                BackdropProps={{
+                                    timeout: 500,
+                                }}
+                                >
+                                <Fade in={open}>
+                                <div className={classes.paper}>
+                                <h2 id="transition-modal-title">{post.title}</h2>
+                                <p id="transition-modal-description">{ ReactHtmlParser(html) }</p>
+                                </div>
+                                </Fade>
+                            </Modal> */}
+                <br/>
+                </div>
+                <Covid />
+                </Router>
+                </div>
+                </>
+            );
+            OurNews.propTypes = {
+                post: PropTypes.object,
+            };
+        }else {
+            return (
+                <div>
+                <Router>
+                <Helmet>
+                  <title>პროექტები</title>
+                </Helmet>
+                    <br/>
+                    <h2>პროექტები</h2>
+                    <br/>
+                    <br/>
+                <div className="post-container">
+                    <div className="feed">
+                    <Container className={classes.cardGrid} maxWidth="lg">
+                    {
+                        posts.map((post, index) => {
+                            const html = `${post.content}`;
+                            return (
+                                <Grid item xs={12} md={6} key={index}>
+                                <Link to={`${url}/${post.id}`}>
+                                    <CardActionArea component="a" style={{height:"200px"}} onClick={handleOpen}>
+                                        <Card className={classes.card} style={{height:"200px"}}>
+                                        <div className={classes.cardDetails}>
+                                            <CardContent>
+                                            <Typography component="h2" variant="h5">
+                                                {post.title}
+                                            </Typography>
+                                            <Typography variant="subtitle1" color="textSecondary">
+                                                {post.date}
+                                            </Typography>
+                                            <Typography variant="subtitle1" paragraph>
+
+                                            </Typography>
+                                            <Typography variant="subtitle1" color="primary">
+                                                მეტი
+                                            </Typography>
+                                            </CardContent>
+                                        </div>
+                                        <Hidden xsDown>
+                                            <CardMedia className={classes.cardMedia} image={post.url} title={post.title} />
+                                        </Hidden>
+                                        </Card>
+                                    </CardActionArea>
+                                </Link>
+                            </Grid>
+                            )
+                        })
+                    }   
+                    </Container>
+                    </div>
+                    <div className="single-post">
+                        <Switch>
+                            <Route exact path="/">
+                                </Route>
+                            <Route path={`${path}/:id`}>
+                                <SingleProject />
+                            </Route>
+                        </Switch>
+                    </div>
+                            {/* <Modal
+                                aria-labelledby="transition-modal-title"
+                                aria-describedby="transition-modal-description"
+                                className={classes.modal}
+                                open={open}
+                                onClose={handleClose}
+                                closeAfterTransition
+                                BackdropComponent={Backdrop}
+                                BackdropProps={{
+                                    timeout: 500,
+                                }}
+                                >
+                                <Fade in={open}>
+                                <div className={classes.paper}>
+                                <h2 id="transition-modal-title">{post.title}</h2>
+                                <p id="transition-modal-description">{ ReactHtmlParser(html) }</p>
+                                </div>
+                                </Fade>
+                            </Modal> */}
+                <br/>
+                </div>
+                <Covid />
+                </Router>
+                </div>
+            );
+        }
+    }
+    function SingleProject() {
+        // The <Route> that rendered this component has a
+        // path of `/topics/:topicId`. The `:topicId` portion
+        // of the URL indicates a placeholder that we can
+        // get from `useParams()`.
+        let { id } = useParams();
+        const [posts, setPosts] = useState([]);
+        useEffect(() => {
+            getPosts();
+        }, [])
+        const getPosts = async () => {
+            const data = await firestore.collection("projects").get();
+            console.log(data);
+            setPosts(data.docs.map(doc => ({
+                ...doc.data(),
+                id: doc.id
+            })))
+            console.log(data);
+        }
+        const editorRef = useRef(null)
+        var user = firebase.auth().currentUser;
+        const updatePost = async (id) => {
+            const year = new Date().getFullYear();
+            const month = new Date().getMonth();
+            const day = new Date().getDate();
+            const title = document.getElementById("headline").value;
+            const url = document.getElementById("url").value;
+            const content = editorRef.current.getContent();
+            const mainMonth = month + 1;
+            const date = `${day}.${mainMonth}.${year}`
+            await firestore.collection("projects").doc(id).update({
+              title: title,
+              url: url,
+              date: date,
+              content: content
+            }).then(() => getPosts());
+          }
+        if (user) {
+            return (
+            <div>
+    {
+                          posts.map((post, index) => {
+                              const html = `${post.content}`;
+                              if (post.id == id) {
+                                  return (
+                                      <div className="full">
+                                          <Helmet>
+                                              <title>
+                                                  {post.title}
+                                              </title>
+                                          </Helmet>
+                                          <div style={{backgroundImage: "url('https://i.postimg.cc/XNKCLj1F/No-Background.png')", width: "100%", height: "300px", backgroundSize: "cover", backgroundPosition: "center"}}></div>
+                                          <form action="">
+                                            <TextField id="headline" defaultValue={`${post.title}`} label="სათაური" variant="filled" style={{width: "100%"}}/>
+                                            <br />
+                                            <br />
+                                            <Editor
+                                                onInit={(evt, editor) => editorRef.current = editor}
+                                                initialValue={`${html}`}
+                                                init={{
+                                                height: 500,
+                                                menubar: false,
+                                                plugins: [
+                                                    'advlist autolink lists link image charmap print preview anchor',
+                                                    'searchreplace visualblocks code fullscreen',
+                                                    'insertdatetime media table paste code help wordcount'
+                                                ],
+                                                toolbar: 'undo redo | formatselect | ' +
+                                                'bold italic backcolor | alignleft aligncenter ' +
+                                                'alignright alignjustify | bullist numlist outdent indent | ' +
+                                                'removeformat | help',
+                                                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                                                }}
+                                            />
+                                                {/* { ReactHtmlParser(html) } */}
+                                            <Button variant="contained" fullWidth color="primary" onClick={() => updatePost(post.id)} style={{textAlign: "center"}}>პოსტის ჩასწორება</Button>
+                                          </form>
+                                          <br />
+                                          <br />
+                                          <p style={{textAlign: "start"}}><i style={{textAlign: "start"}}>{post.date}</i></p>
+                                      </div>
+                                      )
+                                  }
+                          })
+                      }  
+            </div>
+          );
+            
+        }else {
+            return (
+              <div>
+        {
+                            posts.map((post, index) => {
+                                const html = `${post.content}`;
+                                if (post.id == id) {
+                                    return (
+                                        <div className="full">
+                                            <Helmet>
+                                              <title>
+                                                  {post.title}
+                                              </title>
+                                          </Helmet>
+                                          <div style={{backgroundImage: "url(https://i.postimg.cc/XNKCLj1F/No-Background.png)", width: "100%", height: "300px", backgroundSize: "cover", backgroundPosition: "center"}}></div>
+
+                                            <h2>{post.title}</h2>
+                                            <br />
+                                            <p style={{textAlign: "start"}}>{ ReactHtmlParser(html) }</p>
+                                            <br />
+                                            <br />
+                                            <p style={{textAlign: "start"}}><i style={{textAlign: "start"}}>{post.date}</i></p>
+                                        </div>
+                                        )
+                                    }
+                            })
+                        }  
+              </div>
+            );
+
+        }
+      }
     function SinglePost() {
         // The <Route> that rendered this component has a
         // path of `/topics/:topicId`. The `:topicId` portion
@@ -814,7 +1244,8 @@ function Header() {
             const title = document.getElementById("headline").value;
             const url = document.getElementById("url").value;
             const content = editorRef.current.getContent();
-            const date = `${day}.${month}.${year} წ (${hour}:${minutes} სთ)`
+            const mainMonth = month + 1;
+            const date = `${day}.${mainMonth}.${year} წ (${hour}:${minutes} სთ)`
             await firestore.collection("posts").doc(id).update({
               title: title,
               url: url,
@@ -831,6 +1262,11 @@ function Header() {
                               if (post.id == id) {
                                   return (
                                       <div className="full">
+                                          <Helmet>
+                                              <title>
+                                                  {post.title}
+                                              </title>
+                                          </Helmet>
                                           <div style={{backgroundImage: `url(${post.url})`, width: "100%", height: "300px", backgroundSize: "cover", backgroundPosition: "center"}}></div>
                                           <form action="">
                                             <TextField id="headline" defaultValue={`${post.title}`} label="სათაური" variant="filled" style={{width: "100%"}}/>
@@ -880,6 +1316,11 @@ function Header() {
                                 if (post.id == id) {
                                     return (
                                         <div className="full">
+                                            <Helmet>
+                                              <title>
+                                                  {post.title}
+                                              </title>
+                                          </Helmet>
                                             <div style={{backgroundImage: `url(${post.url})`, width: "100%", height: "300px", backgroundSize: "cover", backgroundPosition: "center"}}></div>
                                             <h2>{post.title}</h2>
                                             <br />
@@ -899,11 +1340,27 @@ function Header() {
       }
     
     function ExamsReg() {
+        // const year = new Date().getFullYear();
+        // const month = new Date().getMonth();
         var user = firebase.auth().currentUser;
-        if (user) {
-            return <><Data /><Exams /></>
-        }else {
-            return <NoExams />
+        const year = new Date().getFullYear();
+        const month = new Date().getMonth();
+        const day = new Date().getDate();
+        const hour = new Date().getHours();
+        const minutes = new Date().getMinutes();
+        const date = `${month}.${day}`
+        const mainMonth = month + 1;
+        console.log(mainMonth)
+        console.log(date)
+        if (date == `5.20` || date == `5.21` || date == `5.22` || date == `5.23` || date == `5.24` || date == `5.25` || date == `5.26` || date == `5.27` || date == `5.28` || date == `5.29` || date == `5.30`) {
+            return <><Exams /></>
+        }
+        else {
+            if (user) {
+                return <><Data /><Exams /></>
+            }else {
+                return <NoExams />
+            }
         }
     }
     function ExamsCheck() {
