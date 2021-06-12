@@ -1,59 +1,21 @@
-import React, { Fragment, useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import Typography from "@material-ui/core/Typography";
-import {
-  firebase,
-  auth,
-  firestore,
-  storage,
-} from "../firebase/firebase.config";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import NewsAdmin from "./newsAdmin";
-import Exams from "./exams";
-import ResponsiveHeader from "./responsiveHeader";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Grid from "@material-ui/core/Grid";
-import Toolbar from "@material-ui/core/Toolbar";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { Editor } from "@tinymce/tinymce-react";
-import Modal from "@material-ui/core/Modal";
-import Backdrop from "@material-ui/core/Backdrop";
-import { useSpring, animated } from "react-spring/web.cjs";
-import PropTypes from "prop-types";
-import Divider from "@material-ui/core/Divider";
-import Paper from "@material-ui/core/Paper";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import Hidden from "@material-ui/core/Hidden";
-import Fade from "@material-ui/core/Fade";
-import ReactHtmlParser, {
-  processNodes,
-  convertNodeToElement,
-  htmlparser2,
-} from "react-html-parser";
-import Covid from "./covid";
-import Footer from "./footer";
 import Avatar from "@material-ui/core/Avatar";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet";
 import CheckPupil from "../utils/CheckPupil";
-import { useReactToPrint } from "react-to-print";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
+import swal from "sweetalert";
+import { useReactToPrint } from 'react-to-print';
 
-function Check() {
+const Check = () => {
   const [forCard, setPupilCard] = useState(null);
 
   const useStyles = makeStyles((theme) => ({
@@ -93,36 +55,40 @@ function Check() {
     CheckPupil(idNumberForm).then((response) => {
       if (response.status) {
         setPupilCard(response.data);
+      }else {
+        swal(`ასეთი რეგისტრირებული მოსწავლე არ არსებობს!`, `მოსწავლე პირადი ნომრით ${idNumberForm} არ არის რეგისტრირებული, თუ თვლით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით სარეგისტრაციო ფორმასთან მითითებულ ნომერზე ან ელ. ფოსტებზე.`, "error")
       }
     });
   };
   const componentRef = useRef();
-
-  const printDocument = () => {
-    const input = document.getElementById("card");
-    html2canvas(input, {useCORS: true}).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("landscape");
-      pdf.addImage(imgData, "JPEG", 0, 0, 270, 100, "FAST");
-      pdf.save("card.pdf");
-    });
-  };
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+  // const printDocument = () => {
+  //   const input = document.getElementById("card");
+  //   html2canvas(input, {useCORS: true}).then((canvas) => {
+  //     const imgData = canvas.toDataURL("image/png");
+  //     const pdf = new jsPDF("landscape");
+  //     pdf.addImage(imgData, "JPEG", 0, 0, 270, 100, "FAST");
+  //     pdf.save("card.pdf");
+  //   });
+  // };
 
   function ComponentToPrint() {
     return (
-      <div className="pupil-card" id="card">
-        <p style={{ fontSize: "30px" }}>
+      <div className="pupil-card" id="card"  ref={componentRef}>
+        <p style={{ fontSize: "30px" }} className="card-code">
           <strong>
             {" "}
             {forCard.class}-{forCard.code}
           </strong>
         </p>
         <div className="first">
-          <div className="card-logo">
-            <img src={`${forCard.imgUrl}`} alt={`${forCard.firstName} ${forCard.lastName}`} />
+          <div className="card-logo" style={{width: "33,3%"}}>
+            <img src={`${forCard.imgUrl}`} alt={`${forCard.firstName} ${forCard.lastName}`} className="pupil-logo" style={{width: "100%"}} />
           </div>
           <div className="pupil-info">
-            <p style={{ textAlign: "start" }}>
+            <p style={{ textAlign: "start"  }}>
               სახელი: <b>{forCard.firstName}</b>
             </p>
             <p style={{ textAlign: "start" }}>
@@ -136,7 +102,7 @@ function Check() {
             </p>
           </div>
           <div className="card-logo">
-            <img src="logo.png" alt="logo" />
+            <img src="logo.png" alt="logo" style={{width: "40%"}} />
           </div>
         </div>
         <div className="second">
@@ -157,8 +123,9 @@ function Check() {
         </Helmet>
         {forCard ? (
           <div>
-            <ComponentToPrint ref={componentRef} />
-            <button onClick={printDocument}>Print this out!</button>
+            <ComponentToPrint />
+            <Button variant="outlined" color="primary" onClick={handlePrint}>ამობეჭვდა</Button>
+            <br />
           </div>
         ) : (
           <>
@@ -178,7 +145,7 @@ function Check() {
                 <form
                   className={classes.form}
                   noValidate
-                  onSubmit={handleSubmit(onSubmit)}>
+                  onSubmit={handleSubmit(handleCheck)}>
                   <TextField
                     {...register("idRequired", {
                       required: true,

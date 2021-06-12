@@ -671,8 +671,62 @@ img.footer-logo {
   font-size: 18px;
 }
 
+.card-logo {
+  width: calc(100% / 3);
+}
+
 .card-logo img {
-  width: 200px;
+  width: 100%;
+}
+
+.card-code {
+  text-align: center;
+}
+@page {
+  width: 100%;
+  height: 400px;
+}
+@media print {
+  .first {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .pupil-info {
+    padding-left: 30px;
+    font-size: 13px;
+  }
+
+  .pupil-card {
+    height: 450px;
+    width: 100%;
+  }
+  
+  .view-img {
+    width: 100% !important;
+  }
+  
+  .pupil-info {
+    padding-top: 50px;
+    font-size: 18px;
+  }
+  
+  .card-logo {
+    width: calc(100% / 3);
+  }
+  
+  .card-logo img {
+    width: 100%;
+  }
+
+  .card-code {
+    text-align: center;
+  }
+
+  .pupil-logo {
+    width: 100%;
+  }
 }
 
 @media screen and (max-width:1075px) {

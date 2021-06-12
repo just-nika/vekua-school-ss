@@ -1,8 +1,6 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import {
-  firebase,
-  auth,
   firestore,
   storage,
 } from "../firebase/firebase.config";
@@ -22,7 +20,7 @@ import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import IconButton from "@material-ui/core/IconButton";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet";
 import swal from "sweetalert";
 import CheckPupil from "../utils/CheckPupil";

@@ -273,73 +273,73 @@ export default function PupilsData7() {
 const columns = [
   { 
       field: "id", 
-      headerName: "ბაზის ID", 
-      width: 130 
+      headerName: "ბაზის ID/Base ID", 
+      width: 200 
   },
   { 
       field: "lastName", 
-      headerName: "გვარი", 
-      width: 130 
+      headerName: "გვარი/Last Name", 
+      width: 200 
   },
   { 
       field: "firstName", 
-      headerName: "სახელი", 
-      width: 130 
+      headerName: "სახელი/First Name", 
+      width: 200 
   },
   {
       field: "FatherName",
-      headerName: "მამის სახელი",
-      width: 130,
+      headerName: "მამის სახელი/Father Name",
+      width: 275,
   },
   { 
       field: "idNumber", 
-      headerName: "პირადი ნომერი", 
-      width: 130 
+      headerName: "პირადი ნომერი/Personal Number", 
+      width: 300 
   },
   {
       field: "class",
-      headerName: "კლასი",
-      width: 130,
+      headerName: "კლასი/Class",
+      width: 175,
   },
   {
       field: "code",
-      headerName: "უნიკალური კოდი",
-      width: 130,
+      headerName: "უნიკალური კოდი/Unique Code",
+      width: 300,
   },
   {
       field: "ParentFirstName",
-      headerName: "მშობლის სახელი",
-      width: 130,
+      headerName: "მშობლის სახელი/Parent First Name",
+      width: 310,
   },
   {
       field: "ParentLastName",
-      headerName: "მშობლის გვარი",
-      width: 130,
+      headerName: "მშობლის გვარი/Parent Last Name",
+      width: 300,
   },
   {
       field: "mobileNumber",
-      headerName: "მშობლის ტელეფონის ნომერი",
-      width: 130,
+      headerName: "მშობლის ტელეფონის ნომერი/Parent Mobile Number",
+      width: 430,
   },
   {
       field: "oldSchool",
-      headerName: "სკოლა საიდანაც გადმოდის",
-      width: 130,
+      headerName: "სკოლა საიდანაც გადმოდის/Active School",
+      width: 350,
   },
   {
       field: "language",
-      headerName: "მეორე ენა",
-      width: 130,
+      headerName: "მეორე უცხო ენა/Second Language",
+      width: 330,
   },
   {
       field: "imgUrl",
-      headerName: "მოსწავლის ფოტო",
-      width: 130,
+      headerName: "მოსწავლის ფოტო/Pupil Photo",
+      width: 290,
   },
   {
       field: "fileUrl",
-      headerName: "სკოლის საბუთი",
-      width: 130,
+      headerName: "სკოლის საბუთი/Pupil File",
+      width: 250,
   },
 ];
     const { loading, data, setRowLength, loadNewData } = useDemoData({
