@@ -60,7 +60,7 @@ export default function GeographyTeachers() {
                     <Typography gutterBottom variant="h5" component="h2">
                         ნინო მთიულიშვილი
                     </Typography>
-                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll"}}>
+                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll", overflowY: "none"}}>
                         დაბადების თარიღი: 1962წ.  2 თებერვალი; 
                         1979-1986  „თსუ“, გეოგრაფია -გეოლოგიის ფაკულტეტი. სპეციალობა-ფიზ-გეოგრაფი;
                         1987-1989  თბილისის პატენტმცოდნეობოს და ინფორმაციის ინსტიტუტი, სპეციალობა-პატენტმცოდნე;

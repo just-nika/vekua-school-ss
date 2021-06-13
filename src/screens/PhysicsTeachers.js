@@ -60,7 +60,7 @@ export default function PhysicsTeachers() {
                     <Typography gutterBottom variant="h5" component="h2">
                         გიორგი კაკაბაძე
                     </Typography>
-                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll"}}>
+                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll", overflowY: "none"}}>
                         1990  წლიდან   დღემდე - აკადემიკოს ილია ვეკუას სახელობის ფიზიკა-მათემატიკის ქალაქ თბილისის   #42 საჯარო სკოლა, ფიზიკის მასწავლებელი;      
                         1976-1981 წწ-ში-თსუ, ფიზიკის ფაკულტეტი, სპეციალობა ”კვანტური ელექტრონიკა, ჰოლოგრაფია”.  
                         2010 წ.-„ეროვნული სასწავლო გეგმებისა და შეფასების ცენტრის“- ექსპერტი;
@@ -90,7 +90,7 @@ export default function PhysicsTeachers() {
                     <Typography gutterBottom variant="h6" component="h2">
                         ლეილა ნარინდოშვილი
                     </Typography>
-                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll"}}>
+                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll", overflowY: "none"}}>
                         1977  წლიდან   დღემდე - აკადემიკოს ილია ვეკუას სახელობის ფიზიკა-მათემატიკის ქალაქ თბილისის   #42 საჯარო სკოლა, ფიზიკის მასწავლებელი;  
                         1969-1974წწ.-ში-  თსუ,  ფიზიკის ფაკულტეტი,  სპეციალობა-”ბირთვული   ფიზიკა”;
                         2008 წ.- საქართველოს პრეზიდენტის სტიპენდია;
@@ -125,7 +125,7 @@ export default function PhysicsTeachers() {
                     <Typography gutterBottom variant="h5" component="h2">
                         ლეილა ნარინდოშვილი
                     </Typography>
-                    <Typography style={{textAlign: "start", fontSize: "13px", minHeight: "200px", maxHeight: "200px", overflowX: "scroll"}}>
+                    <Typography style={{textAlign: "start", fontSize: "13px", minHeight: "200px", maxHeight: "200px", overflowX: "scroll", overflowY: "none"}}>
                         1977  წლიდან   დღემდე - აკადემიკოს ილია ვეკუას სახელობის ფიზიკა-მათემატიკის ქალაქ თბილისის   #42 საჯარო სკოლა, ფიზიკის მასწავლებელი;      
                         1969-1974წწ.-ში-  თსუ,  ფიზიკის ფაკულტეტი,  სპეციალობა-”ბირთვული   ფიზიკა”;
                         2008 წ.- საქართველოს პრეზიდენტის სტიპენდია;
@@ -152,7 +152,7 @@ export default function PhysicsTeachers() {
                     <Typography gutterBottom variant="h5" component="h2">
                         ნონა თოდუა
                     </Typography>
-                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll"}}>
+                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll", overflowY: "none"}}>
                         2011 წლიდან  დღემდე - აკადემიკოს ილია ვეკუას სახელობის ფიზიკა-მათემატიკის ქალაქ თბილისის #42  საჯარო სკოლა, ფიზიკის მასწავლებელი;	                                                                           
                         1981-1986წწ.-ში-თსუ,  ფიზიკის ფაკულტეტი ;
                         1986-2007წწ.-ში-სოხუმის სახელმწიფო უნივერსიტეტი- ასისტენტ-პროფესორი;
@@ -181,7 +181,7 @@ export default function PhysicsTeachers() {
                     <Typography gutterBottom variant="h5" component="h2">
                         ესმა ხიზანიშვილი
                     </Typography>
-                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll"}}>
+                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll", overflowY: "none"}}>
                         2008  წლიდან დღემდე - აკადემიკოს ილია ვეკუას სახელობის ფიზიკა-მათემატიკის  ქალაქ თბილისის #42 საჯარო სკოლა , ფიზიკის მასწავლებელი;
                         1980-1985 წწ.-ში-თსუ, ფიზიკის ფაკულტეტი, სპეციალობა-”ნახევარგამტარებისა და დიალექტრიკების ფიზიკა”; 
                         1985-1989წწ.-ში-თსუ, ასპირანტურა,ფიზიკა-მათემატიკურ მეცნიერებათა კანდიდატი;

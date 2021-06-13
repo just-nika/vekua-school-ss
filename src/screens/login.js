@@ -1,29 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import {
     auth,
-    firestore,
-    firebase
+    firestore
 } from '../firebase/firebase.config';
-import {
-    useDispatch
-} from 'react-redux'
 import { useHistory } from 'react-router';
-// import { saveUser } from '../redux/actions';
 
 function Login() {
     const history = useHistory();
-    // const dispatch = useDispatch();
     const userPassAuth = () => {
         console.log("user method")
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
         auth.signInWithEmailAndPassword(email, password)
-            .then(async (userCredential) => {
+        .then(async (userCredential) => {
             const user = userCredential.user;
-            // await dispatch(saveUser(user));
             history.push("/");
         })
     }

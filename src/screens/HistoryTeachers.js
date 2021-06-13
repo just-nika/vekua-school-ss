@@ -61,7 +61,7 @@ export default function HistoryTeachers() {
                     <Typography gutterBottom variant="h5" component="h2">
                         ნუგზარ მოლაშვილი
                     </Typography>
-                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll"}}>
+                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll", overflowY: "none"}}>
                         დაბადების თარიღი:  1956 წლის 1 იანვარი;
                         1974-1982წწ.  დაამთავრა თბილისის სახელმწიფო უნივერსიტეტი, ისტორიის ფაკულტეტი, ისტორიკოსი, ისტორიისა და საზოგადოებათმცოდნეობის მასწავლებელი
                         1994 წლიდან  მუშაობს ილია ვეკუას სახელობის თბილისის  N42 ფიზიკა-მათემატიკის საჯარო სკოლაში  ისტორიის  მასწავლებელად. 
@@ -104,7 +104,7 @@ export default function HistoryTeachers() {
                     <Typography gutterBottom variant="h6" component="h2">
                         მანანა გაბუნია
                     </Typography>
-                    <Typography style={{textAlign: "start", fontSize: "13px", maxHeight: "200px", overflowX: "scroll"}}>
+                    <Typography style={{textAlign: "start", fontSize: "13px", maxHeight: "200px", overflowX: "scroll", overflowY: "none"}}>
                         დაბადების თარიღი: 19.01.1956; 
                         1975-1981  ივ. ჯავახიშვილის სახ. თბილისის სახელმწიფო უნივერსიტეტი ისტორიის ფაკულტეტი, ისტორიისა და საზოგადოებათმცოდნეობის მასწავლებელი.
                         1977 წლიდან  მუშაობს ილია ვეკუას სახელობის თბილისის  N42 ფიზიკა-მათემატიკის საჯარო სკოლაში  ისტორიის  მასწავლებელად.  2010-2011წწ ამავე სკოლის საზოგადოებრივ მეცნიერებათა კათედრის გამგე.
@@ -132,8 +132,8 @@ export default function HistoryTeachers() {
                     <Typography gutterBottom variant="h5" component="h2">
                         ნანა იმერაშვილი
                     </Typography>
-                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll"}}>
-                        დაბადების თარიღი: 1962 წ. 30 ოქტომბერი
+                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll", overflowY: "none"}}>
+                        დაბადების თარიღი: 1962 წ. 30 ოქტომბერი; 
                         1979- 1984 წ.წ.   - თბილისის სახელმწიფო უნივერსიტეტი, ისტორიის ფაკულტეტი  ისტორიისა და  საზოგადოებათმცოდნეობის მასწავლებელი
                         1992 წ - საკანდიდატო დისერტაცია, ისტორიის მეცნიერებათა კანდიდატი 2002 წლიდან დღემდე  მუშაობს ილია ვეკუას სახელობის თბილისის  N42 ფიზიკა-მათემატიკის საჯარო სკოლაში ისტორიისა და სამოქალაქო განათლების პედაგოგად.       
                         ქალბატონი ნანა არის მრავალი გამოცემისა თუ პუბლიკაციის ავტორი და თანაავტორი.

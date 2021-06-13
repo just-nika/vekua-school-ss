@@ -249,21 +249,6 @@ export default function SchoolTeachers() {
                 </Grid>
             </Container>
           </div>
-        <h2>პროფორიენტაცია და კარიერის დაგეგმვა</h2>
-          <div className="members">
-          <Container className={classes.cardGrid} maxWidth="md">
-            <Grid item  xs={12} sm={6} md={4}>
-                <p style={{textAlign: "start"}}>წევრები:</p>
-                <ol style={{textAlign: "start"}}>
-                    <li>მირანდა კაპანაძე</li>
-                    <li>ქეთევან წერეთელი</li>
-                </ol>
-                </Grid>
-            </Container>
-          </div>
-          <div className="teachers-info">
-            <SomeTeachers />
-          </div>
         </TabPanel>
       </SwipeableViews>
     </div>

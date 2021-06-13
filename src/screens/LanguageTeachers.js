@@ -60,7 +60,7 @@ export default function LanguageTeachers() {
                     <Typography gutterBottom variant="h5" component="h2">
                         მაია გოგიაშვილი
                     </Typography>
-                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll"}}>
+                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll", overflowY: "none"}}>
                         დაამთავრა ი. ჭავჭავაძის სახელობის თბილისის უცხო ენათა სახელმწიფო პedაგოგიური ინსტიტუტის გერმანული ენის ფაკულტეტი, სპეციალობით  გერმანული და ესპანური ენების მასწავლებელი.
                         ქალბატონმა   მაიამ  2006-2011 წლებში  გერმანიის  გოეთეს ინსტიტუტში მოისმინა გერმანული ენის ინტენსიური კურსი (85 აკადემიური საათი).
                         ასევე თბილისის გოეთეს ინსტიტუტში გავლილი აქვს ტრენინგები ( ტესტების შედგენა, შეფასებისა და გერმანული ენის გაკვეთილების დაგეგმარების შესახებ.)
@@ -88,7 +88,7 @@ export default function LanguageTeachers() {
                     <Typography gutterBottom variant="h6" component="h2">
                         ვენერა ტურიანი
                     </Typography>
-                    <Typography style={{textAlign: "start", fontSize: "13px", maxHeight: "200px", overflowX: "scroll"}}>
+                    <Typography style={{textAlign: "start", fontSize: "13px", maxHeight: "200px", overflowX: "scroll", overflowY: "none"}}>
                         1954-59 წ.წ-ში დაამთავრა თბილისის უცხო ენების პედაგოგიური ინსტიტუტის ინგლისური ენის ფაკულტეტი, სპეციალობა ინგლისური და გერმანული ენების მასწავლებელი.
                         1998-დღემდე აკადემიკოს ილია ვეკუას სახ.42-ე ფიზიკა-მათემატიკის საჯარო სკოლა, ინგლისური ენის მასწავლებელი
                         არის შრომის ვეტერანი და დაჯილდოვებულია სახალხო განათლების სამკერდე ნიშნით.
@@ -115,7 +115,7 @@ export default function LanguageTeachers() {
                     <Typography gutterBottom variant="h5" component="h2">
                         ლორენა ბაჯელიძე
                     </Typography>
-                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll"}}>
+                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll", overflowY: "none"}}>
                         დაბადების თარიღი: 5.12.1962
                         1985-1990  დაამთავრა სულხან-საბას სახელობის სახელმწიფო პედაგოგიური ინსტიტუტი.  სპეციალობა: რუსული ენის ფილოლოგია 
                         1998-დღემდენ ის  გახლავთ ი.ვეკუას სახელობის თბილისის ფიზიკა-მათემატიკის 42-ე საჯარო სკოლაში რუსული ენის მასწავლებელი. ქალბატონი ლორენას მოსწავლეები არიან რესპუბლიკური ოლიმპიადების გამარჯვებულები რუსულ ენაში.
@@ -142,7 +142,7 @@ export default function LanguageTeachers() {
                     <Typography gutterBottom variant="h5" component="h2">
                         თამარ გაბუნია
                     </Typography>
-                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll"}}>
+                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll", overflowY: "none"}}>
                         1988-1993წწ-ში დაამთავრა რუსული ენისა და ლიტერატურის ფაკულტეტი, სპეციალობა - რუსული ენისა და ლიტერატურის მასწავლებელი.
                         1994-1997 წლებში მიენიჭა ასპირანტის წოდება „ სლავური ენები“-ში.
                         2003 წწ.-ს გახლდათ ივ. ჯავახიშვილის სახელობის თბილისის სახელმწიფო უნივერსიტეტის აკადემიური დოქტორი. 

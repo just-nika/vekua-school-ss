@@ -10,8 +10,6 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet";
 import CheckPupil from "../utils/CheckPupil";
-import html2canvas from "html2canvas";
-import { jsPDF } from "jspdf";
 import swal from "sweetalert";
 import { useReactToPrint } from 'react-to-print';
 
@@ -64,15 +62,6 @@ const Check = () => {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
-  // const printDocument = () => {
-  //   const input = document.getElementById("card");
-  //   html2canvas(input, {useCORS: true}).then((canvas) => {
-  //     const imgData = canvas.toDataURL("image/png");
-  //     const pdf = new jsPDF("landscape");
-  //     pdf.addImage(imgData, "JPEG", 0, 0, 270, 100, "FAST");
-  //     pdf.save("card.pdf");
-  //   });
-  // };
 
   function ComponentToPrint() {
     return (

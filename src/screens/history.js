@@ -1,5 +1,4 @@
 import React from 'react';
-import QuickLinks from './quicklinks';
 import Covid from './covid'
 
 function History() {

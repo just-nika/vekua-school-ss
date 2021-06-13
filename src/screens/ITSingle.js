@@ -60,7 +60,7 @@ export default function ITTeachers() {
                     <Typography gutterBottom variant="h5" component="h2">
                         ირინე ნემსაძე
                     </Typography>
-                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll"}}>
+                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll", overflowY: "none"}}>
                         1983-1988 წწ-ში დაამთავრა საქართველოს ტექნიკური  უნივერსიტეტის  ავტომატიკისა და  გამოთვლეთი ტექნიკის ფაკულტეტი, სპეციალობა – ელექტრონული გამოთვლელი მანქანები.
                         2004-2006 წლებში კითხულობდა ინფორმატიკის კურსს ქართულ–ამერიკული უმაღლესი სკოლაში.
                         2009 წწ-დან დღემდე ის 42-ე საჯარო სკოლის ინფორმატიკის მასწავლებელია. 
@@ -87,7 +87,7 @@ export default function ITTeachers() {
                     <Typography gutterBottom variant="h5" component="h2">
                         ქეთევან წერეთელი
                     </Typography>
-                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll"}}>
+                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll", overflowY: "none"}}>
                         1998 წელს დაამთავრა  თბილისის ეროვნული უნივერსიტეტი ფილოლოგიის ფაკულტეტი და მომენიჭა ფილოლოგის, ქართული ენა-ლიტერატურისა და ინგლისური ენის პედაგოგის კვალიფიკაცია.
                         2003-2005 წლებში მუშაობდა კერძო სკოლა-ლიცეუმ „ვერძში“ პედაგოგად.
                         2005 წელს მას მიენიჭა სერტიფიკატი „სსიპ ინფორმაციული ტექნოლოგიების პროფესიული სწავლების ცენტრი“-ს პროგრამების ოპერატორის სასწავლო კურსების წარმატებით დამთავრებისათვის.

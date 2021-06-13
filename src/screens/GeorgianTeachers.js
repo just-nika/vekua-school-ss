@@ -60,7 +60,7 @@ export default function GeorgianTeachers() {
                     <Typography gutterBottom variant="h5" component="h2">
                         ანა სალაყაია
                     </Typography>
-                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll"}}>
+                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll", overflowY: "none"}}>
                         1997   წლიდან დღემდე  - აკადემიკოს ილია ვეკუას სახელობის ფიზიკა-მათემატიკის  ქალაქ თბილისის  N42 საჯარო სკოლა - ქართული ენისა დალიტერატურის მასწავლებელი;
                         1997წ.- მასწავლებელთა სამეცნიერო-მეთოდური შრომების  კრებულის- ”მთაწმინდა ” რედაქტორი. ( გამოიცა 4 კრებული);
                         2012 წლიდან დღემდე - ბლოგი ”ივერიონი ”- ხელმძღვანელი;
