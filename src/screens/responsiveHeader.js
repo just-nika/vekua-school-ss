@@ -240,20 +240,6 @@ export default function ResponsiveHeader() {
                     </ListItem>
                 </List>
             </Link>
-            <a href="http://vekua42.edu.ge/obiblio/home/index.php" target="_blank">
-                <List>
-                    <ListItem button>
-                        ბიბლიოთეკა
-                    </ListItem>
-                </List>
-            </a>
-            <a href="https://www.vekua.gfca.ge" target="_blank">
-                <List>
-                    <ListItem button>
-                        საშაბათოების რეგისტრაცია
-                    </ListItem>
-                </List>
-            </a>
             <Link to="/contact">
                 <List>
                     <ListItem button>

@@ -206,13 +206,6 @@ function Header() {
                                 </ListItem>
                             </List>
                         </Link>
-                        <a href="http://vekua42.edu.ge/obiblio/home/index.php" target="_blank">
-                            <List>
-                                <ListItem button>
-                                    ბიბლიოთეკა
-                                </ListItem>
-                            </List>
-                        </a>
                         <Link to="/exams">
                             <List>
                                 <ListItem button>
@@ -1113,7 +1106,7 @@ function Header() {
             const url = document.getElementById("url").value;
             const content = editorRef.current.getContent();
             const mainMonth = month + 1;
-            const date = `${day}.${mainMonth}.${year}`
+            const date = `${day}.${mainMonth}.${year} წ.`
             await firestore.collection("projects").doc(id).update({
               title: title,
               url: url,
@@ -1229,13 +1222,11 @@ function Header() {
             const year = new Date().getFullYear();
             const month = new Date().getMonth();
             const day = new Date().getDate();
-            const hour = new Date().getHours();
-            const minutes = new Date().getMinutes();
             const title = document.getElementById("headline").value;
             const url = document.getElementById("url").value;
             const content = editorRef.current.getContent();
             const mainMonth = month + 1;
-            const date = `${day}.${mainMonth}.${year} წ (${hour}:${minutes} სთ)`
+            const date = `${day}.${mainMonth}.${year} წ.`
             await firestore.collection("posts").doc(id).update({
               title: title,
               url: url,
@@ -1342,15 +1333,20 @@ function Header() {
         const mainMonth = month + 1;
         console.log(mainMonth)
         console.log(date)
-        if (date == `5.20` || date == `5.21` || date == `5.22` || date == `5.23` || date == `5.24` || date == `5.25` || date == `5.26` || date == `5.27` || date == `5.28` || date == `5.29` || date == `5.30`) {
-            return <><Exams /></>
-        }
-        else {
-            if (user) {
-                return <><Data /><Exams /></>
-            }else {
-                return <NoExams />
-            }
+        if (user) {
+            return <>
+                <Data /><Exams />
+                <Helmet>
+                    <title>მისაღები გამოცდების Admin გვერდი</title>
+                </Helmet>
+            </>
+        }else {
+            return <>
+                <NoExams />
+                <Helmet>
+                    <title>მისაღები გამოცდებისათვის რეგისტრაცია</title>
+                </Helmet>
+            </>
         }
     }
     function ExamsCheck() {

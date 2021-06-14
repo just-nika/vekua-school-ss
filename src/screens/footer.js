@@ -34,7 +34,7 @@ function Footer() {
                                 <p><a href="/teachers">დირექცია და მასწავლებლები</a></p>
                             </div>
                             <div className="second-link-column">
-                                <p><a href="/laws">შინაგანწესი</a></p>
+                                <p><a href="/laws">შინაგანაწესი</a></p>
                                 <p><a href="/achievements">მიღწევები</a></p>
                                 <p><a href="/contact">კონტაქტი</a></p>
                                 <p><a href="/login">შესვლა</a></p>
