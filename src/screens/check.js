@@ -66,6 +66,7 @@ const Check = () => {
   function ComponentToPrint() {
     return (
       <div className="pupil-card" id="card"  ref={componentRef}>
+        <br />
         <p style={{ fontSize: "30px" }} className="card-code">
           <strong>
             {" "}
@@ -73,9 +74,7 @@ const Check = () => {
           </strong>
         </p>
         <div className="first">
-          <div className="card-logo" style={{width: "33,3%"}}>
-            <img src={`${forCard.imgUrl}`} alt={`${forCard.firstName} ${forCard.lastName}`} className="pupil-logo" style={{width: "100%"}} />
-          </div>
+          <div className="card-" style={{backgroundImage: `url(${forCard.imgUrl})`, backgroundSize: "cover", width: "192px", height: "256px", backgroundPosition: "center"}}></div>
           <div className="pupil-info">
             <p style={{ textAlign: "start"  }}>
               სახელი: <b>{forCard.firstName}</b>
@@ -90,16 +89,47 @@ const Check = () => {
               მამის სახელი: <b>{forCard.FatherName}</b>
             </p>
           </div>
-          <div className="card-logo">
-            <img src="logo.png" alt="logo" style={{width: "40%"}} />
-          </div>
+          <div className="card-logo" style={{width: "150px", height: "150px", backgroundImage: `url(logo.png)`, backgroundSize: "cover", backgroundPosition: "center"}}></div>
         </div>
         <div className="second">
           <br />
-          <i style={{ textAlign: "start" }}>
-            ინფორმაცია მისაღები გამოცდების წესებისა და ტესტირების თარიღების
-            შესახებ დაიდება სიახლეების ველში.
-          </i>
+          <div className="test-laws">
+            <h4><strong>პროცედურული მოთხოვნები და პირობები:</strong></h4>
+            <div className="small-group" style={{textAlign: "start"}}>
+              <p><strong>გამოცდაზე გამომსვლელი ვალდებულია:</strong></p>
+              <ul style={{textAlign: "start"}}>
+                <li>დროულად გამოცხადდეს  სარეგისტრაციო ბარათით;</li>
+                <li>ჰქონდეს პირბადე, საწერი კალამი, სახაზავი, ფანქარი, საშლელი; </li>
+                <li>დაიცვას სოციალური დისტანცია.</li>
+              </ul>
+              <p><strong>გამოცდაზე გამომსვლელს უფლება აქვს:</strong></p>
+              <ul>
+                <li>ტექნიკურ  საკითხებთან  დაკავშირებით კონსულტაციისა და განმარტებისათვის მიმართოს მეთვალყურეს;</li>
+                <li>ჰქონდეს წყალი პოლიეთილენის ბოთლით;</li>
+              </ul>
+              <p><strong>გამოცდის მონაწილეს ეკრძალება:</strong></p>
+              <ul>
+                <li>გამოცდის მსვლელობის პერიოდში მოიხსნას პირბადე;</li>
+                <li>თან ჰქონდეს მობილური ტელეფონი;</li>
+                <li>გამოიყენოს ნებისმიერი საინფორმაციო წყარო;</li>
+                <li>გამოცდის მსვლელობის დროს  ვერბალური და არავერბალური კომუნიკაცია სხვა მონაწილესთან.</li>
+                <li><strong>VII კლასში  გადამსვლელებს  მათემატიკის გამოცდაზე კალკულატორის გამოყენება</strong> <small><i>(დანარჩენ კლასებში კალკულატორის გამოყენება დაშვებულია)</i></small>;</li>
+              </ul>
+              <h4 style={{textAlign: "center"}}><strong>ნამუშევრის შეფასება და აპელაცია:</strong></h4>
+              <ul>
+                <li>ნამუშევრები გამსწორებლამდე  მიდის კოდირებული ფორმით;</li>
+                <li>ინფიცირების რისკის შემცირების მიზნით, საგამოცდო რვეულები შეფასებამდე დამუშავდება და განთავსდება ორდღიან კარანტინში.</li>
+                <li>შეფასებები გამოქვეყნდება სკოლის საიტზე  გამოცდიდან 10 კალენდარული დღის განმავლობაში  სარეგისტრაციო ბარათის ნომრის შესაბამისად;</li>
+                <li>სააპელაციო განაცხადის ფორმების შევსება მოხდება სკოლაში შედეგების გამოქვეყნებიდან ორი სამუშაო დღის განმავლობაში.</li>
+                <li>აპელაციას გაივლის მხოლოდ კოდირებული ნაშრომი მოსწავლისა და მშობლის გარეშე;</li>
+                <li>აპელაციის შედეგები გამოქვეყნდება სკოლის ვებგვერდზე <a href="https://vekua42.edu.ge">vekua42.edu.ge</a> აპელაციის დასრულებისთანავე.</li>
+              </ul>
+              <u>დამატებითი ინფორმაციისთვის დაგვიკავშირდით სკოლის ტელ. ნომერზე: <a href="tel:0322-99-00-73">(995) 032 2 99 00 73</a> ან ელექტრონულ ფოსტებზე: საიტის Admin - <a href="mailto: support@vekua42.edu.ge" rel="noreferrer" target="_blank">support@vekua42.edu.ge</a>; სკოლის IT - <a href="mailto: it@vekua42.edu.ge" rel="noreferrer" target="_blank">it@vekua42.edu.ge</a>.</u>
+              <br />
+              <p className="some-warnings"><b>გთხოვთ,  ტემპერატურის ან ვირუსის სხვა სიმპტომების არსებობის შემთხვევაში არ გამოცხადდეთ გამოცდაზე.</b></p>
+              <p className="some-warnings"><b>სკოლაში დაცულია შრომის, ჯანმრთელობისა და სოციალური დაცვის სამინისტროს მიერ მოცემული რეკომენდაციები.</b></p>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -115,9 +145,11 @@ const Check = () => {
             <ComponentToPrint />
             <Button variant="outlined" color="primary" onClick={handlePrint}>ამობეჭვდა</Button>
             <br />
+            <br />
           </div>
         ) : (
           <>
+            <br />
             <h1>
               გადაამოწმეთ რეგისტრირებული მოსწავლე და ჩამოწერეთ მისი ბარათი
             </h1>
@@ -128,7 +160,7 @@ const Check = () => {
                   <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                  შეავსეთ ქვემოთ მოცემული ველები
+                  შეავსეთ ქვემოთ მოცემული ველი
                 </Typography>
                 <br />
                 <form
@@ -165,7 +197,7 @@ const Check = () => {
                     style={{ width: "100%" }}
                     className={classes.submit}
                     onClick={handleCheck}>
-                    მოძებნეთ მოსწავლის ბარათი
+                      იხილეთ რეგისტრაციის ბარათი
                   </Button>
                 </form>
               </div>

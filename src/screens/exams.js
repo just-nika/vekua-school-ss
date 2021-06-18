@@ -125,7 +125,7 @@ function Exams() {
                 document.getElementById("oldSchool").value = "";
                 document.getElementById("mobileNumber").value = "";
                 swal(
-                  "მოსწავლე წარმატებულად დარეგისტრირდა!",
+                  "თქვენ წარმატებით დარეგისტრირდით!",
                   "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.",
                   "success"
                 );
@@ -413,7 +413,7 @@ function Exams() {
             style={{ width: "100%", marginTop: "0" }}
             color="primary"
             href="/check">
-            რეგისტრაციის გადამოწმება
+            რეგისტრაციის სისწორე
           </Button>
           <br />
         </div>
