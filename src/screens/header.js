@@ -262,7 +262,7 @@ function Header() {
                                 <Link>
                                     <div>
                                         <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                                            ჩვენს შესახებ
+                                            ჩვენ შესახებ
                                         </Button>
                                         <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
                                             {/* <Link to="/about"><MenuItem onClick={handleClose}>ჩვენს შესახებ</MenuItem></Link> */}

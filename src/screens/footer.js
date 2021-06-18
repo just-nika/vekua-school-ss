@@ -28,7 +28,7 @@ function Footer() {
                         <br />
                         <div className="links">
                             <div className="first-link-column">
-                                <p><a href="/history">ჩვენს შესახებ</a></p>
+                                <p><a href="/history">ჩვენ შესახებ</a></p>
                                 <p><a href="/news">სიახლეები</a></p>
                                 <p><a href="/projects">პროგრამები და პროექტები</a></p>
                                 <p><a href="/teachers">დირექცია და მასწავლებლები</a></p>
