@@ -24,6 +24,7 @@ import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet";
 import swal from "sweetalert";
 import CheckPupil from "../utils/CheckPupil";
+import { CircularProgress } from '@material-ui/core';
 
 function Exams() {
   const [value, setValue] = useState("");
@@ -97,39 +98,76 @@ function Exams() {
 
             const imgUrl = await imageRef.getDownloadURL();
             const fileUrl = await fileRef.getDownloadURL();
-
-            firestore
-              .collection(`${data.class}`)
-              .add({
-                code: code,
-                firstName: data.firstName,
-                lastName: data.lastName,
-                idNumber: data.idRequired,
-                FatherName: data.fatherName,
-                ParentFirstName: data.parentName,
-                ParentLastName: data.parentLastName,
-                oldSchool: data.oldSchool,
-                mobileNumber: data.mobileNumber,
-                language: data.language,
-                class: data.class,
-                imgUrl: imgUrl,
-                fileUrl: fileUrl,
-              })
-              .then(() => {
-                document.getElementById("firstName").value = "";
-                document.getElementById("lastName").value = "";
-                document.getElementById("idNumber").value = "";
-                document.getElementById("FatherName").value = "";
-                document.getElementById("ParentFirstName").value = "";
-                document.getElementById("ParentLastName").value = "";
-                document.getElementById("oldSchool").value = "";
-                document.getElementById("mobileNumber").value = "";
-                swal(
-                  "თქვენ წარმატებით დარეგისტრირდით!",
-                  "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.",
-                  "success"
-                );
-              });
+            if (data.class == '7') {
+              const uniqueCode = 299 + code;
+              firestore
+                .collection(`${data.class}`)
+                .add({
+                  code: uniqueCode,
+                  firstName: data.firstName,
+                  lastName: data.lastName,
+                  idNumber: data.idRequired,
+                  FatherName: data.fatherName,
+                  ParentFirstName: data.parentName,
+                  ParentLastName: data.parentLastName,
+                  oldSchool: data.oldSchool,
+                  mobileNumber: data.mobileNumber,
+                  language: data.language,
+                  class: data.class,
+                  imgUrl: imgUrl,
+                  fileUrl: fileUrl,
+                })
+                .then(() => {
+                  document.getElementById("firstName").value = "";
+                  document.getElementById("lastName").value = "";
+                  document.getElementById("idNumber").value = "";
+                  document.getElementById("FatherName").value = "";
+                  document.getElementById("ParentFirstName").value = "";
+                  document.getElementById("ParentLastName").value = "";
+                  document.getElementById("oldSchool").value = "";
+                  document.getElementById("mobileNumber").value = "";
+                  swal(
+                    "თქვენ წარმატებით დარეგისტრირდით!",
+                    "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.",
+                    "success"
+                  );
+                });
+            }
+            else if (data.class == '8' || data.class == '9' || data.class == '10' || data.class == '11') {
+              const uniqueCode = 99 + code;
+              firestore
+                .collection(`${data.class}`)
+                .add({
+                  code: uniqueCode,
+                  firstName: data.firstName,
+                  lastName: data.lastName,
+                  idNumber: data.idRequired,
+                  FatherName: data.fatherName,
+                  ParentFirstName: data.parentName,
+                  ParentLastName: data.parentLastName,
+                  oldSchool: data.oldSchool,
+                  mobileNumber: data.mobileNumber,
+                  language: data.language,
+                  class: data.class,
+                  imgUrl: imgUrl,
+                  fileUrl: fileUrl,
+                })
+                .then(() => {
+                  document.getElementById("firstName").value = "";
+                  document.getElementById("lastName").value = "";
+                  document.getElementById("idNumber").value = "";
+                  document.getElementById("FatherName").value = "";
+                  document.getElementById("ParentFirstName").value = "";
+                  document.getElementById("ParentLastName").value = "";
+                  document.getElementById("oldSchool").value = "";
+                  document.getElementById("mobileNumber").value = "";
+                  swal(
+                    "თქვენ წარმატებით დარეგისტრირდით!",
+                    "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.",
+                    "success"
+                  );
+                });
+            }
           });
       }
     });
@@ -395,7 +433,7 @@ function Exams() {
               color="secondary"
               className={classes.submit}
               fullWidth>
-              რეგისტრაცია
+                რეგისტრაცია
             </Button>
             <br />
             <p><i>თუ სარეგისტრაციო ფორმაში თვლით ან დაუშვით შეცდომა, გთხოვთ დაგვიკავშირდეთ ქვემოთ მოცემულ ელ. ფოსტებზე ან ნომერზე.</i></p>
