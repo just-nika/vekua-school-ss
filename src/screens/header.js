@@ -1331,7 +1331,7 @@ function Header() {
             </>
         }else {
             return <>
-                <NoExams />
+                <Exams />
                 <Helmet>
                     <title>მისაღები გამოცდებისათვის რეგისტრაცია</title>
                 </Helmet>

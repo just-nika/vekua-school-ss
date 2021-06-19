@@ -69,14 +69,14 @@ const Check = () => {
   function Dates() {
     if (forCard.class == 7) {
       return <>
-        <p className="test-dates" style={{ textAlign: "start" }}><i><b>მათემატიკა</b></i> სარეკომენდაციო გამოცდის თარიღი: <b>02.07.2021 წ.</b></p> 
-        <p className="test-dates" style={{ textAlign: "start" }}>სარეკომენდაციო გამოცდის დაწყების დრო: <b>09:00 სთ.</b> <small>მოსწავლე უნდა გამოცხადდეს გამოცდის დაწყებამდე ნახევარი საათით ადრე!</small> </p>
+        <p className="test-dates" style={{ textAlign: "start", margin: "0" }}><i><b>მათემატიკა</b></i> სარეკომენდაციო გამოცდის თარიღი: <b>02.07.2021 წ.</b></p> 
+        <p className="test-dates" style={{ textAlign: "start", margin: "0" }}>სარეკომენდაციო გამოცდის დაწყების დრო: <b>09:00 სთ.</b> <small>მოსწავლე უნდა გამოცხადდეს გამოცდის დაწყებამდე ნახევარი საათით ადრე!</small> </p>
       </>
     }else if (forCard.class == 8 || forCard.class == 9 || forCard.class == 10 || forCard.class == 11) {
       return <>
-        <p className="test-dates" style={{ textAlign: "start" }}><i><b>მათემატიკა</b></i> სარეკომენდაციო გამოცდის თარიღი: <b>03.07.2021 წ.</b></p> 
-        <p className="test-dates" style={{ textAlign: "start" }}><i><b>ფიზიკა</b></i> სარეკომენდაციო გამოცდის თარიღი: <b>04.07.2021 წ.</b></p> 
-        <p className="test-dates" style={{ textAlign: "start" }}>სარეკომენდაციო გამოცდების დაწყების დრო: <b>09:00 სთ.</b> <small>მოსწავლე უნდა გამოცხადდეს გამოცდის დაწყებამდე ნახევარი საათით ადრე!</small> </p>
+        <p className="test-dates" style={{ textAlign: "start", margin: "0" }}><i><b>მათემატიკა</b></i> სარეკომენდაციო გამოცდის თარიღი: <b>03.07.2021 წ.</b></p> 
+        <p className="test-dates" style={{ textAlign: "start", margin: "0" }}><i><b>ფიზიკა</b></i> სარეკომენდაციო გამოცდის თარიღი: <b>04.07.2021 წ.</b></p> 
+        <p className="test-dates" style={{ textAlign: "start", margin: "0" }}>სარეკომენდაციო გამოცდების დაწყების დრო: <b>09:00 სთ.</b> <small>მოსწავლე უნდა გამოცხადდეს გამოცდის დაწყებამდე ნახევარი საათით ადრე!</small> </p>
       </>
     }
   }
@@ -93,13 +93,13 @@ const Check = () => {
         <div className="first">
           <div className="card-" style={{backgroundImage: `url(${forCard.imgUrl})`, backgroundSize: "cover", width: "192px", height: "256px", backgroundPosition: "center"}}></div>
           <div className="pupil-info">
-            <p style={{ textAlign: "start"  }}>
+            <p style={{ textAlign: "start", margin: "0" }}>
               სახელი: <b>{forCard.firstName}</b>
             </p>
-            <p style={{ textAlign: "start" }}>
+            <p style={{ textAlign: "start", margin: "0" }}>
               გვარი: <b>{forCard.lastName}</b>
             </p>
-            <p style={{ textAlign: "start" }}>
+            <p style={{ textAlign: "start", margin: "0" }}>
               პირადი ნომერი: <b>{forCard.idNumber}</b>
             </p>
             <Dates />

@@ -457,7 +457,7 @@ function Exams() {
           <br />
         </div>
       </Container>
-      <Covid />
+      {/* <Covid /> */}
     </div>
   );
 }
