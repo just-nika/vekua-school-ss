@@ -24,7 +24,7 @@ import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet";
 import swal from "sweetalert";
 import CheckPupil from "../utils/CheckPupil";
-import { CircularProgress } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 
 function Exams() {
   const [value, setValue] = useState("");
@@ -426,6 +426,7 @@ function Exams() {
                 </p>
               </Grid>
             </Grid>
+            <Alert severity="info" variant="filled">ღილაკზე დაჭერის შემდეგ, რეგისტრაციის დამადასტურებელ შეტყობინების გამოჩენამდე, გთხოვთ არ დატოვოთ გვერდი, შესაძლოა დასჭირდეს რამდენიმე წამი.</Alert>
             <Button
               type="submit"
               fullWidth

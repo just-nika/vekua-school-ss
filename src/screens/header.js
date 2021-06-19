@@ -406,17 +406,6 @@ function Header() {
             <Pupils />
         </>;
     }
-
-    // function Projects() {
-    //     return <>
-    //         <Helmet>
-    //               <title>პროექტები/პროგრამები</title>
-    //         </Helmet>
-    //         <h2>პროექტები/პროგრამები</h2>
-    //         <Covid />
-    //     </>;
-    // }
-    
     function OurAchievements() {
         return <>
             <Helmet>

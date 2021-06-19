@@ -12,6 +12,7 @@ import { Helmet } from "react-helmet";
 import CheckPupil from "../utils/CheckPupil";
 import swal from "sweetalert";
 import { useReactToPrint } from 'react-to-print';
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
 const Check = () => {
   const [forCard, setPupilCard] = useState(null);
@@ -62,14 +63,30 @@ const Check = () => {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
-
+  // 01026012587
+  // width: "580px"
+// width: "580px"
+  function Dates() {
+    if (forCard.class == 7) {
+      return <>
+        <p className="test-dates" style={{ textAlign: "start" }}><i><b>მათემატიკა</b></i> სარეკომენდაციო გამოცდის თარიღი: <b>02.07.2021 წ.</b></p> 
+        <p className="test-dates" style={{ textAlign: "start" }}>სარეკომენდაციო გამოცდის დაწყების დრო: <b>09:00 სთ.</b> <small>მოსწავლე უნდა გამოცხადდეს გამოცდის დაწყებამდე ნახევარი საათით ადრე!</small> </p>
+      </>
+    }else if (forCard.class == 8 || forCard.class == 9 || forCard.class == 10 || forCard.class == 11) {
+      return <>
+        <p className="test-dates" style={{ textAlign: "start" }}><i><b>მათემატიკა</b></i> სარეკომენდაციო გამოცდის თარიღი: <b>03.07.2021 წ.</b></p> 
+        <p className="test-dates" style={{ textAlign: "start" }}><i><b>ფიზიკა</b></i> სარეკომენდაციო გამოცდის თარიღი: <b>04.07.2021 წ.</b></p> 
+        <p className="test-dates" style={{ textAlign: "start" }}>სარეკომენდაციო გამოცდების დაწყების დრო: <b>09:00 სთ.</b> <small>მოსწავლე უნდა გამოცხადდეს გამოცდის დაწყებამდე ნახევარი საათით ადრე!</small> </p>
+      </>
+    }
+  }
   function ComponentToPrint() {
     return (
       <div className="pupil-card" id="card"  ref={componentRef}>
-        <br />
         <p style={{ fontSize: "30px" }} className="card-code">
           <strong>
             {" "}
+            <br />
             {forCard.class}-{forCard.code}
           </strong>
         </p>
@@ -85,38 +102,35 @@ const Check = () => {
             <p style={{ textAlign: "start" }}>
               პირადი ნომერი: <b>{forCard.idNumber}</b>
             </p>
-            <p style={{ textAlign: "start" }}>
-              მამის სახელი: <b>{forCard.FatherName}</b>
-            </p>
+            <Dates />
           </div>
-          <div className="card-logo" style={{width: "150px", height: "150px", backgroundImage: `url(logo.png)`, backgroundSize: "cover", backgroundPosition: "center"}}></div>
+          <div className="card-logo" style={{width: "125px", height: "125px", backgroundImage: `url(logo.png)`, backgroundSize: "cover", backgroundPosition: "center"}}></div>
         </div>
         <div className="second">
-          <br />
           <div className="test-laws">
-            <h4><strong>პროცედურული მოთხოვნები და პირობები:</strong></h4>
-            <div className="small-group" style={{textAlign: "start"}}>
-              <p><strong>გამოცდაზე გამომსვლელი ვალდებულია:</strong></p>
-              <ul style={{textAlign: "start"}}>
+            <h6><strong>პროცედურული მოთხოვნები და პირობები:</strong></h6>
+            <div className="small-group" style={{textAlign: "start", fontSize: "12px" }}>
+              <p style={{marginBottom: "5px", marginTop: "5px"}}><strong>გამოცდაზე გამომსვლელი ვალდებულია:</strong></p>
+              <ul style={{textAlign: "start", marginBottom: "3px"}}>
                 <li>დროულად გამოცხადდეს  სარეგისტრაციო ბარათით;</li>
                 <li>ჰქონდეს პირბადე, საწერი კალამი, სახაზავი, ფანქარი, საშლელი; </li>
                 <li>დაიცვას სოციალური დისტანცია.</li>
               </ul>
-              <p><strong>გამოცდაზე გამომსვლელს უფლება აქვს:</strong></p>
-              <ul>
+              <p style={{marginBottom: "5px", marginTop: "5px"}}><strong>გამოცდაზე გამომსვლელს უფლება აქვს:</strong></p>
+              <ul style={{textAlign: "start", marginBottom: "3px"}}>
                 <li>ტექნიკურ  საკითხებთან  დაკავშირებით კონსულტაციისა და განმარტებისათვის მიმართოს მეთვალყურეს;</li>
                 <li>ჰქონდეს წყალი პოლიეთილენის ბოთლით;</li>
               </ul>
-              <p><strong>გამოცდის მონაწილეს ეკრძალება:</strong></p>
-              <ul>
+              <p style={{marginBottom: "5px", marginTop: "5px"}}><strong>გამოცდის მონაწილეს ეკრძალება:</strong></p>
+              <ul style={{textAlign: "start", marginBottom: "3px"}}>
                 <li>გამოცდის მსვლელობის პერიოდში მოიხსნას პირბადე;</li>
                 <li>თან ჰქონდეს მობილური ტელეფონი;</li>
                 <li>გამოიყენოს ნებისმიერი საინფორმაციო წყარო;</li>
                 <li>გამოცდის მსვლელობის დროს  ვერბალური და არავერბალური კომუნიკაცია სხვა მონაწილესთან.</li>
                 <li><strong>VII კლასში  გადამსვლელებს  მათემატიკის გამოცდაზე კალკულატორის გამოყენება</strong> <small><i>(დანარჩენ კლასებში კალკულატორის გამოყენება დაშვებულია)</i></small>;</li>
               </ul>
-              <h4 style={{textAlign: "center"}}><strong>ნამუშევრის შეფასება და აპელაცია:</strong></h4>
-              <ul>
+              <p style={{marginBottom: "5px", marginTop: "5px"}}><strong>ნამუშევრის შეფასება და აპელაცია:</strong></p>
+              <ul style={{textAlign: "start", marginBottom: "3px"}}>
                 <li>ნამუშევრები გამსწორებლამდე  მიდის კოდირებული ფორმით;</li>
                 <li>ინფიცირების რისკის შემცირების მიზნით, საგამოცდო რვეულები შეფასებამდე დამუშავდება და განთავსდება ორდღიან კარანტინში.</li>
                 <li>შეფასებები გამოქვეყნდება სკოლის საიტზე  გამოცდიდან 10 კალენდარული დღის განმავლობაში  სარეგისტრაციო ბარათის ნომრის შესაბამისად;</li>
@@ -124,9 +138,9 @@ const Check = () => {
                 <li>აპელაციას გაივლის მხოლოდ კოდირებული ნაშრომი მოსწავლისა და მშობლის გარეშე;</li>
                 <li>აპელაციის შედეგები გამოქვეყნდება სკოლის ვებგვერდზე <a href="https://vekua42.edu.ge">vekua42.edu.ge</a> აპელაციის დასრულებისთანავე.</li>
               </ul>
-              <u>დამატებითი ინფორმაციისთვის დაგვიკავშირდით სკოლის ტელ. ნომერზე: <a href="tel:0322-99-00-73">(995) 032 2 99 00 73</a> ან ელექტრონულ ფოსტებზე: საიტის Admin - <a href="mailto: support@vekua42.edu.ge" rel="noreferrer" target="_blank">support@vekua42.edu.ge</a>; სკოლის IT - <a href="mailto: it@vekua42.edu.ge" rel="noreferrer" target="_blank">it@vekua42.edu.ge</a>.</u>
-              <br />
-              <p className="some-warnings"><b>გთხოვთ,  ტემპერატურის ან ვირუსის სხვა სიმპტომების არსებობის შემთხვევაში არ გამოცხადდეთ გამოცდაზე.</b></p>
+              {/* <p style={{textAlign: "center"}}><u style={{textAlign: "center"}}>დამატებითი ინფორმაციისთვის დაგვიკავშირდით სკოლის ტელ. ნომერზე: <a href="tel:0322-99-00-73">(995) 032 2 99 00 73</a></u></p> */}
+              {/* <p style={{textAlign: "center"}}><u style={{textAlign: "center"}}>ან ელექტრონულ ფოსტებზე: <a href="mailto: support@vekua42.edu.ge" rel="noreferrer" target="_blank">support@vekua42.edu.ge</a>; <a href="mailto: it@vekua42.edu.ge" rel="noreferrer" target="_blank">it@vekua42.edu.ge</a>.</u></p> */}
+              <p className="some-warnings" style={{marginBottom: "0"}}><b>გთხოვთ,  ტემპერატურის ან ვირუსის სხვა სიმპტომების არსებობის შემთხვევაში არ გამოცხადდეთ გამოცდაზე.</b></p>
               <p className="some-warnings"><b>სკოლაში დაცულია შრომის, ჯანმრთელობისა და სოციალური დაცვის სამინისტროს მიერ მოცემული რეკომენდაციები.</b></p>
             </div>
           </div>
