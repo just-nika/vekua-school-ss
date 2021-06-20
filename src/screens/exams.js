@@ -25,6 +25,9 @@ import { Helmet } from "react-helmet";
 import swal from "sweetalert";
 import CheckPupil from "../utils/CheckPupil";
 import Alert from '@material-ui/lab/Alert';
+import clsx from 'clsx';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { green } from '@material-ui/core/colors';
 
 function Exams() {
   const [value, setValue] = useState("");
@@ -57,6 +60,35 @@ function Exams() {
     input: {
       display: "none",
     },
+    root: {
+      display: 'flex',
+      alignItems: 'center',
+    },
+    wrapper: {
+      margin: theme.spacing(1),
+      position: 'relative',
+    },
+    buttonSuccess: {
+      backgroundColor: green[500],
+      '&:hover': {
+        backgroundColor: green[700],
+      },
+    },
+    fabProgress: {
+      color: green[500],
+      position: 'absolute',
+      top: -6,
+      left: -6,
+      zIndex: 1,
+    },
+    buttonProgress: {
+      color: green[500],
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      marginTop: -12,
+      marginLeft: -12,
+    },
   }));
   const [age, setAge] = React.useState("");
   const handleChange = (event) => {
@@ -68,6 +100,18 @@ function Exams() {
   // };
   const [image, setImage] = useState(null);
   const [file, setFile] = useState(null);
+  const [loading, setLoading] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
+  const timer = React.useRef();
+  const buttonClassname = clsx({
+    [classes.buttonSuccess]: success,
+  });
+
+  React.useEffect(() => {
+    return () => {
+      clearTimeout(timer.current);
+    };
+  }, []);
   const imgUpload = (e) => {
     setImage(e.target.files[0]);
   };
@@ -84,7 +128,11 @@ function Exams() {
           "error"
         );
       } else {
-        firestore
+        if (!loading) {
+          setSuccess(false);
+          setLoading(true);
+          
+          firestore
           .collection(`${data.class}`)
           .get()
           .then(async function (querySnapshot) {
@@ -169,6 +217,11 @@ function Exams() {
                 });
             }
           });
+          timer.current = window.setTimeout(() => {
+            setSuccess(true);
+            setLoading(false);
+          }, 4500);
+        }
       }
     });
   };
@@ -432,10 +485,12 @@ function Exams() {
               fullWidth
               variant="contained"
               color="secondary"
-              className={classes.submit}
+              className={buttonClassname}
+              disabled={loading}
               fullWidth>
                 რეგისტრაცია
             </Button>
+            {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
             <br />
             <p><i>თუ სარეგისტრაციო ფორმაში თვლით ან დაუშვით შეცდომა, გთხოვთ დაგვიკავშირდეთ ქვემოთ მოცემულ ელ. ფოსტებზე ან ნომერზე.</i></p>
             <p style={{textAlign: "start"}}><b>საიტის Admin</b> - <a href="mailto: support@vekua42.edu.ge" rel="noreferrer" target="_blank">support@vekua42.edu.ge</a></p>
