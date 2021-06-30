@@ -1,7 +1,6 @@
 import React from 'react';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Covid from './covid';
-import Exams from './exams';
 
 (function(){
     var i, e, d = document, s = "script";i = d.createElement("script");i.async = 1;
@@ -70,7 +69,6 @@ function Main() {
                     თვითრეალიზება და ქვეყნის ეკონომიკური განვითარების პროცესებში წარმატებულად მონაწილეობა.
                 </p>
             </div>
-            <Exams />
             <div className="facebook">
                 <div id="curator-feed-default-feed-layout"><a href="https://curator.io" target="_blank" class="crt-logo crt-tag">Powered by Curator.io</a></div>
             </div>

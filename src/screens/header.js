@@ -206,13 +206,6 @@ function Header() {
                                 </ListItem>
                             </List>
                         </Link>
-                        <Link to="/exams">
-                            <List>
-                                <ListItem button>
-                                    მისაღები გამოცდებისათვის რეგისტრაცია
-                                </ListItem>
-                            </List>
-                        </Link>
                         <Link to="/contact">
                             <List>
                                 <ListItem button>
@@ -284,9 +277,7 @@ function Header() {
                             <li className="header-link">
                                 <Link to="/achievements"><Button aria-controls="simple-menu" aria-haspopup="true">მიღწევები</Button></Link>
                             </li>
-                            <li className="header-link">
-                                <Link to="/exams"><Button aria-controls="simple-menu" aria-haspopup="true">მისაღები გამოცდები</Button></Link>
-                            </li>
+                            
                             <li className="header-link">
                                 <Link to="/contact"><Button aria-controls="simple-menu" aria-haspopup="true">კონტაქტი</Button></Link>
                             </li>
@@ -338,12 +329,6 @@ function Header() {
                     </Route>
                     <Route path="/login">
                         <SecretLogin />
-                    </Route>
-                    <Route path="/exams">
-                        <ExamsReg />
-                    </Route>
-                    <Route path="/check">
-                        <ExamsCheck />
                     </Route>
                     <Route path="/" exact>
                         <Home />
@@ -1308,39 +1293,6 @@ function Header() {
 
         }
       }
-    
-    function ExamsReg() {
-        // const year = new Date().getFullYear();
-        // const month = new Date().getMonth();
-        var user = firebase.auth().currentUser;
-        const year = new Date().getFullYear();
-        const month = new Date().getMonth();
-        const day = new Date().getDate();
-        const hour = new Date().getHours();
-        const minutes = new Date().getMinutes();
-        const date = `${month}.${day}`
-        const mainMonth = month + 1;
-        console.log(mainMonth)
-        console.log(date)
-        if (user) {
-            return <>
-                <Data /><Exams />
-                <Helmet>
-                    <title>მისაღები გამოცდების Admin გვერდი</title>
-                </Helmet>
-            </>
-        }else {
-            return <>
-                <Exams />
-                <Helmet>
-                    <title>მისაღები გამოცდებისათვის რეგისტრაცია</title>
-                </Helmet>
-            </>
-        }
-    }
-    function ExamsCheck() {
-        return <Check />
-    }
 }
 
 export default Header;
