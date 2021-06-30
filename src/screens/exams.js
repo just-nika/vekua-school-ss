@@ -303,13 +303,13 @@ function Exams() {
                   {...register("fatherName", { required: true })}
                   error={errors.fatherName}
                   helperText={
-                    errors.fatherName && "მამის სახელის მითითება აუცილებელია"
+                    errors.fatherName && "მამის ან კანონიერი წარმომადგენლის სახელის მითითება აუცილებელია"
                   }
                   variant="standard"
                   required
                   fullWidth
                   id="FatherName"
-                  label="მოსწავლის მამის სახელი"
+                  label="მოსწავლის მამის/კანონიერი წარმომადგენლის სახელი"
                   name="fatherName"
                   autoComplete="fatherName"
                 />
@@ -320,13 +320,13 @@ function Exams() {
                   error={errors.parentName}
                   helperText={
                     errors.parentName &&
-                    "მოსწავლის მშობლის სახელის მითითება აუცილებელია"
+                    "მოსწავლის მშობლის ან კანონიერი წარმომადგენლის სახელის მითითება აუცილებელია"
                   }
                   variant="standard"
                   required
                   fullWidth
                   id="ParentFirstName"
-                  label="მოსწავლის მშობლის სახელი"
+                  label="მოსწავლის მშობლის/კანონიერი წარმომადგენლის სახელი"
                   name="parentName"
                   autoComplete="parentName"
                 />
@@ -337,13 +337,13 @@ function Exams() {
                   error={errors.parentLastName}
                   helperText={
                     errors.parentLastName &&
-                    "მოსწავლის მშობლის გვარის მითითება აუცილებელია"
+                    "მოსწავლის მშობლის ან კანონიერი წარმომადგენლის გვარის მითითება აუცილებელია"
                   }
                   variant="standard"
                   required
                   fullWidth
                   id="ParentLastName"
-                  label="მოსწავლის მშობლის გვარი"
+                  label="მოსწავლის მშობლის/კანონიერი წარმომადგენლის გვარი"
                   name="parentLastName"
                   autoComplete="parentLastName"
                 />
@@ -371,14 +371,14 @@ function Exams() {
                   error={errors.mobileNumber}
                   helperText={
                     errors.mobileNumber &&
-                    "მშობლის ტელეფონის ნომრის მითითება აუცილებელია"
+                    "მშობლის ან კანონიერი წარმომადგენლის ტელეფონის ნომრის მითითება აუცილებელია"
                   }
                   variant="standard"
                   required
                   fullWidth
                   id="mobileNumber"
                   type="number"
-                  label="მშობლის ტელეფონის ნომერი"
+                  label="მშობლის/კანონიერი წარმომადგენლის ტელეფონის ნომერი"
                   name="mobileNumber"
                   autoComplete="mobileNumber"
                 />
@@ -391,7 +391,7 @@ function Exams() {
                     error={errors.class}
                     helperText={
                       errors.class &&
-                      "მშობლის ტელეფონის ნომრის მითითება აუცილებელია"
+                      "კლასის მითითება აუცილებელია"
                     }
                     id="class"
                     onChange={selectClass}
@@ -480,6 +480,7 @@ function Exams() {
               </Grid>
             </Grid>
             <Alert severity="info" variant="filled">ღილაკზე დაჭერის შემდეგ, რეგისტრაციის დამადასტურებელ შეტყობინების გამოჩენამდე, გთხოვთ არ დატოვოთ გვერდი, შესაძლოა დასჭირდეს რამდენიმე წამი.</Alert>
+            <br />
             <Button
               type="submit"
               fullWidth
@@ -493,8 +494,8 @@ function Exams() {
             {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
             <br />
             <p><i>თუ სარეგისტრაციო ფორმაში თვლით ან დაუშვით შეცდომა, გთხოვთ დაგვიკავშირდეთ ქვემოთ მოცემულ ელ. ფოსტებზე ან ნომერზე.</i></p>
-            <p style={{textAlign: "start"}}><b>საიტის Admin</b> - <a href="mailto: support@vekua42.edu.ge" rel="noreferrer" target="_blank">support@vekua42.edu.ge</a></p>
-            <p style={{textAlign: "start"}}><b>სკოლის IT</b> - <a href="mailto: it@vekua42.edu.ge" rel="noreferrer" target="_blank">it@vekua42.edu.ge</a></p>
+            <p style={{textAlign: "start"}}><a href="mailto: support@vekua42.edu.ge" rel="noreferrer" target="_blank">support@vekua42.edu.ge</a></p>
+            <p style={{textAlign: "start"}}><a href="mailto: it@vekua42.edu.ge" rel="noreferrer" target="_blank">it@vekua42.edu.ge</a></p>
           </form>
           <br />
           <p>

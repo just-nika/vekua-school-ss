@@ -12,7 +12,6 @@ import { Helmet } from "react-helmet";
 import CheckPupil from "../utils/CheckPupil";
 import swal from "sweetalert";
 import { useReactToPrint } from 'react-to-print';
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
 const Check = () => {
   const [forCard, setPupilCard] = useState(null);
@@ -40,15 +39,8 @@ const Check = () => {
   const {
     register,
     handleSubmit,
-    getValues,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
-    const language = data.language;
-    // console.log(language)
-
-    console.log(data);
-  };
   const handleCheck = async () => {
     const idNumberForm = document.getElementById("idNumber").value;
     CheckPupil(idNumberForm).then((response) => {
@@ -67,12 +59,12 @@ const Check = () => {
   // width: "580px"
 // width: "580px"
   function Dates() {
-    if (forCard.class == 7) {
+    if (forCard.class === 7) {
       return <>
         <p className="test-dates" style={{ textAlign: "start", margin: "0" }}><i><b>მათემატიკა</b></i> სარეკომენდაციო გამოცდის თარიღი: <b>02.07.2021 წ.</b></p> 
         <p className="test-dates" style={{ textAlign: "start", margin: "0" }}>სარეკომენდაციო გამოცდის დაწყების დრო: <b>09:00 სთ.</b> <small>მოსწავლე უნდა გამოცხადდეს გამოცდის დაწყებამდე ნახევარი საათით ადრე!</small> </p>
       </>
-    }else if (forCard.class == 8 || forCard.class == 9 || forCard.class == 10 || forCard.class == 11) {
+    }else if (forCard.class === 8 || forCard.class === 9 || forCard.class === 10 || forCard.class === 11) {
       return <>
         <p className="test-dates" style={{ textAlign: "start", margin: "0" }}><i><b>მათემატიკა</b></i> სარეკომენდაციო გამოცდის თარიღი: <b>03.07.2021 წ.</b></p> 
         <p className="test-dates" style={{ textAlign: "start", margin: "0" }}><i><b>ფიზიკა</b></i> სარეკომენდაციო გამოცდის თარიღი: <b>04.07.2021 წ.</b></p> 

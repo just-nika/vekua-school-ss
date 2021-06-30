@@ -510,7 +510,7 @@ function Header() {
             const url = document.getElementById("photo").value;
             const content = editorRef.current.getContent();
             const mainMonth = month + 1;
-            const date = `${day}.${mainMonth}.${year} წ (${hour}:${minutes} სთ)`
+            const date = `${day}.${mainMonth}.${year} წ.`
             await firestore.collection("posts").add({
                 title: title,
                 url: url,
@@ -522,7 +522,7 @@ function Header() {
             })
         }
         const getPosts = async () => {
-            const data = await firestore.collection("posts").get();
+            const data = await firestore.collection("posts").orderBy("date", "desc").get();
             console.log(data);
             setPosts(data.docs.map(doc => ({
                 ...doc.data(),
@@ -832,7 +832,7 @@ function Header() {
             })
         }
         const getPosts = async () => {
-            const data = await firestore.collection("projects").get();
+            const data = await firestore.collection("projects").orderBy("date", "desc").get();;
             console.log(data);
             setPosts(data.docs.map(doc => ({
                 ...doc.data(),
