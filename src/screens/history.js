@@ -1,9 +1,13 @@
 import React from 'react';
 import Covid from './covid'
+import { Helmet } from "react-helmet";
 
 function History() {
     return (
         <div className="">
+            <Helmet>
+                <title>ისტორია და მისია</title>
+            </Helmet>
             <div className="mission-background"></div>
             <div className="text-about">
                 <div className="page-content" style={{textAlign: 'start'}}>

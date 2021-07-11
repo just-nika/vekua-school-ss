@@ -6,6 +6,8 @@ import {
     firestore
 } from '../firebase/firebase.config';
 import { useHistory } from 'react-router';
+import { Helmet } from "react-helmet";
+import swal from 'sweetalert';
 
 function Login() {
     const history = useHistory();
@@ -17,13 +19,21 @@ function Login() {
         .then(async (userCredential) => {
             const user = userCredential.user;
             history.push("/");
-        })
+        }).catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            swal("სისტემაში ვერ შეხვედით!", "ელექტრონული ფოსტა ან პაროლი არასწორია.", "error");
+            // ..
+        });
     }
     firestore.collection("posts").get().then(function(querySnapshot) {      
         console.log(querySnapshot.size); 
     });
     return (
     <div className="login-container">
+        <Helmet>
+            <title>სისტემაში შესვლა</title>
+        </Helmet>
         <div className="login">
             <form className="" autoComplete="off">
                 <h2>Admin Panel-ზე შესვლა</h2>

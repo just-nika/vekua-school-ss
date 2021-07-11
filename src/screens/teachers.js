@@ -16,7 +16,7 @@ import BiologyTeachers from './BiologyTeachers';
 import LanguageTeachers from './LanguageTeachers';
 import HistoryTeachers from './HistoryTeachers';
 import GeographyTeachers from './GeographyTeachers';
-import SomeTeachers from './SomeTeachers';
+import { Helmet } from "react-helmet";
 import Container from '@material-ui/core/Container';
 
 function TabPanel(props) {
@@ -73,6 +73,9 @@ export default function SchoolTeachers() {
 
   return (
     <div className={classes.root}>
+      <Helmet>
+        <title>დირექცია/მასწავლებლები</title>
+      </Helmet>
       <AppBar position="static" color="default">
         <Tabs
           value={value}
@@ -244,7 +247,7 @@ export default function SchoolTeachers() {
                 <p style={{textAlign: "start"}}>წევრები:</p>
                 <ol style={{textAlign: "start"}}>
                     <li>მაკა ბიბილეიშვილი</li>
-                    <li>მანანა გაბუნია</li>
+                    <li>მირანდა კაპანაძე</li>
                 </ol>
                 </Grid>
             </Container>

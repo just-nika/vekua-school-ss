@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { firestore } from '../firebase/firebase.config';
 import { useForm } from "react-hook-form";
+import { Helmet } from "react-helmet";
 
 function Contact() {
     const addMessage = async () => {
@@ -31,7 +32,10 @@ function Contact() {
       } = useForm();
     return (
         <div className="">
-            <div className="contact-background"></div>
+            <Helmet>
+                  <title>კონტაქტი</title>
+                </Helmet>
+            {/* <div className="contact-background"></div> */}
             <div className="content">
                 <br />
                 <h1>კონტაქტი</h1>

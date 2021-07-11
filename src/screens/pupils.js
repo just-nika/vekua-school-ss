@@ -1,9 +1,13 @@
 import React from 'react';
 import Covid from './covid';
+import { Helmet } from "react-helmet";
 
 function Pupils() {
     return (
         <div className="">
+            <Helmet>
+                <title>სკოლის თვითმმართველობა</title>
+            </Helmet>
             <div className="pupils-main">
                 <div className="pupils-background"></div>
                 <div className="about-that">

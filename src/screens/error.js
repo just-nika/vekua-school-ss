@@ -1,9 +1,13 @@
 import React from 'react'
+import { Helmet } from "react-helmet";
 
 function Error() {
     
     return (
     <div>
+        <Helmet>
+            <title>გვერდი ვერ მოიძებნა 404</title>
+        </Helmet>
         {/* <div>
            
         

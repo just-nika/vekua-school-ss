@@ -1,10 +1,13 @@
 import React from 'react';
-import QuickLinks from './quicklinks';
+import { Helmet } from "react-helmet";
 import Covid from './covid';
 
 function laws() {
     return (
         <div className="">
+        <Helmet>
+            <title>შინაგანაწესი</title>
+        </Helmet>
         <div className="text-about">
             <div className="content" style={{}}>
                 <br />

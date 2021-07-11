@@ -6,7 +6,7 @@ function Footer() {
         <div>
                 <div className="footer">
                     <div className="first-column">
-                        <a href="/"><img src="./logo.png" className="footer-logo" alt="logo"/></a>
+                        <a href="/"><img src="/logo.png" className="footer-logo" alt="logo"/></a>
                         <br />
                         <br />
                         <a href="https://www.facebook.com/schoolvekua/" target="_blank"><Button color="primary"><i class="fab fa-facebook"></i></Button></a>

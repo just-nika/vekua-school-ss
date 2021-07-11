@@ -1,10 +1,14 @@
 import React from 'react';
 import QuickLinks from './quicklinks';
 import Covid from './covid';
+import { Helmet } from "react-helmet";
 
 function Achievements() {
     return (
         <div className="">
+            <Helmet>
+              <title>მიღწევები</title>
+            </Helmet>
             <div className="achievements-text">
                 <div className="achievements-content">
                     <h2>მიღწევები</h2>
