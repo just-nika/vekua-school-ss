@@ -13,7 +13,7 @@ import CheckPupil from "../utils/CheckPupil";
 import swal from "sweetalert";
 import { useReactToPrint } from 'react-to-print';
 
-const Check = () => {
+const CheckAp = () => {
   const [forCard, setPupilCard] = useState(null);
 
   const useStyles = makeStyles((theme) => ({
@@ -55,62 +55,45 @@ const Check = () => {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
-  function DatesA() {
+  function Dates() {
     if (forCard.class === 7) {
-      if (forCard.point) {
+      if (forCard.ap) {
         return <>
           {/* <p className="test-dates" style={{ textAlign: "start", margin: "0" }}><i><b>მათემატიკა</b></i> სარეკომენდაციო გამოცდის თარიღი: <b>02.07.2021 წ.</b></p> 
           <p className="test-dates" style={{ textAlign: "start", margin: "0" }}>სარეკომენდაციო გამოცდის დაწყების დრო: <b>09:00 სთ.</b> <small>მოსწავლე უნდა გამოცხადდეს გამოცდის დაწყებამდე ნახევარი საათით ადრე!</small> </p> */}
-          <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}>02.07.2021-ის მათემატიკის მისაღებ გამოცდაზე მოსწავლემ უნიკალური კოდით {forCard.class}-{forCard.code}, მიიღო {forCard.point} ქულა.</p>
+          <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}>მოსწავლემ უნიკალური კოდით {forCard.class}-{forCard.code}, აპელაციის შედეგად მიიღო {forCard.ap} ქულა.</p>
           <br />
         </>
       }else {
-        swal(`მოსწავლის ნიშნები ვერ მოიძებნა!`)
         return <>
           {/* <p className="test-dates" style={{ textAlign: "start", margin: "0" }}><i><b>მათემატიკა</b></i> სარეკომენდაციო გამოცდის თარიღი: <b>02.07.2021 წ.</b></p> 
           <p className="test-dates" style={{ textAlign: "start", margin: "0" }}>სარეკომენდაციო გამოცდის დაწყების დრო: <b>09:00 სთ.</b> <small>მოსწავლე უნდა გამოცხადდეს გამოცდის დაწყებამდე ნახევარი საათით ადრე!</small> </p> */}
-          {/* <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}>მოსწავლეს უნიკალური კოდით {forCard.class}-{forCard.code} აპელაცია არ გაუვლია.</p>
-          <br /> */}
+          <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}>მოსწავლეს უნიკალური კოდით {forCard.class}-{forCard.code} აპელაცია არ გაუვლია.</p>
+          <br />
         </>
         // swal(`ასეთი რეგისტრირებული მოსწავლე არ არსებობს!`, `მოსწავლე პირადი ნომრით ${forCard.idNumber} არ არის რეგისტრირებული, თუ თვლით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით სკოლის ნომერზე ან ელ. ფოსტებზე.`, "error")
       }
     }else if (forCard.class === 8 || forCard.class === 9 || forCard.class === 10 || forCard.class === 11) {
-      if (forCard.m || forCard.p) {
+      if (forCard.map && forCard.pap) {
         return <>
-          <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}>მოსწავლის, უნიკალური კოდით {forCard.class}-{forCard.code} შეფასებებია:</p>
-          <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}><i>03.07.2021 <b>მათემატიკა</b></i> {forCard.m}</p> 
-          <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}><i>04.07.2021 <b>ფიზიკა</b></i> {forCard.p}</p> 
+          <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}>მოსწავლის, უნიკალური კოდით {forCard.class}-{forCard.code} აპელაციის შემდგომი შეფასებებია:</p>
+          <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}><i><b>მათემატიკა</b></i> {forCard.map}</p> 
+          <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}><i><b>ფიზიკა</b></i> {forCard.pap}</p> 
           <br />
         </>
       }else {
-        swal(`მოსწავლის ნიშნები ვერ მოიძებნა!`)
         return <>
-          {/* <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}>მოსწავლეს, უნიკალური კოდით {forCard.class}-{forCard.code} აპელაცია არ გაუვლია.</p> */}
-          {/* <br /> */}
+          <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}>მოსწავლეს, უნიკალური კოდით {forCard.class}-{forCard.code} აპელაცია არ გაუვლია.</p>
+          <br />
         </>
       }
     }
-    // if (forCard.class === 7) {
-    //   return <>
-    //     {/* <p className="test-dates" style={{ textAlign: "start", margin: "0" }}><i><b>მათემატიკა</b></i> სარეკომენდაციო გამოცდის თარიღი: <b>02.07.2021 წ.</b></p> 
-    //     <p className="test-dates" style={{ textAlign: "start", margin: "0" }}>სარეკომენდაციო გამოცდის დაწყების დრო: <b>09:00 სთ.</b> <small>მოსწავლე უნდა გამოცხადდეს გამოცდის დაწყებამდე ნახევარი საათით ადრე!</small> </p> */}
-    //     <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}>02.07.2021-ის მათემატიკის მისაღებ გამოცდაზე მოსწავლემ უნიკალური კოდით {forCard.class}-{forCard.code}, მიიღო {forCard.point} ქულა.</p>
-    //     <br />
-    //   </>
-    // }else if (forCard.class === 8 || forCard.class === 9 || forCard.class === 10 || forCard.class === 11) {
-    //   return <>
-    //     <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}>მოსწავლის, უნიკალური კოდით {forCard.class}-{forCard.code} შეფასებებია:</p>
-    //     <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}><i>03.07.2021 <b>მათემატიკა</b></i> {forCard.m}</p> 
-    //     <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}><i>04.07.2021 <b>ფიზიკა</b></i> {forCard.p}</p> 
-    //     <br />
-    //   </>
-    // }
   }
   function ComponentToPrint() {
     return (
         <div>
           <br />
-          <DatesA />
+          <Dates />
         </div>
       // <div className="pupil-card" id="card"  ref={componentRef}>
       //   <p style={{ fontSize: "30px" }} className="card-code">
@@ -193,9 +176,9 @@ const Check = () => {
           <>
             <br />
             <h1>
-            2021 წლის 2, 3 და 4 ივლისს ჩატარებული სარეკომენდაციო წერის შედეგები გადაამოწმეთ მოსწავლის პირადი ნომრის მიხედვით
+            2021 წლის 2, 3 და 4 ივლისს ჩატარებული სარეკომენდაციო წერის აპელაციით დადგენილი ქულა გადაამოწმეთ მოსწავლის პირადი ნომრის მიხედვით
             </h1>
-            <div className="info-text" style={{ textAlign: "start", margin: "0", fontSize: "16px" }}>
+            {/* <div className="info-text" style={{ textAlign: "start", margin: "0", fontSize: "16px" }}>
               <p>მიმდინარე წლის 2, 3 და 4 ივლისს ჩატარებული სარეკომენდაციო წერების შედეგები შეგიძლიათ იხილოთ სკოლის ვებ. გვერდზე <a href="/#checking">vekua42.edu.ge</a> მოსწავლის პირადი ნომრის მითითებით.</p>
               <br />
               <p>სააპელაციო განაცხადის ფორმების შევსება მოხდება სკოლაში 8-9 ივლისს, 17 საათამდე.</p>
@@ -206,7 +189,7 @@ const Check = () => {
                 <li><b>აპელაციას გაივლის მხოლოდ კოდირებული ნაშრომი მოსწავლისა და მშობლის გარეშე;</b></li>
                 <li><b>აპელაციის შედეგები გამოქვეყნდება სკოლის ვებგვერდზე vekua42.edu.ge აპელაციის დასრულებისთანავე.</b></li>
               </ul>
-            </div>
+            </div> */}
             <Container component="main" maxWidth="xs">
               <CssBaseline />
               <div className={classes.paper} >
@@ -263,4 +246,4 @@ const Check = () => {
   );
 }
 
-export default Check;
+export default CheckAp;

@@ -5,6 +5,8 @@ import Check from './check';
 import { Helmet } from "react-helmet";
 import Button from '@material-ui/core/Button'
 import { firebase, firestore } from '../firebase/firebase.config'
+import CheckAp from './checkAp';
+import Divider from '@material-ui/core/Divider';
 
 (function(){
     var i, e, d = document, s = "script";i = d.createElement("script");i.async = 1;
@@ -88,6 +90,8 @@ function Main() {
                 <span className="visually-hidden">Next</span>
             </button>
             </div>
+            <CheckAp />
+            <hr />
             <Check />
             <div className="main-text">
                 <p>

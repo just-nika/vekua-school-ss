@@ -737,6 +737,10 @@ div.quick:hover {
   box-shadow: 9px 13px 26px -8px #222533;
 }
 
+.news-container {
+  width: 75% !important;
+}
+
 @media (min-width: 960px) {
   .MuiGrid-grid-md-6 {
     flex-grow: 0;

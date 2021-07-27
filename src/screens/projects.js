@@ -160,7 +160,7 @@ function Projects() {
                             style={{margin: "auto"}}
                         />
                     </div>
-                    <div className="news-container" style={{width: "60%"}}>
+                    <div className="news-container">
                         <br />
                         <br />
                         <br />

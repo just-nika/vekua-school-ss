@@ -76,6 +76,18 @@ export default function SchoolTeachers() {
       <Helmet>
         <title>დირექცია/მასწავლებლები</title>
       </Helmet>
+      <div className="administration"  style={{paddingLeft: "30px", paddingRight: "30px"}}>
+        <br />
+        <h2>სკოლის დირექცია</h2>
+        <p style={{textAlign: "start"}}>სკოლის დირექტორი: <b>ნუგზარ კედელაშვილი</b>.</p>
+        <br />
+        <p style={{textAlign: "start"}}>დირექტორის მოადგილეები:</p>
+        <ol style={{textAlign: "start"}}>
+          <li><b>მაკა ბიბილეიშვილი</b>;</li>
+          <li><b>თემურ გაჩეჩილაძე</b>;</li>
+        </ol>
+        <br />
+      </div>
       <AppBar position="static" color="default">
         <Tabs
           value={value}

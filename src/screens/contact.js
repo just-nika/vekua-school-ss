@@ -25,10 +25,11 @@ function Contact() {
             document.getElementById("content").value = "";
         })
     }
-    const {
+
+      const {
         register,
         handleSubmit,
-        formState: { errors }
+        formState: { errors },
       } = useForm();
     return (
         <div className="">
@@ -47,7 +48,7 @@ function Contact() {
                     <div className="send-message" style={{marginTop: "10px"}}>
                         <form noValidate onSubmit={handleSubmit(addMessage)}>
                                 <TextField className="half" {...register("firstName", { required: true })} error={errors.firstName} helperText={errors.firstName && "სახელი აუცილებელია"} label="სახელი" id="name" variant="filled" style={{width: "100%"}} required />
-                                <br />
+                                <br /> 
                                 <br />
                                 <TextField className="half" {...register("email", { required: true, pattern: /^\S+@\S+$/i })} error={errors.email} helperText={errors.email && "შეიყვანეთ ელ. ფოსტა რომელიც შეიცავს @"} label="ელექტრონული ფოსტა" id="email" variant="filled" style={{width: "100%"}} required />
                                 <br />
@@ -57,7 +58,7 @@ function Contact() {
                             <br />
                             <TextField label="შეტყობინება" {...register("content", { required: true })} error={errors.content} helperText={errors.content && "შეტყობინების შინაარსი აუცილებელია"} multiline rows={5} variant="filled" id="content" style={{width:"100%"}} required />
                             <br />
-                            <Button variant="outlined" color="primary" style={{marginTop: "10px"}}>
+                            <Button variant="contained" color="primary" fullWidth style={{marginTop: "10px"}}>
                                 გაგზავნა
                             </Button>
                         </form>
