@@ -72,11 +72,6 @@ div.login {
   box-shadow: 0 0 26px grey;
   margin-bottom: 50px;
   margin-top: 50px;
-  }
-
-.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary {
-  margin-top: 50px;
-  /* width: 30%; */
 }
 
 .MuiFormControl-root.MuiTextField-root.login-input {
@@ -92,12 +87,20 @@ div.header {
   background-color: rgba(159, 216, 237, 0.9);
 }
 
+.fb-link:hover .MuiButton-label{
+  color: white;
+}
+
 li.header-link {
   list-style-type: none;
 }
 
 div.logo {
   padding: 10px;
+}
+
+.facebook {
+  padding: 30px;
 }
 
 nav {
@@ -237,13 +240,15 @@ div.covid-plan {
 
 div.covid-title {
   vertical-align: middle;
-  margin-top: 60px;
+  margin-top: auto;
+  margin-bottom: auto;
   color: white;
 }
 
 div.covid-link {
   vertical-align: middle;
-  margin-top: 50px;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 div.about-that {
@@ -434,9 +439,6 @@ border-radius:50%;box-shadow:0 0 14px 4px white;margin-top:-2px}
 30% {margin-top:300px -600px 0 0;opacity:0}100% {opacity:0}}
 @keyframes meteors{0%{margin:-300px -300px 0 0;opacity:1}8%{opacity:0}
 30% {margin-top:300px -600px 0 0;opacity:0}100% {opacity:0}}
-
-
-
 
 #handboy
 {

@@ -24,6 +24,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import NewsRoute from './newsRoute';
 import ProjectsRoute from './projectsRoute';
+import SaturdaySchool from './saturday-school';
 
 function Header() {
     const useStyles = makeStyles({
@@ -189,6 +190,13 @@ function Header() {
                                 </ListItem>
                             </List>
                         </Link>
+                        <Link to="/saturday-school">
+                            <List>
+                                <ListItem button>
+                                    საშაბათო სკოლა
+                                </ListItem>
+                            </List>
+                        </Link>
                         <Link to="/achievements">
                             <List>
                                 <ListItem button>
@@ -263,6 +271,9 @@ function Header() {
                             <li className="header-link">
                                 <Link to="/achievements">მიღწევები</Link>
                             </li>
+                            <li className="header-link">
+                                <Link to="/saturday-school">საშაბათო სკოლა</Link>
+                            </li>
                             
                             <li className="header-link">
                                 <Link to="/contact">კონტაქტი</Link>
@@ -310,6 +321,9 @@ function Header() {
                     </Route>
                     <Route path="/contact">
                         <Contact />
+                    </Route>
+                    <Route path="/saturday-school">
+                        <SaturdaySchool />
                     </Route>
                     <Route path="/login">
                         <Login />

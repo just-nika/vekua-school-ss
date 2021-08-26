@@ -5,8 +5,7 @@ import Check from './check';
 import { Helmet } from "react-helmet";
 import Button from '@material-ui/core/Button'
 import { firebase, firestore } from '../firebase/firebase.config'
-import CheckAp from './checkAp';
-import Divider from '@material-ui/core/Divider';
+import FacebookIcon from '@material-ui/icons/Facebook';
 
 (function(){
     var i, e, d = document, s = "script";i = d.createElement("script");i.async = 1;
@@ -90,9 +89,6 @@ function Main() {
                 <span className="visually-hidden">Next</span>
             </button>
             </div>
-            <CheckAp />
-            <hr />
-            <Check />
             <div className="main-text">
                 <p>
                     აკადემიკოს ილია ვეკუას სახელობის  ფიზიკა-მათემატიკის ქალაქ თბილისის N42 საჯარო  სკოლა სპეციალიზებულია. 
@@ -107,7 +103,10 @@ function Main() {
                 </p>
             </div>
             <div className="facebook">
-                <div id="curator-feed-default-feed-layout"><a href="https://curator.io" target="_blank" class="crt-logo crt-tag">Powered by Curator.io</a></div>
+                <h3 style={{color: "white"}}>Facebook პოსტების სანახავად დააჭირეთ ღილაკს:</h3>
+                <br />
+                <Button href="https://www.facebook.com/schoolvekua" className="fb-link" target="_blank" variant="contained" color="primary" ><FacebookIcon style={{fontSize: "38px"}}/></Button>
+                {/* <div id="curator-feed-default-feed-layout"><a href="https://curator.io" target="_blank" class="crt-logo crt-tag">Powered by Curator.io</a></div> */}
             </div>
             <Covid />
         </div>
