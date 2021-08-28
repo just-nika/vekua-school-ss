@@ -2,7 +2,7 @@ import { secondaryApp } from '../firebase/firebase.config';
 
 function CheckPupil(personalNumber) {
         let promise = new Promise((res, rej) =>  {["3","4","5","6","7","8","9","10","11","12"].forEach(item => {
-          secondaryApp.firestore().collection(item).where("idNumber", "==", `${personalNumber}`)
+          secondaryApp.firestore().collection(item).where("id", "==", `${personalNumber}`)
           .get()
           .then((querySnapshot) => {
             if(item == "11" && querySnapshot.empty){

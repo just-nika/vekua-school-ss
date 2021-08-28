@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Container from "@material-ui/core/Container";
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -17,6 +11,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import {secondaryApp} from '../firebase/firebase.config'
 import { useForm } from "react-hook-form";
+import CheckPupil from '../utils/CheckSSPupil';
+import swal from "sweetalert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,84 +39,81 @@ function SaturdaySchool() {
   const [age, setAge] = React.useState('');
   const [subject, setSubject] = React.useState('');
   const [time, setTime] = React.useState('');
-  console.log(time)
-  function Selects() {
-    if (!age) {
-      return <>
-        <Grid item xs={12}>
-          <FormControl className={classes.formControl} fullWidth>
-            <InputLabel id="demo-simple-select-label" style={{textAlign: "start"}}>საგანი</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              required
-              style={{textAlign: "start"}}
-            >
-              <MenuItem value="" disabled style={{textAlign: "start"}}>საგნის ასარჩევად ჯერ აირჩიეთ კლასი</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-      </>
-    }else if (age <= 6) {
-      console.log(age)
-      const HandleCh = (event) => {
-        setSubject(event.target.value);
-      };
-      return <>
-        <Grid item xs={12}>
-          <FormControl className={classes.formControl} fullWidth style={{textAlign: "start"}}>
-            <InputLabel id="demo-simple-select-label">საგანი</InputLabel>
-            <Select
-              {...register("subject", { required: true })}
-              error={errors.subject}
-              id="subject"
-              name="subject"
-              value={subject}
-              onChange={HandleCh}
-              style={{textAlign: "start"}}
-            >
-              <MenuItem value={'მათემატიკა'} style={{textAlign: "start"}}>მათემატიკა</MenuItem>
-            </Select>
-            {errors.class && <FormHelperText style={{color: "red"}}>საგნის არჩევა აუცილებელია</FormHelperText>}
-          </FormControl>
-        </Grid>
-      </>
-    }else if (age => 6) {
-      console.log(age)
-      const HandleCh = (event) => {
-        setSubject(event.target.value);
-      };
-      return <>
-        <Grid item xs={12}>
-          <FormControl className={classes.formControl} fullWidth>
-            <InputLabel id="demo-simple-select-label" style={{textAlign: "start"}}>საგანი</InputLabel>
-            <Select
-              {...register("subject", { required: true })}
-              error={errors.subject}
-              id="subject"
-              name="subject"
-              value={subject}
-              onChange={HandleCh}
-              style={{textAlign: "start"}}
-            >
-              <MenuItem style={{textAlign: "start"}} value={'მათემატიკა'}>მათემატიკა</MenuItem>
-              <MenuItem style={{textAlign: "start"}} value={'ფიზიკა'}>ფიზიკა</MenuItem>
-            </Select>
-            {errors.class && <FormHelperText style={{color: "red"}}>საგნის არჩევა აუცილებელია</FormHelperText>}
-          </FormControl>
-        </Grid>
-      </>
-    }
-  }
 
   const handleChange = (event) => {
     setAge(event.target.value);
   };
   const { register, handleSubmit, getValues, formState: { errors } } = useForm();
-
   // var t0 = performance.now()
   const addPupil = async (data) => {
-    console.log(data);
+    CheckPupil(data.id).then((response) => {
+      if (response.status) {
+        return swal(
+          "მოსწავლე უკვე რეგისტრირებულია!",
+          "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.",
+          "error"
+        );
+      } else {
+        if (data.code <= 26) {
+          if (data.id !== data.lawId) {
+            secondaryApp.firestore().collection(`${data.teachers}`).add({
+              address: data.address,
+              class: data.class,
+              fatherFirstName: data.fatherFirstName,
+              fatherLastName: data.fatherLastName,
+              fatherMobileNumber: data.fatherMobileNumber,
+              firstName: data.firstName,
+              id: data.id,
+              lastName: data.lastName,
+              lawId: data.lawId,
+              lawLastName: data.lawLastName,
+              lawName: data.lawName,
+              motherFirstName: data.motherFirstName,
+              motherLastName: data.motherLastName,
+              motherMobileNumber: data.motherMobileNumber,
+              subject: data.subject
+            }).then(() => {
+              secondaryApp.firestore().collection(`${data.class}`).add({
+                address: data.address,
+                class: data.class,
+                fatherFirstName: data.fatherFirstName,
+                fatherLastName: data.fatherLastName,
+                fatherMobileNumber: data.fatherMobileNumber,
+                firstName: data.firstName,
+                id: data.id,
+                lastName: data.lastName,
+                lawId: data.lawId,
+                lawLastName: data.lawLastName,
+                lawName: data.lawName,
+                motherFirstName: data.motherFirstName,
+                motherLastName: data.motherLastName,
+                motherMobileNumber: data.motherMobileNumber,
+                subject: data.subject,
+                teacherTime: data.teachers
+              }).then(() => {
+                swal(
+                  "მოსწავლე წარმატებით დარეგისტრირდა!",
+                  "",
+                  "success"
+                );
+              });
+            });
+          }else {
+            return swal(
+              "გთხოვთ მიუთითოთ სხვა პირადი ნომერი ხელშეკრულებისთვის!",
+              `მშობელის/კანონიერი წარმომადგენლის პირადი ნომერი არ უნდა ემთხვეოდეს მოსწავლის პირად ნომერს.`,
+              "warning"
+            );
+          }
+        }else {
+          return swal(
+            "ამ ჯგუფში მოსწავლე ვერ დარეგისტრირდება!",
+            `თქვენს მიერ არჩეული ჯგუფში აღარაა ადგილი, გთხოვთ აარჩიოთ სხვა ჯგუფი.`,
+            "error"
+          );
+        }
+      }
+    });
   }
   // var t1 = performance.now()
   // console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
@@ -162,24 +155,9 @@ function SaturdaySchool() {
   const [SSMAN3, querySizeThirdTwo] = React.useState('');
   const [SSMEO3, querySizeThirdThree] = React.useState('');
   
-  secondaryApp.firestore().collection(`SSMMT31515`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeThirdOne(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMAN31330`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeThirdTwo(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMEO30900`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeThirdThree(pupils)
-    }
-  );
+  secondaryApp.firestore().collection(`SSMMT31515`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeThirdOne(pupils) } );
+  secondaryApp.firestore().collection(`SSMAN31330`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeThirdTwo(pupils) } );
+  secondaryApp.firestore().collection(`SSMEO30900`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeThirdThree(pupils) } );
 
   const [SSMMT4, querySizeFourthOne] = React.useState('');
   const [SSMAN4, querySizeFourthTwo] = React.useState('');
@@ -187,36 +165,11 @@ function SaturdaySchool() {
   const [SSMKK4, querySizeFourthFour] = React.useState('');
   const [SSMNM4, querySizefourthFive] = React.useState('');
 
-  secondaryApp.firestore().collection(`SSMMT41315`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeFourthOne(pupils)
-    }
-  );
-    secondaryApp.firestore().collection(`SSMAN41530`).get().then(
-      async function (querySnapshot) {
-        const pupils = querySnapshot.size
-      querySizeFourthTwo(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMEO41100`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeFourthThree(pupils)
-    }
-    );
-  secondaryApp.firestore().collection(`SSMKK41115`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeFourthFour(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMNM41530`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizefourthFive(pupils)
-    }
-  );
+  secondaryApp.firestore().collection(`SSMMT41315`).get().then(async function (querySnapshot) { const pupils = querySnapshot.size; querySizeFourthOne(pupils) } );
+  secondaryApp.firestore().collection(`SSMAN41530`).get().then(async function (querySnapshot) { const pupils = querySnapshot.size; querySizeFourthTwo(pupils) } );
+  secondaryApp.firestore().collection(`SSMEO41100`).get().then(async function (querySnapshot) { const pupils = querySnapshot.size; querySizeFourthThree(pupils) } );
+  secondaryApp.firestore().collection(`SSMKK41115`).get().then(async function (querySnapshot) { const pupils = querySnapshot.size; querySizeFourthFour(pupils) } );
+  secondaryApp.firestore().collection(`SSMNM41530`).get().then(async function (querySnapshot) { const pupils = querySnapshot.size; querySizefourthFive(pupils) } );
 
   const [SSMNM5, querySizeFifthOne] = React.useState('');
   const [SSMNQ5, querySizeFifthTwo] = React.useState('');
@@ -228,60 +181,15 @@ function SaturdaySchool() {
   const [SSMKK5, querySizeFifthEight] = React.useState('');
   const [SSMEO5, querySizeFifthNine] = React.useState('');
 
-  secondaryApp.firestore().collection(`SSMNM51130`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeFifthOne(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMNQ51100`).get().then(
-      async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeFifthTwo(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMNQ51500`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeFifthThree(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMMT51115`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeFifthFour(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMMN51100`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeFifthFive(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMMN51500`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeFifthSix(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMAN51130`).get().then(
-      async function (querySnapshot) {
-        const pupils = querySnapshot.size
-        querySizeFifthSeven(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMKK51315`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeFifthEight(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMEO51300`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeFifthNine(pupils)
-    }
-  );
+  secondaryApp.firestore().collection(`SSMNM51130`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeFifthOne(pupils)});
+  secondaryApp.firestore().collection(`SSMNQ51100`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeFifthTwo(pupils)});
+  secondaryApp.firestore().collection(`SSMNQ51500`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeFifthThree(pupils)});
+  secondaryApp.firestore().collection(`SSMMT51115`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeFifthFour(pupils)});
+  secondaryApp.firestore().collection(`SSMMN51100`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeFifthFive(pupils)});
+  secondaryApp.firestore().collection(`SSMMN51500`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeFifthSix(pupils)});
+  secondaryApp.firestore().collection(`SSMAN51130`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeFifthSeven(pupils)});
+  secondaryApp.firestore().collection(`SSMKK51315`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeFifthEight(pupils)});
+  secondaryApp.firestore().collection(`SSMEO51300`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeFifthNine(pupils)});
 
   const [SSMNM6, querySizeSixthOne] = React.useState('');
   const [SSMNM62, querySizeSixthOne2] = React.useState('');
@@ -297,193 +205,67 @@ function SaturdaySchool() {
   const [SSMKK6, querySizeSixthEight] = React.useState('');
   const [SSMKK62, querySizeSixthEightTwo] = React.useState('');
   
-  secondaryApp.firestore().collection(`SSMNM60930`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeSixthOne(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMNM61330`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeSixthOne2(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMNQ60900`).get().then(
-      async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeSixthTwo(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMNQ61300`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeSixthThree(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMGS61100`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeSixthThirteen(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMGS61400`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeSixthTwelve(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMMG61300`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeSixthFour(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMMT60915`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeSixthFive(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMMN60900`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeSixthSix(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMMN61300`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeSixthSixTwo(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMAN60930`).get().then(
-      async function (querySnapshot) {
-        const pupils = querySnapshot.size
-        querySizeSixthSeven(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMKK60915`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeSixthEight(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMKK61515`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeSixthEightTwo(pupils)
-    }
-  );
-
+  secondaryApp.firestore().collection(`SSMNM60930`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeSixthOne(pupils)});
+  secondaryApp.firestore().collection(`SSMNM61330`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeSixthOne2(pupils)});
+  secondaryApp.firestore().collection(`SSMNQ60900`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeSixthTwo(pupils)});
+  secondaryApp.firestore().collection(`SSMNQ61300`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeSixthThree(pupils)});
+  secondaryApp.firestore().collection(`SSMGS61100`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeSixthThirteen(pupils)});
+  secondaryApp.firestore().collection(`SSMGS61400`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeSixthTwelve(pupils)});
+  secondaryApp.firestore().collection(`SSMMG61300`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeSixthFour(pupils)});
+  secondaryApp.firestore().collection(`SSMMT60915`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeSixthFive(pupils)});
+  secondaryApp.firestore().collection(`SSMMN60900`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeSixthSix(pupils)});
+  secondaryApp.firestore().collection(`SSMMN61300`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeSixthSixTwo(pupils)});
+  secondaryApp.firestore().collection(`SSMAN60930`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeSixthSeven(pupils)});
+  secondaryApp.firestore().collection(`SSMKK60915`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeSixthEight(pupils)});
+  secondaryApp.firestore().collection(`SSMKK61515`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeSixthEightTwo(pupils)});
 
   const [SSMGS7, querySizeSeventhOne] = React.useState('');
   const [SSMGS72, querySizeSeventhOne2] = React.useState('');
   const [SSMLM7, querySizeSeventhTwo] = React.useState('');
   
-  secondaryApp.firestore().collection(`SSMGS70930`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeSeventhOne(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMGS71230`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeSeventhOne2(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSMLM70930`).get().then(
-      async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeSeventhTwo(pupils)
-    }
-  );
+  secondaryApp.firestore().collection(`SSMGS70930`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeSeventhOne(pupils)});
+  secondaryApp.firestore().collection(`SSMGS71230`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeSeventhOne2(pupils)});
+  secondaryApp.firestore().collection(`SSMLM70930`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeSeventhTwo(pupils)});
 
   const [SSPGK7, querySizeSeventhThree] = React.useState('');
   const [SSPGK72, querySizeSeventhThirteen] = React.useState('');
   const [SSPTG7, querySizeSeventhTwelve] = React.useState('');
   const [SSPTG72, querySizeSeventhFour] = React.useState('');
 
-  secondaryApp.firestore().collection(`SSPGK71100`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeSeventhThree(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSPGK71230`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeSeventhThirteen(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSPTG71100`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeSeventhTwelve(pupils)
-    }
-  );
-  secondaryApp.firestore().collection(`SSPTG71230`).get().then(
-    async function (querySnapshot) {
-      const pupils = querySnapshot.size
-      querySizeSeventhFour(pupils)
-    }
-  );
+  secondaryApp.firestore().collection(`SSPGK71100`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeSeventhThree(pupils)});
+  secondaryApp.firestore().collection(`SSPGK71230`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeSeventhThirteen(pupils)});
+  secondaryApp.firestore().collection(`SSPTG71100`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeSeventhTwelve(pupils)});
+  secondaryApp.firestore().collection(`SSPTG71230`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeSeventhFour(pupils)});
 
+  const [SSMMG8, querySizeEightThree] = React.useState('');
+  const [SSMMG82, querySizeEightThirteen] = React.useState('');
+  const [SSPEKH8, querySizeEightTwelve] = React.useState('');
 
-  const[classSubject, setClassSubject] = React.useState('');
+  secondaryApp.firestore().collection(`SSMMG81100`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeEightThree(pupils)});
+  secondaryApp.firestore().collection(`SSMMG81500`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeEightThirteen(pupils)});
+  secondaryApp.firestore().collection(`SSPEKH81300`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeEightTwelve(pupils)});
 
-  if (age === 7) {
-    if (subject === "მათემატიკა") {
-      const class7 = "math7"
-      setClassSubject(class7)
-    }else if (subject === "ფიზიკა") {
-      const class7 = "physics7"
-      setClassSubject(class7)
-    }   
-  }
+  const [SSMMG9, querySizeNinthThirteen] = React.useState('');
+  const [SSPNT9, querySizeNinthTwelve] = React.useState('');
 
-  // if (age === 8 && subject === "მათემატიკა") {
-  //   const class8 = "math8"
-  //   setClassSubject(class8)
-  // }else if (age === 8 && subject === "ფიზიკა") {
-  //   const class8 = "physics8"
-  //   setClassSubject(class8)
-  // }
+  secondaryApp.firestore().collection(`SSMMG90900`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeNinthThirteen(pupils)});
+  secondaryApp.firestore().collection(`SSPNT91030`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeNinthTwelve(pupils)});
 
-  // if (age === 9 && subject === "მათემატიკა") {
-  //   const class9 = "math9"
-  //   setClassSubject(class9)
-  // }else if (age === 9 && subject === "ფიზიკა") {
-  //   const class9 = "physics9"
-  //   setClassSubject(class9)
-  // }
+  const [SSMEL10, querySizeTenthThirteen] = React.useState('');
+  const [SSPTG10, querySizeTenthTwelve] = React.useState('');
 
-  // if (age === 10 && subject === "მათემატიკა") {
-  //   const class10 = "math10"
-  //   setClassSubject(class10)
-  // }else if (age === 10 && subject === "ფიზიკა") {
-  //   const class10 = "physics10"
-  //   setClassSubject(class10)
-  // }
+  secondaryApp.firestore().collection(`SSMEL101230`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeTenthThirteen(pupils)});
+  secondaryApp.firestore().collection(`SSPTG100930`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeTenthTwelve(pupils)});
 
-  // if (age === 11 && subject === "მათემატიკა") {
-  //   const class11 = "math11"
-  //   setClassSubject(class11)
-  // }else if (age === 11 && subject === "ფიზიკა") {
-  //   const class11 = "physics11"
-  //   setClassSubject(class11)
-  // }
+  const [SSMEL1112, querySizeETThirteen] = React.useState('');
+  const [SSPGK1112, querySizeETTwelve] = React.useState('');
 
-  // if (age === 12 && subject === "მათემატიკა") {
-  //   const class12 = "math12"
-  //   setClassSubject(class12)
-  // }else if (age === 12 && subject === "ფიზიკა") {
-  //   const class12 = "physics12"
-  //   setClassSubject(class12)
-  // }
-  
+  secondaryApp.firestore().collection(`SSMEL11121230`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeETThirteen(pupils)});
+  secondaryApp.firestore().collection(`SSPGK11120930`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeETTwelve(pupils)});
 
+  const HandleCh = (event) => {
+    setSubject(event.target.value);
+  };
   return (
     <React.Fragment>
       <h2>რეგისტრაცია</h2>
@@ -571,7 +353,26 @@ function SaturdaySchool() {
                 {/* <FormHelperText>Error</FormHelperText> */}
               </FormControl>
             </Grid>
-            <Selects />
+            {/* <Selects /> */}
+            <Grid item xs={12}>
+              <FormControl className={classes.formControl} fullWidth>
+                <InputLabel id="demo-simple-select-label" style={{textAlign: "start"}}>საგანი</InputLabel>
+                <Select
+                  {...register("subject", { required: true })}
+                  error={errors.subject}
+                  id="subject"
+                  name="subject"
+                  value={subject}
+                  onChange={HandleCh}
+                  style={{textAlign: "start"}}
+                >
+                  <MenuItem style={{textAlign: "start"}} disabled={!age} hidden={age}>საგნის ასარჩევად აირჩიეთ კლასი</MenuItem>
+                  <MenuItem style={{textAlign: "start"}} hidden={!age} value={'მათემატიკა'}>მათემატიკა</MenuItem>
+                  <MenuItem style={{textAlign: "start"}} hidden={!age || age<7} value={'ფიზიკა'}>ფიზიკა</MenuItem>
+                </Select>
+                {errors.class && <FormHelperText style={{color: "red"}}>საგნის არჩევა აუცილებელია</FormHelperText>}
+              </FormControl>
+            </Grid>
             <Grid item xs={12} sm={4}>
               <TextField
                 required
@@ -744,59 +545,64 @@ function SaturdaySchool() {
               <FormControl style={{textAlign: "start"}} className={classes.formControl} fullWidth hidden={!subject}>
                 <InputLabel id="demo-simple-select-label">დროები მასწავლებლების მიხედვით</InputLabel>
                 <Select
-                  {...register("subject", { required: true })}
-                  error={errors.subject}
-                  id="subject"
-                  name="subject"
+                  {...register("teachers", { required: true })}
+                  error={errors.teachers}
+                  id="teachers"
+                  name="teachers"
                   value={state}
                   onChange={getTime}
                   style={{textAlign: "start"}}
                 >
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMMT3 >= 26} hidden={age!==3} value={"SSMMT31515"}>მაია თევდორაშვილი - 15:15</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMAN3 >= 26} hidden={age!==3} value={"SSMAN31330"}>ალექსანდრე ნემსაძე - 13:30</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMEO3 >= 26} hidden={age!==3} value={"SSMEO30900"}>ეკა ონაშვილი - 09:00</MenuItem>
-
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMMT4 >= 26} hidden={age!==4} value={"SSMMT41315"}>მაია თევდორაშვილი - 13:15</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMAN4 >= 26} hidden={age!==4} value={"SSMAN41530"}>ალექსანდრე ნემსაძე - 15:30</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMEO4 >= 26} hidden={age!==4} value={"SSMEO41100"}>ეკა ონაშვილი - 11:00</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMKK4 >= 26} hidden={age!==4} value={"SSMKK41115"}>კოტე კუპატაძე - 11:15</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMNM4 >= 26} hidden={age!==4} value={"SSMNM41530"}>ნუგზარ მახათაძე - 15:30</MenuItem>
-
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMNM5 >= 26} hidden={age!==5} value={"SSMNM51130"}>ნუგზარ მახათაძე - 11:30</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMNQ5 >= 26} hidden={age!==5} value={"SSMNQ51100"}>ნონა ქუშაშვილი - 11:00</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMNQ52 >= 26} hidden={age!==5} value={"SSMNQ51500"}>ნონა ქუშაშვილი - 15:00</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMMT5 >= 26} hidden={age!==5} value={"SSMMT51115"}>მაია თევდორაშვილი - 11:15</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMMN5 >= 26} hidden={age!==5} value={"SSMMN51100"}>ნანა მეტრეველი - 11:00</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMMN52 >= 26} hidden={age!==5} value={"SSMMN51500"}>ნანა მეტრეველი - 15:00</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMAN5 >= 26} hidden={age!==5} value={"SSMAN51130"}>ალექსანდრე ნემსაძე - 11:30</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMKK5 >= 26} hidden={age!==5} value={"SSMKK51315"}>კოტე კუპატაძე - 13:15</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMEO5 >= 26} hidden={age!==5} value={"SSMEO51300"}>ეკა ონაშვილი - 13:00</MenuItem>
-
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMNM6 >= 26} hidden={age!==6} value={"SSMNM60930"}>ნუგზარ მახათაძე - 09:30</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMNM62 >= 26} hidden={age!==6} value={"SSMNM61330"}>ნუგზარ მახათაძე - 13:30</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMNQ6 >= 26} hidden={age!==6} value={"SSMNQ60900"}>ნონა ქუშაშვილი - 09:00</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMNQ62 >= 26} hidden={age!==6} value={"SSMNQ61300"}>ნონა ქუშაშვილი - 13:00</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMGS6 >= 26} hidden={age!==6} value={"SSMGS61100"}>გურამ სიხარულიძე - 11:00</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMGS62 >= 26} hidden={age!==6} value={"SSMGS61400"}>გურამ სიხარულიძე - 14:00</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMMG6 >= 26} hidden={age!==6} value={"SSMMG61300"}>მედეია გურგენაძე - 13:00</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMMT6 >= 26} hidden={age!==6} value={"SSMMT60915"}>მაია თევდორაშვილი - 09:15</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMMN6 >= 26} hidden={age!==6} value={"SSMMN60900"}>ნანა მეტრეველი - 09:00</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMMN62 >= 26} hidden={age!==6} value={"SSMMN61300"}>ნანა მეტრეველი - 13:00</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMAN6 >= 26} hidden={age!==6} value={"SSMAN60930"}>ალექსანდრე ნემსაძე - 09:30</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMKK6 >= 26} hidden={age!==6} value={"SSMKK60915"}>კოტე კუპატაძე - 09:15</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMKK62 >= 26} hidden={age!==6} value={"SSMKK61515"}>კოტე კუპატაძე - 15:15</MenuItem>
-
-
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMGS7 >= 26} hidden={classSubject!=="math7"} value={"SSMGS70930"}>გურამ სიხარულიძე - 09:30</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMGS72 >= 26} hidden={classSubject!=="math7"} value={"SSMGS71230"}>გურამ სიხარულიძე - 12:30</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSMLM7 >= 26} hidden={classSubject!=="math7"} value={"SSMLM70930"}>ლელა მამულაშვილი - 09:30</MenuItem>
-
-                  <MenuItem style={{textAlign: "start"}} disabled={SSPGK7 >= 26} hidden={classSubject!=="physics7"} value={"SSPGK71100"}>გიორგი კაკაბაძე - 11:00</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSPGK72 >= 26} hidden={classSubject!=="physics7"} value={"SSPGK71230"}>გიორგი კაკაბაძე - 12:30</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSPTG7 >= 26} hidden={classSubject!=="physics7"} value={"SSPTG71100"}>თემურ გაჩეჩილაძე - 11:00</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} disabled={SSPTG72 >= 26} hidden={classSubject!=="physics7"} value={"SSPTG71230"}>თემურ გაჩეჩილაძე - 12:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMT3 >= 26} hidden={age!==3 || subject!=="მათემატიკა"} value={"SSMMT31515"}><input type="hidden" value="SSMMT3"{...register("code")}/> მაია თევდორაშვილი - 15:15</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMAN3 >= 26} hidden={age!==3 || subject!=="მათემატიკა"} value={"SSMAN31330"}><input type="hidden" value="SSMAN3"{...register("code")}/> ალექსანდრე ნემსაძე - 13:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMEO3 >= 26} hidden={age!==3 || subject!=="მათემატიკა"} value={"SSMEO30900"}><input type="hidden" value="SSMEO3"{...register("code")}/> ეკა ონაშვილი - 09:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMT4 >= 26} hidden={age!==4 || subject!=="მათემატიკა"} value={"SSMMT41315"}><input type="hidden" value="SSMMT4"{...register("code")}/> მაია თევდორაშვილი - 13:15</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMAN4 >= 26} hidden={age!==4 || subject!=="მათემატიკა"} value={"SSMAN41530"}><input type="hidden" value="SSMAN4"{...register("code")}/> ალექსანდრე ნემსაძე - 15:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMEO4 >= 26} hidden={age!==4 || subject!=="მათემატიკა"} value={"SSMEO41100"}><input type="hidden" value="SSMEO4"{...register("code")}/> ეკა ონაშვილი - 11:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMKK4 >= 26} hidden={age!==4 || subject!=="მათემატიკა"} value={"SSMKK41115"}><input type="hidden" value="SSMKK4"{...register("code")}/> კოტე კუპატაძე - 11:15</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMNM4 >= 26} hidden={age!==4 || subject!=="მათემატიკა"} value={"SSMNM41530"}><input type="hidden" value="SSMNM4"{...register("code")}/> ნუგზარ მახათაძე - 15:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMNM5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMNM51130"}><input type="hidden" value="SSMNM5"{...register("code")}/> ნუგზარ მახათაძე - 11:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMNQ5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMNQ51100"}><input type="hidden" value="SSMNQ5"{...register("code")}/> ნონა ქუშაშვილი - 11:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMNQ52 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMNQ51500"}><input type="hidden" value="SSMNQ52"{...register("code")}/> ნონა ქუშაშვილი - 15:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMT5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMMT51115"}><input type="hidden" value="SSMMT5"{...register("code")}/> მაია თევდორაშვილი - 11:15</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMN5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMMN51100"}><input type="hidden" value="SSMMN5"{...register("code")}/> ნანა მეტრეველი - 11:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMN52 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMMN51500"}><input type="hidden" value="SSMMN52"{...register("code")}/> ნანა მეტრეველი - 15:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMAN5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMAN51130"}><input type="hidden" value="SSMAN5"{...register("code")}/> ალექსანდრე ნემსაძე - 11:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMKK5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMKK51315"}><input type="hidden" value="SSMKK5"{...register("code")}/> კოტე კუპატაძე - 13:15</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMEO5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMEO51300"}><input type="hidden" value="SSMEO5"{...register("code")}/> ეკა ონაშვილი - 13:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMNM6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMNM60930"}><input type="hidden" value="SSMNM6"{...register("code")}/> ნუგზარ მახათაძე - 09:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMNM62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMNM61330"}><input type="hidden" value="SSMNM62"{...register("code")}/> ნუგზარ მახათაძე - 13:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMNQ6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMNQ60900"}><input type="hidden" value="SSMNQ6"{...register("code")}/> ნონა ქუშაშვილი - 09:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMNQ62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMNQ61300"}><input type="hidden" value="SSMNQ62"{...register("code")}/> ნონა ქუშაშვილი - 13:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMGS6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMGS61100"}><input type="hidden" value="SSMGS6"{...register("code")}/> გურამ სიხარულიძე - 11:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMGS62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMGS61400"}><input type="hidden" value="SSMGS62"{...register("code")}/> გურამ სიხარულიძე - 14:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMG6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMMG61300"}><input type="hidden" value="SSMMG6"{...register("code")}/> მედეია გურგენაძე - 13:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMT6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMMT60915"}><input type="hidden" value="SSMMT6"{...register("code")}/> მაია თევდორაშვილი - 09:15</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMN6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMMN60900"}><input type="hidden" value="SSMMN6"{...register("code")}/> ნანა მეტრეველი - 09:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMN62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMMN61300"}><input type="hidden" value="SSMMN62"{...register("code")}/> ნანა მეტრეველი - 13:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMAN6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMAN60930"}><input type="hidden" value="SSMAN6"{...register("code")}/> ალექსანდრე ნემსაძე - 09:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMKK6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMKK60915"}><input type="hidden" value="SSMKK6"{...register("code")}/> კოტე კუპატაძე - 09:15</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMKK62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMKK61515"}><input type="hidden" value="SSMKK62"{...register("code")}/> კოტე კუპატაძე - 15:15</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMGS7 >= 26} hidden={age!==7 || subject!=="მათემატიკა"} value={"SSMGS70930"}><input type="hidden" value="SSMGS7"{...register("code")}/> გურამ სიხარულიძე - 09:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMGS72 >= 26} hidden={age!==7 || subject!=="მათემატიკა"} value={"SSMGS71230"}><input type="hidden" value="SSMGS72"{...register("code")}/> გურამ სიხარულიძე - 12:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMLM7 >= 26} hidden={age!==7 || subject!=="მათემატიკა"} value={"SSMLM70930"}><input type="hidden" value="SSMLM7"{...register("code")}/> ლელა მამულაშვილი - 09:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPGK7 >= 26} hidden={age!==7 || subject!=="ფიზიკა"} value={"SSPGK71100"}><input type="hidden" value="SSPGK7"{...register("code")}/> გიორგი კაკაბაძე - 11:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPGK72 >= 26} hidden={age!==7 || subject!=="ფიზიკა"} value={"SSPGK71230"}><input type="hidden" value="SSPGK72"{...register("code")}/> გიორგი კაკაბაძე - 12:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPTG7 >= 26} hidden={age!==7 || subject!=="ფიზიკა"} value={"SSPTG71100"}><input type="hidden" value="SSPTG7"{...register("code")}/> თემურ გაჩეჩილაძე - 11:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPTG72 >= 26} hidden={age!==7 || subject!=="ფიზიკა"} value={"SSPTG71230"}><input type="hidden" value="SSPTG72"{...register("code")}/> თემურ გაჩეჩილაძე - 12:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMG8 >= 26} hidden={age!==8 || subject!=="მათემატიკა"} value={"SSMMG81100"}><input type="hidden" value="SSMMG8"{...register("code")}/> მედეია გურგენაძე - 11:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMG82 >= 26} hidden={age!==8 || subject!=="მათემატიკა"} value={"SSMMG81500"}><input type="hidden" value="SSMMG82"{...register("code")}/> მედეია გურგენაძე - 15:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPEKH8 >= 26} hidden={age!==8 || subject!=="ფიზიკა"} value={"SSPEKH81300"}><input type="hidden" value="SSPEKH8"{...register("code")}/> ესმა ხიზანიშვილი - 13:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMG9 >= 26} hidden={age!==9 || subject!=="მათემატიკა"} value={"SSMMG90900"}><input type="hidden" value="SSMMG9"{...register("code")}/> მედეია გურგენაძე - 09:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPNT9 >= 26} hidden={age!==9 || subject!=="ფიზიკა"} value={"SSPNT91030"}><input type="hidden" value="SSPNT9"{...register("code")}/> ნონა თოდუა - 10:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMEL10 >= 26} hidden={age!==10 || subject!=="მათემატიკა"} value={"SSMEL101230"}><input type="hidden" value="SSMEL10"{...register("code")}/> ედემ ლაგვილავა - 12:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPTG10 >= 26} hidden={age!==10 || subject!=="ფიზიკა"} value={"SSPTG100930"}><input type="hidden" value="SSPTG10"{...register("code")}/> თემურ გაჩეჩილაძე - 09:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMEL1112 >= 26} hidden={age!==11 || subject!=="მათემატიკა"} value={"SSMEL11121230"}><input type="hidden" value="SSMEL1112"{...register("code")}/> ედემ ლაგვილავა - 12:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPGK1112 >= 26} hidden={age!==11 || subject!=="ფიზიკა"} value={"SSPGK11120930"}><input type="hidden" value="SSPGK1112"{...register("code")}/> ნონა თოდუა - 10:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMEL1112 >= 26} hidden={age!==12 || subject!=="მათემატიკა"} value={"SSMEL11121230"}><input type="hidden" value="SSMEL1112"{...register("code")}/> ედემ ლაგვილავა - 12:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPGK1112 >= 26} hidden={age!==12 || subject!=="ფიზიკა"} value={"SSPGK11120930"}><input type="hidden" value="SSPGK1112"{...register("code")}/> გიორგი კაკაბაძე - 09:30</MenuItem>
                 </Select>
-                {errors.class && <FormHelperText style={{color: "red"}}>საგნის არჩევა აუცილებელია</FormHelperText>}
+                {errors.teachers && <FormHelperText style={{color: "red"}}>საგნის არჩევა აუცილებელია</FormHelperText>}
               </FormControl>
             </Grid>
           </Grid>
