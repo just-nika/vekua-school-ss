@@ -54,26 +54,10 @@ function SaturdaySchool() {
           "error"
         );
       } else {
-        if (data.code <= 26) {
-          if (data.id !== data.lawId) {
-            secondaryApp.firestore().collection(`${data.teachers}`).add({
-              address: data.address,
-              class: data.class,
-              fatherFirstName: data.fatherFirstName,
-              fatherLastName: data.fatherLastName,
-              fatherMobileNumber: data.fatherMobileNumber,
-              firstName: data.firstName,
-              id: data.id,
-              lastName: data.lastName,
-              lawId: data.lawId,
-              lawLastName: data.lawLastName,
-              lawName: data.lawName,
-              motherFirstName: data.motherFirstName,
-              motherLastName: data.motherLastName,
-              motherMobileNumber: data.motherMobileNumber,
-              subject: data.subject
-            }).then(() => {
-              secondaryApp.firestore().collection(`${data.class}`).add({
+        if (data.code!==0 && data.code) {
+          if (data.code <= 26) {
+            if (data.id !== data.lawId) {
+              secondaryApp.firestore().collection(`${data.teachers}`).add({
                 address: data.address,
                 class: data.class,
                 fatherFirstName: data.fatherFirstName,
@@ -88,27 +72,51 @@ function SaturdaySchool() {
                 motherFirstName: data.motherFirstName,
                 motherLastName: data.motherLastName,
                 motherMobileNumber: data.motherMobileNumber,
-                subject: data.subject,
-                teacherTime: data.teachers
+                subject: data.subject
               }).then(() => {
-                swal(
-                  "მოსწავლე წარმატებით დარეგისტრირდა!",
-                  "",
-                  "success"
-                );
+                secondaryApp.firestore().collection(`${data.class}`).add({
+                  address: data.address,
+                  class: data.class,
+                  fatherFirstName: data.fatherFirstName,
+                  fatherLastName: data.fatherLastName,
+                  fatherMobileNumber: data.fatherMobileNumber,
+                  firstName: data.firstName,
+                  id: data.id,
+                  lastName: data.lastName,
+                  lawId: data.lawId,
+                  lawLastName: data.lawLastName,
+                  lawName: data.lawName,
+                  motherFirstName: data.motherFirstName,
+                  motherLastName: data.motherLastName,
+                  motherMobileNumber: data.motherMobileNumber,
+                  subject: data.subject,
+                  teacherTime: data.teachers
+                }).then(() => {
+                  swal(
+                    "მოსწავლე წარმატებით დარეგისტრირდა!",
+                    "",
+                    "success"
+                  );
+                });
               });
-            });
+            }else {
+              return swal(
+                "გთხოვთ მიუთითოთ სხვა პირადი ნომერი ხელშეკრულებისთვის!",
+                `მშობელის/კანონიერი წარმომადგენლის პირადი ნომერი არ უნდა ემთხვეოდეს მოსწავლის პირად ნომერს.`,
+                "warning"
+              );
+            }
           }else {
             return swal(
-              "გთხოვთ მიუთითოთ სხვა პირადი ნომერი ხელშეკრულებისთვის!",
-              `მშობელის/კანონიერი წარმომადგენლის პირადი ნომერი არ უნდა ემთხვეოდეს მოსწავლის პირად ნომერს.`,
+              "ამ ჯგუფში მოსწავლე ვერ დარეგისტრირდება!",
+              `თქვენს მიერ არჩეული ჯგუფში აღარაა ადგილი, გთხოვთ აარჩიოთ სხვა ჯგუფი.`,
               "warning"
             );
           }
         }else {
           return swal(
-            "ამ ჯგუფში მოსწავლე ვერ დარეგისტრირდება!",
-            `თქვენს მიერ არჩეული ჯგუფში აღარაა ადგილი, გთხოვთ აარჩიოთ სხვა ჯგუფი.`,
+            "რეგისტრაცია ვერ განხორციელდა!",
+            `ტექნიკური ხარვეზის გამო ჯერ-ჯერობით რეგისტრაცია შეუძლებელია.`,
             "error"
           );
         }
