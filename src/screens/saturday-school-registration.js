@@ -54,7 +54,7 @@ function SaturdaySchool() {
           "error"
         );
       } else {
-        if (data.code!==0 && data.code) {
+        if (data.code) {
           if (data.code <= 26) {
             if (data.id !== data.lawId) {
               secondaryApp.firestore().collection(`${data.teachers}`).add({
@@ -64,7 +64,7 @@ function SaturdaySchool() {
                 fatherLastName: data.fatherLastName,
                 fatherMobileNumber: data.fatherMobileNumber,
                 firstName: data.firstName,
-                id: data.id,
+                idNumber: data.id,
                 lastName: data.lastName,
                 lawId: data.lawId,
                 lawLastName: data.lawLastName,
@@ -81,7 +81,7 @@ function SaturdaySchool() {
                   fatherLastName: data.fatherLastName,
                   fatherMobileNumber: data.fatherMobileNumber,
                   firstName: data.firstName,
-                  id: data.id,
+                  idNumber: data.id,
                   lastName: data.lastName,
                   lawId: data.lawId,
                   lawLastName: data.lawLastName,
@@ -561,54 +561,54 @@ function SaturdaySchool() {
                   onChange={getTime}
                   style={{textAlign: "start"}}
                 >
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMMT3 >= 26} hidden={age!==3 || subject!=="მათემატიკა"} value={"SSMMT31515"}><input type="hidden" value="SSMMT3"{...register("code")}/> მაია თევდორაშვილი - 15:15</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMAN3 >= 26} hidden={age!==3 || subject!=="მათემატიკა"} value={"SSMAN31330"}><input type="hidden" value="SSMAN3"{...register("code")}/> ალექსანდრე ნემსაძე - 13:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMEO3 >= 26} hidden={age!==3 || subject!=="მათემატიკა"} value={"SSMEO30900"}><input type="hidden" value="SSMEO3"{...register("code")}/> ეკა ონაშვილი - 09:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMMT4 >= 26} hidden={age!==4 || subject!=="მათემატიკა"} value={"SSMMT41315"}><input type="hidden" value="SSMMT4"{...register("code")}/> მაია თევდორაშვილი - 13:15</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMAN4 >= 26} hidden={age!==4 || subject!=="მათემატიკა"} value={"SSMAN41530"}><input type="hidden" value="SSMAN4"{...register("code")}/> ალექსანდრე ნემსაძე - 15:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMEO4 >= 26} hidden={age!==4 || subject!=="მათემატიკა"} value={"SSMEO41100"}><input type="hidden" value="SSMEO4"{...register("code")}/> ეკა ონაშვილი - 11:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMKK4 >= 26} hidden={age!==4 || subject!=="მათემატიკა"} value={"SSMKK41115"}><input type="hidden" value="SSMKK4"{...register("code")}/> კოტე კუპატაძე - 11:15</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMNM4 >= 26} hidden={age!==4 || subject!=="მათემატიკა"} value={"SSMNM41530"}><input type="hidden" value="SSMNM4"{...register("code")}/> ნუგზარ მახათაძე - 15:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMNM5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMNM51130"}><input type="hidden" value="SSMNM5"{...register("code")}/> ნუგზარ მახათაძე - 11:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMNQ5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMNQ51100"}><input type="hidden" value="SSMNQ5"{...register("code")}/> ნონა ქუშაშვილი - 11:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMNQ52 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMNQ51500"}><input type="hidden" value="SSMNQ52"{...register("code")}/> ნონა ქუშაშვილი - 15:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMMT5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMMT51115"}><input type="hidden" value="SSMMT5"{...register("code")}/> მაია თევდორაშვილი - 11:15</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMMN5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMMN51100"}><input type="hidden" value="SSMMN5"{...register("code")}/> ნანა მეტრეველი - 11:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMMN52 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMMN51500"}><input type="hidden" value="SSMMN52"{...register("code")}/> ნანა მეტრეველი - 15:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMAN5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMAN51130"}><input type="hidden" value="SSMAN5"{...register("code")}/> ალექსანდრე ნემსაძე - 11:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMKK5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMKK51315"}><input type="hidden" value="SSMKK5"{...register("code")}/> კოტე კუპატაძე - 13:15</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMEO5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMEO51300"}><input type="hidden" value="SSMEO5"{...register("code")}/> ეკა ონაშვილი - 13:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMNM6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMNM60930"}><input type="hidden" value="SSMNM6"{...register("code")}/> ნუგზარ მახათაძე - 09:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMNM62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMNM61330"}><input type="hidden" value="SSMNM62"{...register("code")}/> ნუგზარ მახათაძე - 13:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMNQ6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMNQ60900"}><input type="hidden" value="SSMNQ6"{...register("code")}/> ნონა ქუშაშვილი - 09:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMNQ62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMNQ61300"}><input type="hidden" value="SSMNQ62"{...register("code")}/> ნონა ქუშაშვილი - 13:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMGS6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMGS61100"}><input type="hidden" value="SSMGS6"{...register("code")}/> გურამ სიხარულიძე - 11:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMGS62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMGS61400"}><input type="hidden" value="SSMGS62"{...register("code")}/> გურამ სიხარულიძე - 14:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMMG6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMMG61300"}><input type="hidden" value="SSMMG6"{...register("code")}/> მედეია გურგენაძე - 13:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMMT6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMMT60915"}><input type="hidden" value="SSMMT6"{...register("code")}/> მაია თევდორაშვილი - 09:15</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMMN6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMMN60900"}><input type="hidden" value="SSMMN6"{...register("code")}/> ნანა მეტრეველი - 09:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMMN62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMMN61300"}><input type="hidden" value="SSMMN62"{...register("code")}/> ნანა მეტრეველი - 13:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMAN6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMAN60930"}><input type="hidden" value="SSMAN6"{...register("code")}/> ალექსანდრე ნემსაძე - 09:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMKK6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMKK60915"}><input type="hidden" value="SSMKK6"{...register("code")}/> კოტე კუპატაძე - 09:15</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMKK62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMKK61515"}><input type="hidden" value="SSMKK62"{...register("code")}/> კოტე კუპატაძე - 15:15</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMGS7 >= 26} hidden={age!==7 || subject!=="მათემატიკა"} value={"SSMGS70930"}><input type="hidden" value="SSMGS7"{...register("code")}/> გურამ სიხარულიძე - 09:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMGS72 >= 26} hidden={age!==7 || subject!=="მათემატიკა"} value={"SSMGS71230"}><input type="hidden" value="SSMGS72"{...register("code")}/> გურამ სიხარულიძე - 12:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMLM7 >= 26} hidden={age!==7 || subject!=="მათემატიკა"} value={"SSMLM70930"}><input type="hidden" value="SSMLM7"{...register("code")}/> ლელა მამულაშვილი - 09:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSPGK7 >= 26} hidden={age!==7 || subject!=="ფიზიკა"} value={"SSPGK71100"}><input type="hidden" value="SSPGK7"{...register("code")}/> გიორგი კაკაბაძე - 11:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSPGK72 >= 26} hidden={age!==7 || subject!=="ფიზიკა"} value={"SSPGK71230"}><input type="hidden" value="SSPGK72"{...register("code")}/> გიორგი კაკაბაძე - 12:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSPTG7 >= 26} hidden={age!==7 || subject!=="ფიზიკა"} value={"SSPTG71100"}><input type="hidden" value="SSPTG7"{...register("code")}/> თემურ გაჩეჩილაძე - 11:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSPTG72 >= 26} hidden={age!==7 || subject!=="ფიზიკა"} value={"SSPTG71230"}><input type="hidden" value="SSPTG72"{...register("code")}/> თემურ გაჩეჩილაძე - 12:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMMG8 >= 26} hidden={age!==8 || subject!=="მათემატიკა"} value={"SSMMG81100"}><input type="hidden" value="SSMMG8"{...register("code")}/> მედეია გურგენაძე - 11:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMMG82 >= 26} hidden={age!==8 || subject!=="მათემატიკა"} value={"SSMMG81500"}><input type="hidden" value="SSMMG82"{...register("code")}/> მედეია გურგენაძე - 15:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSPEKH8 >= 26} hidden={age!==8 || subject!=="ფიზიკა"} value={"SSPEKH81300"}><input type="hidden" value="SSPEKH8"{...register("code")}/> ესმა ხიზანიშვილი - 13:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMMG9 >= 26} hidden={age!==9 || subject!=="მათემატიკა"} value={"SSMMG90900"}><input type="hidden" value="SSMMG9"{...register("code")}/> მედეია გურგენაძე - 09:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSPNT9 >= 26} hidden={age!==9 || subject!=="ფიზიკა"} value={"SSPNT91030"}><input type="hidden" value="SSPNT9"{...register("code")}/> ნონა თოდუა - 10:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMEL10 >= 26} hidden={age!==10 || subject!=="მათემატიკა"} value={"SSMEL101230"}><input type="hidden" value="SSMEL10"{...register("code")}/> ედემ ლაგვილავა - 12:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSPTG10 >= 26} hidden={age!==10 || subject!=="ფიზიკა"} value={"SSPTG100930"}><input type="hidden" value="SSPTG10"{...register("code")}/> თემურ გაჩეჩილაძე - 09:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMEL1112 >= 26} hidden={age!==11 || subject!=="მათემატიკა"} value={"SSMEL11121230"}><input type="hidden" value="SSMEL1112"{...register("code")}/> ედემ ლაგვილავა - 12:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSPGK1112 >= 26} hidden={age!==11 || subject!=="ფიზიკა"} value={"SSPGK11120930"}><input type="hidden" value="SSPGK1112"{...register("code")}/> ნონა თოდუა - 10:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMEL1112 >= 26} hidden={age!==12 || subject!=="მათემატიკა"} value={"SSMEL11121230"}><input type="hidden" value="SSMEL1112"{...register("code")}/> ედემ ლაგვილავა - 12:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSPGK1112 >= 26} hidden={age!==12 || subject!=="ფიზიკა"} value={"SSPGK11120930"}><input type="hidden" value="SSPGK1112"{...register("code")}/> გიორგი კაკაბაძე - 09:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMT3 >= 26} hidden={age!==3 || subject!=="მათემატიკა"} value={"SSMMT31515"}><input type="hidden" value={SSMMT3} {...register("code")}/> მაია თევდორაშვილი - 15:15</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMAN3 >= 26} hidden={age!==3 || subject!=="მათემატიკა"} value={"SSMAN31330"}><input type="hidden" value={SSMAN3} {...register("code")}/> ალექსანდრე ნემსაძე - 13:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMEO3 >= 26} hidden={age!==3 || subject!=="მათემატიკა"} value={"SSMEO30900"}><input type="hidden" value={SSMEO3} {...register("code")}/> ეკა ონაშვილი - 09:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMT4 >= 26} hidden={age!==4 || subject!=="მათემატიკა"} value={"SSMMT41315"}><input type="hidden" value={SSMMT4} {...register("code")}/> მაია თევდორაშვილი - 13:15</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMAN4 >= 26} hidden={age!==4 || subject!=="მათემატიკა"} value={"SSMAN41530"}><input type="hidden" value={SSMAN4} {...register("code")}/> ალექსანდრე ნემსაძე - 15:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMEO4 >= 26} hidden={age!==4 || subject!=="მათემატიკა"} value={"SSMEO41100"}><input type="hidden" value={SSMEO4} {...register("code")}/> ეკა ონაშვილი - 11:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMKK4 >= 26} hidden={age!==4 || subject!=="მათემატიკა"} value={"SSMKK41115"}><input type="hidden" value={SSMKK4} {...register("code")}/> კოტე კუპატაძე - 11:15</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMNM4 >= 26} hidden={age!==4 || subject!=="მათემატიკა"} value={"SSMNM41530"}><input type="hidden" value={SSMNM4} {...register("code")}/> ნუგზარ მახათაძე - 15:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMNM5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMNM51130"}><input type="hidden" value={SSMNM5} {...register("code")}/> ნუგზარ მახათაძე - 11:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMNQ5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMNQ51100"}><input type="hidden" value={SSMNQ5} {...register("code")}/> ნონა ქუშაშვილი - 11:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMNQ52 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMNQ51500"}><input type="hidden" value={SSMNQ52} {...register("code")}/> ნონა ქუშაშვილი - 15:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMT5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMMT51115"}><input type="hidden" value={SSMMT5} {...register("code")}/> მაია თევდორაშვილი - 11:15</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMN5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMMN51100"}><input type="hidden" value={SSMMN5} {...register("code")}/> ნანა მეტრეველი - 11:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMN52 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMMN51500"}><input type="hidden" value={SSMMN52} {...register("code")}/> ნანა მეტრეველი - 15:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMAN5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMAN51130"}><input type="hidden" value={SSMAN5} {...register("code")}/> ალექსანდრე ნემსაძე - 11:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMKK5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMKK51315"}><input type="hidden" value={SSMKK5} {...register("code")}/> კოტე კუპატაძე - 13:15</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMEO5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMEO51300"}><input type="hidden" value={SSMEO5} {...register("code")}/> ეკა ონაშვილი - 13:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMNM6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMNM60930"}><input type="hidden" value={SSMNM6} {...register("code")}/> ნუგზარ მახათაძე - 09:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMNM62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMNM61330"}><input type="hidden" value={SSMNM62} {...register("code")}/> ნუგზარ მახათაძე - 13:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMNQ6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMNQ60900"}><input type="hidden" value={SSMNQ6} {...register("code")}/> ნონა ქუშაშვილი - 09:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMNQ62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMNQ61300"}><input type="hidden" value={SSMNQ62} {...register("code")}/> ნონა ქუშაშვილი - 13:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMGS6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMGS61100"}><input type="hidden" value={SSMGS6} {...register("code")}/> გურამ სიხარულიძე - 11:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMGS62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMGS61400"}><input type="hidden" value={SSMGS62} {...register("code")}/> გურამ სიხარულიძე - 14:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMG6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMMG61300"}><input type="hidden" value={SSMMG6} {...register("code")}/> მედეია გურგენაძე - 13:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMT6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMMT60915"}><input type="hidden" value={SSMMT6} {...register("code")}/> მაია თევდორაშვილი - 09:15</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMN6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMMN60900"}><input type="hidden" value={SSMMN6} {...register("code")}/> ნანა მეტრეველი - 09:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMN62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMMN61300"}><input type="hidden" value={SSMMN62} {...register("code")}/> ნანა მეტრეველი - 13:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMAN6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMAN60930"}><input type="hidden" value={SSMAN6} {...register("code")}/> ალექსანდრე ნემსაძე - 09:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMKK6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMKK60915"}><input type="hidden" value={SSMKK6} {...register("code")}/> კოტე კუპატაძე - 09:15</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMKK62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMKK61515"}><input type="hidden" value={SSMKK62} {...register("code")}/> კოტე კუპატაძე - 15:15</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMGS7 >= 26} hidden={age!==7 || subject!=="მათემატიკა"} value={"SSMGS70930"}><input type="hidden" value={SSMGS7} {...register("code")}/> გურამ სიხარულიძე - 09:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMGS72 >= 26} hidden={age!==7 || subject!=="მათემატიკა"} value={"SSMGS71230"}><input type="hidden" value={SSMGS72} {...register("code")}/> გურამ სიხარულიძე - 12:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMLM7 >= 26} hidden={age!==7 || subject!=="მათემატიკა"} value={"SSMLM70930"}><input type="hidden" value={SSMLM7} {...register("code")}/> ლელა მამულაშვილი - 09:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPGK7 >= 26} hidden={age!==7 || subject!=="ფიზიკა"} value={"SSPGK71100"}><input type="hidden" value={SSPGK7} {...register("code")}/> გიორგი კაკაბაძე - 11:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPGK72 >= 26} hidden={age!==7 || subject!=="ფიზიკა"} value={"SSPGK71230"}><input type="hidden" value={SSPGK72} {...register("code")}/> გიორგი კაკაბაძე - 12:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPTG7 >= 26} hidden={age!==7 || subject!=="ფიზიკა"} value={"SSPTG71100"}><input type="hidden" value={SSPTG7} {...register("code")}/> თემურ გაჩეჩილაძე - 11:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPTG72 >= 26} hidden={age!==7 || subject!=="ფიზიკა"} value={"SSPTG71230"}><input type="hidden" value={SSPTG72} {...register("code")}/> თემურ გაჩეჩილაძე - 12:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMG8 >= 26} hidden={age!==8 || subject!=="მათემატიკა"} value={"SSMMG81100"}><input type="hidden" value={SSMMG8} {...register("code")}/> მედეია გურგენაძე - 11:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMG82 >= 26} hidden={age!==8 || subject!=="მათემატიკა"} value={"SSMMG81500"}><input type="hidden" value={SSMMG82} {...register("code")}/> მედეია გურგენაძე - 15:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPEKH8 >= 26} hidden={age!==8 || subject!=="ფიზიკა"} value={"SSPEKH81300"}><input type="hidden" value={SSPEKH8} {...register("code")}/> ესმა ხიზანიშვილი - 13:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMG9 >= 26} hidden={age!==9 || subject!=="მათემატიკა"} value={"SSMMG90900"}><input type="hidden" value={SSMMG9} {...register("code")}/> მედეია გურგენაძე - 09:00</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPNT9 >= 26} hidden={age!==9 || subject!=="ფიზიკა"} value={"SSPNT91030"}><input type="hidden" value={SSPNT9} {...register("code")}/> ნონა თოდუა - 10:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMEL10 >= 26} hidden={age!==10 || subject!=="მათემატიკა"} value={"SSMEL101230"}><input type="hidden" value={SSMEL10} {...register("code")}/> ედემ ლაგვილავა - 12:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPTG10 >= 26} hidden={age!==10 || subject!=="ფიზიკა"} value={"SSPTG100930"}><input type="hidden" value={SSPTG10} {...register("code")}/> თემურ გაჩეჩილაძე - 09:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMEL1112 >= 26} hidden={age!==11 || subject!=="მათემატიკა"} value={"SSMEL11121230"}><input type="hidden" value={SSMEL1112} {...register("code")}/> ედემ ლაგვილავა - 12:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPGK1112 >= 26} hidden={age!==11 || subject!=="ფიზიკა"} value={"SSPGK11120930"}><input type="hidden" value={SSPGK1112} {...register("code")}/> ნონა თოდუა - 10:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMEL1112 >= 26} hidden={age!==12 || subject!=="მათემატიკა"} value={"SSMEL11121230"}><input type="hidden" value={SSMEL1112} {...register("code")}/> ედემ ლაგვილავა - 12:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPGK1112 >= 26} hidden={age!==12 || subject!=="ფიზიკა"} value={"SSPGK11120930"}><input type="hidden" value={SSPGK1112} {...register("code")}/> გიორგი კაკაბაძე - 09:30</MenuItem>
                 </Select>
                 {errors.teachers && <FormHelperText style={{color: "red"}}>საგნის არჩევა აუცილებელია</FormHelperText>}
               </FormControl>
