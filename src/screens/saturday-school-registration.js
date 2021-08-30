@@ -606,7 +606,6 @@ function SaturdaySchool() {
                     <MenuItem style={{textAlign: "start"}} disabled={SSMEL10 >= 26} hidden={age!==10 || subject!=="მათემატიკა"} value={"SSMEL101230"}><input type="hidden" value={SSMEL10} {...register("code")}/> ედემ ლაგვილავა - 12:30</MenuItem>
                     <MenuItem style={{textAlign: "start"}} disabled={SSPTG10 >= 26} hidden={age!==10 || subject!=="ფიზიკა"} value={"SSPTG100930"}><input type="hidden" value={SSPTG10} {...register("code")}/> თემურ გაჩეჩილაძე - 09:30</MenuItem>
                     <MenuItem style={{textAlign: "start"}} disabled={SSMEL1112 >= 26} hidden={age!==11 || subject!=="მათემატიკა"} value={"SSMEL11121230"}><input type="hidden" value={SSMEL1112} {...register("code")}/> ედემ ლაგვილავა - 12:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSPGK1112 >= 26} hidden={age!==11 || subject!=="ფიზიკა"} value={"SSPGK11120930"}><input type="hidden" value={SSPGK1112} {...register("code")}/> ნონა თოდუა - 10:30</MenuItem>
                     <MenuItem style={{textAlign: "start"}} disabled={SSMEL1112 >= 26} hidden={age!==12 || subject!=="მათემატიკა"} value={"SSMEL11121230"}><input type="hidden" value={SSMEL1112} {...register("code")}/> ედემ ლაგვილავა - 12:30</MenuItem>
                     <MenuItem style={{textAlign: "start"}} disabled={SSPGK1112 >= 26} hidden={age!==12 || subject!=="ფიზიკა"} value={"SSPGK11120930"}><input type="hidden" value={SSPGK1112} {...register("code")}/> გიორგი კაკაბაძე - 09:30</MenuItem>
                 </Select>
