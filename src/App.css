@@ -737,6 +737,13 @@ div.quick:hover {
   width: 75% !important;
 }
 
+.messages {
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
 @media (min-width: 960px) {
   .MuiGrid-grid-md-6 {
     flex-grow: 0;

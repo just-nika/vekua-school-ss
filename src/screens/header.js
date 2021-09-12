@@ -26,6 +26,7 @@ import NewsRoute from './newsRoute';
 import ProjectsRoute from './projectsRoute';
 import SaturdaySchool from './saturday-school';
 import SwitchM from "@material-ui/core/Switch";
+import Messages from './messages';
 
 function Header({ toggleDark, settoggleDark }) {
     const handleModeChange = () => {
@@ -355,8 +356,8 @@ function Header({ toggleDark, settoggleDark }) {
                     <Route path="/login">
                         <Login toggleDark={toggleDark} />
                     </Route>
-                    <Route path="/school-pupils">
-                        {/* <Login /> */}
+                    <Route path="/messages">
+                        <Messages toggleDark={toggleDark} />
                     </Route>
                     <Route path="/" exact>
                         <Main toggleDark={toggleDark} />
