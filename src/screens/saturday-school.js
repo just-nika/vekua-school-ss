@@ -14,6 +14,7 @@ import PropTypes from 'prop-types';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
+import AllSSPupils from './allSSPupils'
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -73,6 +74,9 @@ function SaturdaySchool() {
     function TeachersClasses() {
         if (user) {
             return <>
+                <br />
+                <AllSSPupils />
+                <br />
                 <div className="teacher-names" style={{textAlign: "start", fontSize: "17px"}}>
                 <div className={classes.root} style={{width: "100%", textAlign: "start"}}>
                 <Tabs
@@ -333,6 +337,7 @@ function SaturdaySchool() {
             </Helmet>
             <br />
             <h1>საშაბათო სკოლა</h1>
+            <br />
             <br />
             <TeachersClasses />
             <br />
