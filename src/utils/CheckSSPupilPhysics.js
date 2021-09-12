@@ -1,7 +1,7 @@
 import { secondaryApp } from '../firebase/firebase.config';
 
 function CheckPupil(personalNumber) {
-        let promise = new Promise((res, rej) =>  {["3","4","5","6","7","8","9","10","11","12"].forEach(item => {
+        let promise = new Promise((res, rej) =>  {["3p","4p","5p","6p","7p","8p","9p","10p","11p","12p"].forEach(item => {
           secondaryApp.firestore().collection(item).where("id", "==", `${personalNumber}`)
           .get()
           .then((querySnapshot) => {

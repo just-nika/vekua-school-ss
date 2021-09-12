@@ -3,7 +3,7 @@ import QuickLinks from './quicklinks';
 import Covid from './covid';
 import { Helmet } from "react-helmet";
 
-function Achievements() {
+function Achievements(toggleDark) {
     return (
         <div className="">
             <Helmet>
@@ -11,6 +11,7 @@ function Achievements() {
             </Helmet>
             <div className="achievements-text">
                 <div className="achievements-content">
+                    <br />
                     <h2>მიღწევები</h2>
                     <br />
                     <div className="achievements">
@@ -28,7 +29,7 @@ function Achievements() {
                 </div>
             </div>
         <QuickLinks />
-        <Covid />
+        <Covid toggleDark={toggleDark} />
         </div>
     )
 }

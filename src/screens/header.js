@@ -25,14 +25,22 @@ import Button from '@material-ui/core/Button';
 import NewsRoute from './newsRoute';
 import ProjectsRoute from './projectsRoute';
 import SaturdaySchool from './saturday-school';
+import SwitchM from "@material-ui/core/Switch";
 
-function Header() {
+function Header({ toggleDark, settoggleDark }) {
+    const handleModeChange = () => {
+        settoggleDark(!toggleDark);
+      };
+    const dark = toggleDark.toggleDark;
     const useStyles = makeStyles({
         list: {
             width: 250,
         },
         fullList: {
             width: 'auto',
+        },
+        headerClasses: {
+            backgroundColor: toggleDark ? "#383838" : "rgba(159, 216, 237, 0.9)",
         },
     });
     const Accordion = withStyles({
@@ -113,11 +121,14 @@ function Header() {
 
     setState({ ...state, [anchor]: open });
 };
-
+    const aStyle = {
+        color: toggleDark ? "white" : "#343a40",
+    }
 
     return (
 <Router>
-        <div className="page-main">
+        <div className="page-main" className={classes.root}>
+            <div className={classes.headerClasses}>
                 <div className="header">
                     <nav>
                         <div className="logo">
@@ -239,6 +250,12 @@ function Header() {
                                 </ListItem>
                             </List>
                         </a>
+                        <SwitchM
+                                checked={toggleDark}
+                                onChange={handleModeChange}
+                                name="toggleDark"
+                                color="default"
+                            />
                     </div>
                             </Drawer>
                             </React.Fragment>
@@ -248,10 +265,10 @@ function Header() {
                         <ul className="routes">
                             <li className="header-link">
                                 {/* <Link to="/"><Button aria-controls="simple" aria-haspopup="true">მთავარი</Button></Link> */}
-                                <Link to="/" style={{marginTop: "auto", marginBottom: "auto"}}>მთავარი</Link>
+                                <Link to="/" style={aStyle}>მთავარი</Link>
                             </li>
                             <li className="header-link">
-                                <Link onClick={handleClick}>
+                                <Link onClick={handleClick} style={aStyle}>
                                     ჩვენ შესახებ
                                 </Link>
                                 <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
@@ -263,23 +280,23 @@ function Header() {
                                 </Menu>
                             </li>
                             <li className="header-link">
-                                <Link to="/news">სიახლეები</Link>
+                                <Link to="/news" style={aStyle}>სიახლეები</Link>
                             </li>
                             <li className="header-link">
-                                <Link to="/projects">პროგრამები/პროექტები</Link>
+                                <Link to="/projects" style={aStyle}>პროგრამები/პროექტები</Link>
                             </li>
                             <li className="header-link">
-                                <Link to="/achievements">მიღწევები</Link>
+                                <Link to="/achievements" style={aStyle}>მიღწევები</Link>
                             </li>
                             <li className="header-link">
-                                <Link to="/saturday-school">საშაბათო სკოლა</Link>
+                                <Link to="/saturday-school" style={aStyle}>საშაბათო სკოლა</Link>
                             </li>
                             
                             <li className="header-link">
-                                <Link to="/contact">კონტაქტი</Link>
+                                <Link to="/contact" style={aStyle}>კონტაქტი</Link>
                             </li>
                             <li className="header-link">
-                                <Link onClick={handleClick2}>
+                                <Link onClick={handleClick2} style={aStyle}>
                                     ბლოგები
                                 </Link>
                                 <Menu id="simple-menu" anchorEl={anchorEl2} keepMounted open={Boolean(anchorEl2)} onClose={handleClose2}>
@@ -289,55 +306,68 @@ function Header() {
                                 </Menu>
                             </li>
                             <li className="header-link">
-                                <a href="https://vekua-tv.netlify.app" target="_blank">ვეკუა TV</a>
+                                <a href="https://vekua-tv.netlify.app" target="_blank" style={aStyle}>ვეკუა TV</a>
+                            </li>
+                            <li className="header-link">
+                            <SwitchM
+                                checked={toggleDark}
+                                onChange={handleModeChange}
+                                name="toggleDark"
+                                color="default"
+                            />
                             </li>
                         </ul>
                     </nav>
                 </div>
+            </div>
+
                 <Switch>
                     <Route path="/news">
-                        <NewsRoute />
+                        <NewsRoute toggleDark={toggleDark} />
                     </Route>
                     <Route path="/history">
-                        <History />
+                        <History toggleDark={toggleDark} />
                     </Route>
                     <Route path="/laws">
-                        <Laws />
+                        <Laws toggleDark={toggleDark} />
                     </Route>
                     <Route path="/plan">
-                        <Plan />
+                        <Plan toggleDark={toggleDark} />
                     </Route>
                     <Route path="/teachers">
-                        <SchoolTeachers />
+                        <SchoolTeachers toggleDark={toggleDark} />
                     </Route>
                     <Route path="/pupils">
-                        <Pupils />
+                        <Pupils toggleDark={toggleDark} />
                     </Route>
                     <Route path="/projects">
-                        <ProjectsRoute />
+                        <ProjectsRoute toggleDark={toggleDark} />
                     </Route>
                     <Route path="/achievements">
-                        <Achievements />
+                        <Achievements toggleDark={toggleDark} />
                     </Route>
                     <Route path="/contact">
-                        <Contact />
+                        <Contact toggleDark={toggleDark} />
                     </Route>
                     <Route path="/saturday-school">
-                        <SaturdaySchool />
+                        <SaturdaySchool toggleDark={toggleDark} />
                     </Route>
                     <Route path="/login">
-                        <Login />
+                        <Login toggleDark={toggleDark} />
+                    </Route>
+                    <Route path="/school-pupils">
+                        {/* <Login /> */}
                     </Route>
                     <Route path="/" exact>
-                        <Main />
+                        <Main toggleDark={toggleDark} />
                     </Route>
                     <Route path="*">
                         <Error />
                     </Route>
                 </Switch>
-                <Footer />
+                <Footer toggleDark={toggleDark} />
             </div>
-            </Router>
+        </Router>
          )
     function Plan() {
         return <>

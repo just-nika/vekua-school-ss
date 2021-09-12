@@ -19,7 +19,7 @@ import Button from '@material-ui/core/Button';
 import { Editor } from '@tinymce/tinymce-react';
 import TextField from '@material-ui/core/TextField';
 
-function News() {
+function News(toggleDark) {
     let [page, setPage] = useState(1);
     const [posts, setPosts] = useState([]);
     const [size, getSize] = useState([])
@@ -97,6 +97,11 @@ function News() {
         firebase.auth().signOut().then(() => {<Redirect path="/" />}).catch((error) => {})
     }
     let { path, url } = useRouteMatch();
+    const dark = toggleDark.toggleDark;
+    const calendarStyle = {
+        margin: "auto",
+        backgroundColor: dark ? "#363636 !important" : "white !important",
+    }
     if (user) {
         return (
             <Route>
@@ -157,7 +162,7 @@ function News() {
                         <Calendar 
                             value={dateState}
                             onChange={changeDate}
-                            style={{margin: "auto"}}
+                            style={calendarStyle}
                         />
                     </div>
                     <div className="news-container">

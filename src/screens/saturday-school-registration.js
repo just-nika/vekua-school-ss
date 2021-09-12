@@ -9,9 +9,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import {secondaryApp} from '../firebase/firebase.config'
+import { secondaryApp } from '../firebase/firebase.config'
 import { useForm } from "react-hook-form";
 import CheckPupil from '../utils/CheckSSPupil';
+import CheckSSPupilPhysics from '../utils/CheckSSPupilPhysics'
 import swal from "sweetalert";
 
 const useStyles = makeStyles((theme) => ({
@@ -39,6 +40,7 @@ function SaturdaySchool() {
   const [age, setAge] = React.useState('');
   const [subject, setSubject] = React.useState('');
   const [time, setTime] = React.useState('');
+  const [posts, setPosts] = useState([]);
 
   const handleChange = (event) => {
     setAge(event.target.value);
@@ -46,94 +48,100 @@ function SaturdaySchool() {
   const { register, handleSubmit, getValues, formState: { errors } } = useForm();
   // var t0 = performance.now()
   const addPupil = async (data) => {
-    CheckPupil(data.id).then((response) => {
-      if (response.status) {
+    const datas = await secondaryApp.firestore().collection(`${data.subject}`).get();
+    setPosts(datas.docs.map(doc => ({
+        ...doc.data(),
+        id: doc.id
+    })))
+    console.log(data)
+    console.log(posts)
+    posts.map((pupil, index) => {
+      if (pupil.idNumber == data.id) {
         return swal(
           "მოსწავლე უკვე რეგისტრირებულია!",
           "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.",
           "error"
         );
-      } else {
-        if (data.code) {
-          if (data.code <= 26) {
-            if (data.id !== data.lawId) {
-              secondaryApp.firestore().collection(`${data.teachers}`).add({
-                address: data.address,
-                class: data.class,
-                fatherFirstName: data.fatherFirstName,
-                fatherLastName: data.fatherLastName,
-                fatherMobileNumber: data.fatherMobileNumber,
+      }else {
+        if (data.id !== data.lawId) {
+          secondaryApp.firestore().collection(`${data.teachers}`).add({
+            firstName: data.firstName,
+            lastName: data.lastName,
+            idNumber: data.id,
+            class: data.class,
+            subject: data.subject,
+            address: data.address,
+            lawName: data.lawName,
+            lawLastName: data.lawLastName,
+            lawId: data.lawId,
+            lawMobileNumber: data.MobileNumber,
+            teacherTime: data.teachers,            
+          }).then(() => {
+            secondaryApp.firestore().collection(`${data.class}`).add({
+              firstName: data.firstName,
+              lastName: data.lastName,
+              idNumber: data.id,
+              class: data.class,
+              subject: data.subject,
+              address: data.address,
+              lawName: data.lawName,
+              lawLastName: data.lawLastName,
+              lawId: data.lawId,
+              lawMobileNumber: data.MobileNumber,
+              teacherTime: data.teachers,              
+            }).then(() => {
+              secondaryApp.firestore().collection(`${data.subject}`).add({
                 firstName: data.firstName,
-                idNumber: data.id,
                 lastName: data.lastName,
-                lawId: data.lawId,
-                lawLastName: data.lawLastName,
+                idNumber: data.id,
+                class: data.class,
+                subject: data.subject,
+                address: data.address,
                 lawName: data.lawName,
-                motherFirstName: data.motherFirstName,
-                motherLastName: data.motherLastName,
-                motherMobileNumber: data.motherMobileNumber,
-                subject: data.subject
+                lawLastName: data.lawLastName,
+                lawId: data.lawId,
+                lawMobileNumber: data.MobileNumber,
+                teacherTime: data.teachers,                
               }).then(() => {
-                secondaryApp.firestore().collection(`${data.class}`).add({
-                  address: data.address,
-                  class: data.class,
-                  fatherFirstName: data.fatherFirstName,
-                  fatherLastName: data.fatherLastName,
-                  fatherMobileNumber: data.fatherMobileNumber,
+                secondaryApp.firestore().collection(`all`).add({
                   firstName: data.firstName,
-                  idNumber: data.id,
                   lastName: data.lastName,
-                  lawId: data.lawId,
-                  lawLastName: data.lawLastName,
-                  lawName: data.lawName,
-                  motherFirstName: data.motherFirstName,
-                  motherLastName: data.motherLastName,
-                  motherMobileNumber: data.motherMobileNumber,
+                  idNumber: data.id,
+                  class: data.class,
                   subject: data.subject,
-                  teacherTime: data.teachers
+                  address: data.address,
+                  lawName: data.lawName,
+                  lawLastName: data.lawLastName,
+                  lawId: data.lawId,
+                  lawMobileNumber: data.MobileNumber,
+                  teacherTime: data.teachers,                  
                 }).then(() => {
                   swal(
                     "მოსწავლე წარმატებით დარეგისტრირდა!",
                     "",
                     "success"
                   );
+                  window.location.reload(false)
                 });
               });
-            }else {
-              return swal(
-                "გთხოვთ მიუთითოთ სხვა პირადი ნომერი ხელშეკრულებისთვის!",
-                `მშობელის/კანონიერი წარმომადგენლის პირადი ნომერი არ უნდა ემთხვეოდეს მოსწავლის პირად ნომერს.`,
-                "warning"
-              );
-            }
-          }else {
-            return swal(
-              "ამ ჯგუფში მოსწავლე ვერ დარეგისტრირდება!",
-              `თქვენს მიერ არჩეული ჯგუფში აღარაა ადგილი, გთხოვთ აარჩიოთ სხვა ჯგუფი.`,
-              "warning"
-            );
-          }
+            });
+          });
         }else {
           return swal(
-            "რეგისტრაცია ვერ განხორციელდა!",
-            `ტექნიკური ხარვეზის გამო ჯერ-ჯერობით რეგისტრაცია შეუძლებელია.`,
-            "error"
+            "გთხოვთ მიუთითოთ სხვა პირადი ნომერი ხელშეკრულებისთვის!",
+            `მშობელის/კანონიერი წარმომადგენლის პირადი ნომერი არ უნდა ემთხვეოდეს მოსწავლის პირად ნომერს.`,
+            "warning"
           );
         }
       }
-    });
+    })
   }
   // var t1 = performance.now()
   // console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
   const [pupilName, setPupilName] = React.useState('');
   const [pupilLastName, setPupilLastName] = React.useState('');
   const [pupilId, setPupilId] = React.useState('');
-  const [fatherFirstName, setFatherFirstName] = React.useState('');
-  const [fatherLastName, setFatherLastName] = React.useState('');
-  const [fatherMobileNumber, setFatherMobileNumber] = React.useState('');
-  const [motherFirstName, setMotherFirstName] = React.useState('');
-  const [motherLastName, setMotherLastName] = React.useState('');
-  const [motherMobileNumber, setMotherMobileNumber] = React.useState('');
+  const [mobileNumber, setFatherMobileNumber] = React.useState('');
   const [lawName, setLawName] = React.useState('');
   const [lawLastName, setLawLastName] = React.useState('');
   const [lawId, setLawId] = React.useState('');
@@ -142,12 +150,7 @@ function SaturdaySchool() {
   const PupilName = (event) => { setPupilName(event.target.value) }
   const PupilLastName = (event) => { setPupilLastName(event.target.value) }
   const PupilId = (event) => { setPupilId(event.target.value) }
-  const FatherFirstName = (event) => { setFatherFirstName(event.target.value) }
-  const FatherLastName = (event) => { setFatherLastName(event.target.value) }
-  const FatherMobileNumber = (event) => { setFatherMobileNumber(event.target.value) }
-  const MotherFirstName = (event) => { setMotherFirstName(event.target.value) }
-  const MotherLastName = (event) => { setMotherLastName(event.target.value) }
-  const MotherMobileNumber = (event) => { setMotherMobileNumber(event.target.value) }
+  const MobileNumber = (event) => { setFatherMobileNumber(event.target.value) }
   const LawName = (event) => { setLawName(event.target.value) }
   const LawLastName = (event) => { setLawLastName(event.target.value) }
   const LawId = (event) => { setLawId(event.target.value) }
@@ -375,109 +378,16 @@ function SaturdaySchool() {
                   style={{textAlign: "start"}}
                 >
                   <MenuItem style={{textAlign: "start"}} disabled={!age} hidden={age}>საგნის ასარჩევად აირჩიეთ კლასი</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} hidden={!age} value={'მათემატიკა'}>მათემატიკა</MenuItem>
-                  <MenuItem style={{textAlign: "start"}} hidden={!age || age<7} value={'ფიზიკა'}>ფიზიკა</MenuItem>
+                  <MenuItem style={{textAlign: "start"}} hidden={!age} value='მათემატიკა'>მათემატიკა</MenuItem>
+                  <MenuItem style={{textAlign: "start"}} hidden={!age || age<7} value='ფიზიკა'>ფიზიკა</MenuItem>
                 </Select>
                 {errors.class && <FormHelperText style={{color: "red"}}>საგნის არჩევა აუცილებელია</FormHelperText>}
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={4}>
-              <TextField
-                required
-                {...register("fatherFirstName", { required: true })}
-                error={errors.fatherFirstName}
-                helperText={
-                  errors.fatherFirstName && "მამის სახელი აუცილებელია"
-                }
-                onChange={FatherFirstName}
-                id="fatherFirstName"
-                name="fatherFirstName"
-                label="მამის სახელი"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <TextField 
-                {...register("fatherLastName", { required: true })}
-                error={errors.fatherLastName}
-                helperText={
-                  errors.fatherLastName && "მამის გვარი აუცილებელია"
-                }
-                onChange={FatherLastName}
-                id="fatherLastName"
-                name="fatherLastName"
-                label="მამის გვარი"
-                fullWidth
-                required
-              />
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <TextField 
-                {...register("fatherMobileNumber", { required: true, minLength: 9 })}
-                error={errors.fatherMobileNumber}
-                helperText={
-                  errors.fatherMobileNumber && "გთხოვთ შეიყვანეთ სწორი ნომერი"
-                }
-                onChange={FatherMobileNumber}
-                id="fatherMobileNumber"
-                name="fatherMobileNumber"
-                label="მამის ტელეფონის ნომერი"
-                type="number"
-                fullWidth
-                required
-              />
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <TextField
-                required
-                {...register("motherFirstName", { required: true })}
-                error={errors.motherFirstName}
-                helperText={
-                  errors.motherFirstName && "დედის სახელი აუცილებელია"
-                }
-                onChange={MotherFirstName}
-                id="motherFirstName"
-                name="motherFirstName"
-                label="დედის სახელი"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <TextField
-                required
-                {...register("motherLastName", { required: true })}
-                error={errors.motherLastName}
-                helperText={
-                  errors.motherLastName && "დედის გვარი აუცილებელია"
-                }
-                onChange={MotherLastName}
-                id="motherLastName"
-                name="motherLastName"
-                label="დედის გვარი"
-                fullWidth
-                autoComplete="shipping country"
-              />
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <TextField 
-                {...register("motherMobileNumber", { required: true, minLength: 9 })}
-                error={errors.motherMobileNumber}
-                helperText={
-                  errors.motherMobileNumber && "გთხოვთ შეიყვანეთ სწორი ტელეფონის ნომერი"
-                }
-                onChange={MotherMobileNumber}
-                id="motherMobileNumber" 
-                name="motherMobileNumber" 
-                label="დედის ტელეფონის ნომერი" 
-                type="number"
-                fullWidth 
-                required 
-              />
-            </Grid>
-            <Grid item xs={12} sm={12} hidden={!pupilName || !pupilLastName || !pupilId || !age || !fatherFirstName || !fatherLastName || !fatherMobileNumber || !motherFirstName || !motherLastName || !motherMobileNumber}>
+            <Grid item xs={12} sm={12} hidden={!pupilName || !pupilLastName || !pupilId || !age || !subject}>
               <p style={{marginTop: "auto", marginBottom: "auto"}}>მშობელი/კანონიერი წარმომადგენელი, რომელთანაც იდება ხელშეკრულება:</p>
             </Grid>
-            <Grid item xs={12} sm={6} hidden={!pupilName || !pupilLastName || !pupilId || !age || !fatherFirstName || !fatherLastName || !fatherMobileNumber || !motherFirstName || !motherLastName || !motherMobileNumber}>
+            <Grid item xs={12} sm={6} hidden={!pupilName || !pupilLastName || !pupilId || !age || !subject}>
               <TextField
                 {...register("lawName", { required: true })}
                 error={errors.lawName}
@@ -491,10 +401,10 @@ function SaturdaySchool() {
                 label="სახელი"
                 fullWidth
                 autoComplete=""
-                hidden={!pupilName || !pupilLastName || !pupilId || !age || !fatherFirstName || !fatherLastName || !fatherMobileNumber || !motherFirstName || !motherLastName || !motherMobileNumber}
+                hidden={!pupilName || !pupilLastName || !pupilId || !age || !subject}
               />
             </Grid>
-            <Grid item xs={12} sm={6} hidden={!pupilName || !pupilLastName || !pupilId || !age || !fatherFirstName || !fatherLastName || !fatherMobileNumber || !motherFirstName || !motherLastName || !motherMobileNumber}>
+            <Grid item xs={12} sm={6} hidden={!pupilName || !pupilLastName || !pupilId || !age || !subject}>
               <TextField
                 {...register("lawLastName", { required: true })}
                 error={errors.lawLastName}
@@ -508,10 +418,27 @@ function SaturdaySchool() {
                 label="გვარი"
                 fullWidth
                 autoComplete=""
-                hidden={!pupilName || !pupilLastName || !pupilId || !age || !fatherFirstName || !fatherLastName || !fatherMobileNumber || !motherFirstName || !motherLastName || !motherMobileNumber}
+                hidden={!pupilName || !pupilLastName || !pupilId || !age || !subject}
               />
             </Grid>
-            <Grid item xs={12} hidden={!pupilName || !pupilLastName || !pupilId || !age || !fatherFirstName || !fatherLastName || !fatherMobileNumber || !motherFirstName || !motherLastName || !motherMobileNumber}>
+            <Grid item xs={12} hidden={!pupilName || !pupilLastName || !pupilId || !age || !subject}>
+              <TextField 
+                {...register("MobileNumber", { required: true, minLength: 9 })}
+                error={errors.MobileNumber}
+                helperText={
+                  errors.MobileNumber && "გთხოვთ შეიყვანეთ სწორი ნომერი"
+                }
+                onChange={MobileNumber}
+                id="MobileNumber"
+                name="MobileNumber"
+                label="ტელეფონის ნომერი"
+                type="number"
+                fullWidth
+                required
+                hidden={!pupilName || !pupilLastName || !pupilId || !age || !subject}
+              />
+            </Grid>
+            <Grid item xs={12} hidden={!pupilName || !pupilLastName || !pupilId || !age || !subject}>
               <TextField
                 {...register("lawId", { required: true, minLength: 11, maxLength: 11 })}
                 error={errors.lawId}
@@ -526,10 +453,10 @@ function SaturdaySchool() {
                 fullWidth
                 type="number"
                 autoComplete="id"
-                hidden={!pupilName || !pupilLastName || !pupilId || !age || !fatherFirstName || !fatherLastName || !fatherMobileNumber || !motherFirstName || !motherLastName || !motherMobileNumber}
+                hidden={!pupilName || !pupilLastName || !pupilId || !age || !subject}
               />
             </Grid>
-            <Grid item xs={12} hidden={!pupilName || !pupilLastName || !pupilId || !age || !fatherFirstName || !fatherLastName || !fatherMobileNumber || !motherFirstName || !motherLastName || !motherMobileNumber}>
+            <Grid item xs={12} hidden={!pupilName || !pupilLastName || !pupilId || !age || !subject}>
               <TextField
                 {...register("address", { required: true })}
                 error={errors.address}
@@ -543,13 +470,13 @@ function SaturdaySchool() {
                 label="მისამართი"
                 fullWidth
                 autoComplete="address"
-                hidden={!pupilName || !pupilLastName || !pupilId || !age || !fatherFirstName || !fatherLastName || !fatherMobileNumber || !motherFirstName || !motherLastName || !motherMobileNumber}
+                hidden={!pupilName || !pupilLastName || !pupilId || !age || !subject}
               />
             </Grid>
-            <Grid item xs={12} sm={12} hidden={!pupilName || !pupilLastName || !pupilId || !age || !fatherFirstName || !fatherLastName || !fatherMobileNumber || !motherFirstName || !motherLastName || !motherMobileNumber || !lawName || !lawLastName || !lawId || !address}>
+            <Grid item xs={12} sm={12} hidden={!pupilName || !pupilLastName || !pupilId || !age || !lawName || !lawLastName || !lawId || !address}>
               <p style={{marginTop: "auto", marginBottom: "auto"}}>მასწავლებლისა და დროის არჩევა:</p>
             </Grid>
-            <Grid item xs={12} hidden={!pupilName || !pupilLastName || !pupilId || !age || !fatherFirstName || !fatherLastName || !fatherMobileNumber || !motherFirstName || !motherLastName || !motherMobileNumber || !lawName || !lawLastName || !lawId || !address}>
+            <Grid item xs={12} hidden={!pupilName || !pupilLastName || !pupilId || !age || !lawName || !lawLastName || !lawId || !address}>
               <FormControl style={{textAlign: "start"}} className={classes.formControl} fullWidth hidden={!subject}>
                 <InputLabel id="demo-simple-select-label">დროები მასწავლებლების მიხედვით</InputLabel>
                 <Select
@@ -561,60 +488,60 @@ function SaturdaySchool() {
                   onChange={getTime}
                   style={{textAlign: "start"}}
                 >
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMMT3 >= 26} hidden={age!==3 || subject!=="მათემატიკა"} value={"SSMMT31515"}><input type="hidden" value={SSMMT3} {...register("code")}/> მაია თევდორაშვილი - 15:15</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMAN3 >= 26} hidden={age!==3 || subject!=="მათემატიკა"} value={"SSMAN31330"}><input type="hidden" value={SSMAN3} {...register("code")}/> ალექსანდრე ნემსაძე - 13:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMEO3 >= 26} hidden={age!==3 || subject!=="მათემატიკა"} value={"SSMEO30900"}><input type="hidden" value={SSMEO3} {...register("code")}/> ეკა ონაშვილი - 09:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMMT4 >= 26} hidden={age!==4 || subject!=="მათემატიკა"} value={"SSMMT41315"}><input type="hidden" value={SSMMT4} {...register("code")}/> მაია თევდორაშვილი - 13:15</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMAN4 >= 26} hidden={age!==4 || subject!=="მათემატიკა"} value={"SSMAN41530"}><input type="hidden" value={SSMAN4} {...register("code")}/> ალექსანდრე ნემსაძე - 15:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMEO4 >= 26} hidden={age!==4 || subject!=="მათემატიკა"} value={"SSMEO41100"}><input type="hidden" value={SSMEO4} {...register("code")}/> ეკა ონაშვილი - 11:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMKK4 >= 26} hidden={age!==4 || subject!=="მათემატიკა"} value={"SSMKK41115"}><input type="hidden" value={SSMKK4} {...register("code")}/> კოტე კუპატაძე - 11:15</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMNM4 >= 26} hidden={age!==4 || subject!=="მათემატიკა"} value={"SSMNM41530"}><input type="hidden" value={SSMNM4} {...register("code")}/> ნუგზარ მახათაძე - 15:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMNM5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMNM51130"}><input type="hidden" value={SSMNM5} {...register("code")}/> ნუგზარ მახათაძე - 11:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMNQ5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMNQ51100"}><input type="hidden" value={SSMNQ5} {...register("code")}/> ნონა ქუშაშვილი - 11:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMNQ52 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMNQ51500"}><input type="hidden" value={SSMNQ52} {...register("code")}/> ნონა ქუშაშვილი - 15:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMMT5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMMT51115"}><input type="hidden" value={SSMMT5} {...register("code")}/> მაია თევდორაშვილი - 11:15</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMMN5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMMN51100"}><input type="hidden" value={SSMMN5} {...register("code")}/> ნანა მეტრეველი - 11:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMMN52 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMMN51500"}><input type="hidden" value={SSMMN52} {...register("code")}/> ნანა მეტრეველი - 15:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMAN5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMAN51130"}><input type="hidden" value={SSMAN5} {...register("code")}/> ალექსანდრე ნემსაძე - 11:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMKK5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMKK51315"}><input type="hidden" value={SSMKK5} {...register("code")}/> კოტე კუპატაძე - 13:15</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMEO5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMEO51300"}><input type="hidden" value={SSMEO5} {...register("code")}/> ეკა ონაშვილი - 13:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMNM6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMNM60930"}><input type="hidden" value={SSMNM6} {...register("code")}/> ნუგზარ მახათაძე - 09:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMNM62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMNM61330"}><input type="hidden" value={SSMNM62} {...register("code")}/> ნუგზარ მახათაძე - 13:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMNQ6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMNQ60900"}><input type="hidden" value={SSMNQ6} {...register("code")}/> ნონა ქუშაშვილი - 09:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMNQ62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMNQ61300"}><input type="hidden" value={SSMNQ62} {...register("code")}/> ნონა ქუშაშვილი - 13:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMGS6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMGS61100"}><input type="hidden" value={SSMGS6} {...register("code")}/> გურამ სიხარულიძე - 11:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMGS62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMGS61400"}><input type="hidden" value={SSMGS62} {...register("code")}/> გურამ სიხარულიძე - 14:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMMG6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMMG61300"}><input type="hidden" value={SSMMG6} {...register("code")}/> მედეია გურგენაძე - 13:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMMT6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMMT60915"}><input type="hidden" value={SSMMT6} {...register("code")}/> მაია თევდორაშვილი - 09:15</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMMN6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMMN60900"}><input type="hidden" value={SSMMN6} {...register("code")}/> ნანა მეტრეველი - 09:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMMN62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMMN61300"}><input type="hidden" value={SSMMN62} {...register("code")}/> ნანა მეტრეველი - 13:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMAN6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMAN60930"}><input type="hidden" value={SSMAN6} {...register("code")}/> ალექსანდრე ნემსაძე - 09:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMKK6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMKK60915"}><input type="hidden" value={SSMKK6} {...register("code")}/> კოტე კუპატაძე - 09:15</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMKK62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMKK61515"}><input type="hidden" value={SSMKK62} {...register("code")}/> კოტე კუპატაძე - 15:15</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMGS7 >= 26} hidden={age!==7 || subject!=="მათემატიკა"} value={"SSMGS70930"}><input type="hidden" value={SSMGS7} {...register("code")}/> გურამ სიხარულიძე - 09:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMGS72 >= 26} hidden={age!==7 || subject!=="მათემატიკა"} value={"SSMGS71230"}><input type="hidden" value={SSMGS72} {...register("code")}/> გურამ სიხარულიძე - 12:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMLM7 >= 26} hidden={age!==7 || subject!=="მათემატიკა"} value={"SSMLM70930"}><input type="hidden" value={SSMLM7} {...register("code")}/> ლელა მამულაშვილი - 09:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSPGK7 >= 26} hidden={age!==7 || subject!=="ფიზიკა"} value={"SSPGK71100"}><input type="hidden" value={SSPGK7} {...register("code")}/> გიორგი კაკაბაძე - 11:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSPGK72 >= 26} hidden={age!==7 || subject!=="ფიზიკა"} value={"SSPGK71230"}><input type="hidden" value={SSPGK72} {...register("code")}/> გიორგი კაკაბაძე - 12:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSPTG7 >= 26} hidden={age!==7 || subject!=="ფიზიკა"} value={"SSPTG71100"}><input type="hidden" value={SSPTG7} {...register("code")}/> თემურ გაჩეჩილაძე - 11:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSPTG72 >= 26} hidden={age!==7 || subject!=="ფიზიკა"} value={"SSPTG71230"}><input type="hidden" value={SSPTG72} {...register("code")}/> თემურ გაჩეჩილაძე - 12:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMMG8 >= 26} hidden={age!==8 || subject!=="მათემატიკა"} value={"SSMMG81100"}><input type="hidden" value={SSMMG8} {...register("code")}/> მედეია გურგენაძე - 11:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMMG82 >= 26} hidden={age!==8 || subject!=="მათემატიკა"} value={"SSMMG81500"}><input type="hidden" value={SSMMG82} {...register("code")}/> მედეია გურგენაძე - 15:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSPEKH8 >= 26} hidden={age!==8 || subject!=="ფიზიკა"} value={"SSPEKH81300"}><input type="hidden" value={SSPEKH8} {...register("code")}/> ესმა ხიზანიშვილი - 13:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMMG9 >= 26} hidden={age!==9 || subject!=="მათემატიკა"} value={"SSMMG90900"}><input type="hidden" value={SSMMG9} {...register("code")}/> მედეია გურგენაძე - 09:00</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSPNT9 >= 26} hidden={age!==9 || subject!=="ფიზიკა"} value={"SSPNT91030"}><input type="hidden" value={SSPNT9} {...register("code")}/> ნონა თოდუა - 10:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMEL10 >= 26} hidden={age!==10 || subject!=="მათემატიკა"} value={"SSMEL101230"}><input type="hidden" value={SSMEL10} {...register("code")}/> ედემ ლაგვილავა - 12:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSPTG10 >= 26} hidden={age!==10 || subject!=="ფიზიკა"} value={"SSPTG100930"}><input type="hidden" value={SSPTG10} {...register("code")}/> თემურ გაჩეჩილაძე - 09:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMEL1112 >= 26} hidden={age!==11 || subject!=="მათემატიკა"} value={"SSMEL11121230"}><input type="hidden" value={SSMEL1112} {...register("code")}/> ედემ ლაგვილავა - 12:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMEL1112 >= 26} hidden={age!==12 || subject!=="მათემატიკა"} value={"SSMEL11121230"}><input type="hidden" value={SSMEL1112} {...register("code")}/> ედემ ლაგვილავა - 12:30</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSPGK1112 >= 26} hidden={age!==12 || subject!=="ფიზიკა"} value={"SSPGK11120930"}><input type="hidden" value={SSPGK1112} {...register("code")}/> გიორგი კაკაბაძე - 09:30</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMT3 >= 26} hidden={age!==3 || subject!=="მათემატიკა"} value={"SSMMT31515"}> მაია თევდორაშვილი - 15:15 (კლასში დარჩა {26 - SSMMT3} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMAN3 >= 26} hidden={age!==3 || subject!=="მათემატიკა"} value={"SSMAN31330"}> ალექსანდრე ნემსაძე - 13:30 (კლასში დარჩა {26 - SSMAN3} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMEO3 >= 26} hidden={age!==3 || subject!=="მათემატიკა"} value={"SSMEO30900"}> ეკა ონაშვილი - 09:00 (კლასში დარჩა {26 - SSMEO3} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMT4 >= 26} hidden={age!==4 || subject!=="მათემატიკა"} value={"SSMMT41315"}> მაია თევდორაშვილი - 13:15 (კლასში დარჩა {26 - SSMMT4} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMAN4 >= 26} hidden={age!==4 || subject!=="მათემატიკა"} value={"SSMAN41530"}> ალექსანდრე ნემსაძე - 15:30 (კლასში დარჩა {26 - SSMAN4} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMEO4 >= 26} hidden={age!==4 || subject!=="მათემატიკა"} value={"SSMEO41100"}> ეკა ონაშვილი - 11:00 (კლასში დარჩა {26 - SSMEO4} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMKK4 >= 26} hidden={age!==4 || subject!=="მათემატიკა"} value={"SSMKK41115"}> კოტე კუპატაძე - 11:15 (კლასში დარჩა {26 - SSMKK4} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMNM4 >= 26} hidden={age!==4 || subject!=="მათემატიკა"} value={"SSMNM41530"}> ნუგზარ მახათაძე - 15:30 (კლასში დარჩა {26 - SSMNM4} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMNM5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMNM51130"}> ნუგზარ მახათაძე - 11:30 (კლასში დარჩა {26 - SSMNM5} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMNQ5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMNQ51100"}> ნონა ქუშაშვილი - 11:00 (კლასში დარჩა {26 - SSMNQ5} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMNQ52 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMNQ51500"}> ნონა ქუშაშვილი - 15:00 (კლასში დარჩა {26 - SSMNQ52} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMT5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMMT51115"}> მაია თევდორაშვილი - 11:15 (კლასში დარჩა {26 - SSMMT5} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMN5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMMN51100"}> ნანა მეტრეველი - 11:00 (კლასში დარჩა {26 - SSMMN5} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMN52 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMMN51500"}> ნანა მეტრეველი - 15:00 (კლასში დარჩა {26 - SSMMN52} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMAN5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMAN51130"}> ალექსანდრე ნემსაძე - 11:30 (კლასში დარჩა {26 - SSMAN5} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMKK5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMKK51315"}> კოტე კუპატაძე - 13:15 (კლასში დარჩა {26 - SSMKK5} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMEO5 >= 26} hidden={age!==5 || subject!=="მათემატიკა"} value={"SSMEO51300"}> ეკა ონაშვილი - 13:00 (კლასში დარჩა {26 - SSMEO5} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMNM6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMNM60930"}> ნუგზარ მახათაძე - 09:30 (კლასში დარჩა {26 - SSMNM6} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMNM62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMNM61330"}> ნუგზარ მახათაძე - 13:30 (კლასში დარჩა {26 - SSMNM62} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMNQ6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMNQ60900"}> ნონა ქუშაშვილი - 09:00 (კლასში დარჩა {26 - SSMNQ6} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMNQ62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMNQ61300"}> ნონა ქუშაშვილი - 13:00 (კლასში დარჩა {26 - SSMNQ62} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMGS6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMGS61100"}> გურამ სიხარულიძე - 11:00 (კლასში დარჩა {26 - SSMGS6} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMGS62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMGS61400"}> გურამ სიხარულიძე - 14:00 (კლასში დარჩა {26 - SSMGS62} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMG6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMMG61300"}> მედეია გურგენაძე - 13:00 (კლასში დარჩა {26 - SSMMG6} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMT6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMMT60915"}> მაია თევდორაშვილი - 09:15 (კლასში დარჩა {26 - SSMMT6} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMN6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMMN60900"}> ნანა მეტრეველი - 09:00 (კლასში დარჩა {26 - SSMMN6} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMN62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMMN61300"}> ნანა მეტრეველი - 13:00 (კლასში დარჩა {26 - SSMMN62} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMAN6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMAN60930"}> ალექსანდრე ნემსაძე - 09:30 (კლასში დარჩა {26 - SSMAN6} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMKK6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMKK60915"}> კოტე კუპატაძე - 09:15 (კლასში დარჩა {26 - SSMKK6} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMKK62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMKK61515"}> კოტე კუპატაძე - 15:15 (კლასში დარჩა {26 - SSMKK62} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMGS7 >= 26} hidden={age!==7 || subject!=="მათემატიკა"} value={"SSMGS70930"}> გურამ სიხარულიძე - 09:30 (კლასში დარჩა {26 - SSMGS7} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMGS72 >= 26} hidden={age!==7 || subject!=="მათემატიკა"} value={"SSMGS71230"}> გურამ სიხარულიძე - 12:30 (კლასში დარჩა {26 - SSMGS72} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMLM7 >= 26} hidden={age!==7 || subject!=="მათემატიკა"} value={"SSMLM70930"}> ლელა მამულაშვილი - 09:30 (კლასში დარჩა {26 - SSMLM7} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPGK7 >= 26} hidden={age!==7 || subject!=="ფიზიკა"} value={"SSPGK71100"}> გიორგი კაკაბაძე - 11:00 (კლასში დარჩა {26 - SSPGK7} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPGK72 >= 26} hidden={age!==7 || subject!=="ფიზიკა"} value={"SSPGK71230"}> გიორგი კაკაბაძე - 12:30 (კლასში დარჩა {26 - SSPGK72} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPTG7 >= 26} hidden={age!==7 || subject!=="ფიზიკა"} value={"SSPTG71100"}> თემურ გაჩეჩილაძე - 11:00 (კლასში დარჩა {26 - SSPTG7} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPTG72 >= 26} hidden={age!==7 || subject!=="ფიზიკა"} value={"SSPTG71230"}> თემურ გაჩეჩილაძე - 12:30 (კლასში დარჩა {26 - SSPTG72} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMG8 >= 26} hidden={age!==8 || subject!=="მათემატიკა"} value={"SSMMG81100"}> მედეია გურგენაძე - 11:00 (კლასში დარჩა {26 - SSMMG8} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMG82 >= 26} hidden={age!==8 || subject!=="მათემატიკა"} value={"SSMMG81500"}> მედეია გურგენაძე - 15:00 (კლასში დარჩა {26 - SSMMG82} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPEKH8 >= 26} hidden={age!==8 || subject!=="ფიზიკა"} value={"SSPEKH81300"}> ესმა ხიზანიშვილი - 13:00 (კლასში დარჩა {26 - SSPEKH8} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMMG9 >= 26} hidden={age!==9 || subject!=="მათემატიკა"} value={"SSMMG90900"}> მედეია გურგენაძე - 09:00 (კლასში დარჩა {26 - SSMMG9} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPNT9 >= 26} hidden={age!==9 || subject!=="ფიზიკა"} value={"SSPNT91030"}> ნონა თოდუა - 10:30 (კლასში დარჩა {26 - SSPNT9} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMEL10 >= 26} hidden={age!==10 || subject!=="მათემატიკა"} value={"SSMEL101230"}> ედემ ლაგვილავა - 12:30 (კლასში დარჩა {26 - SSMEL10} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPTG10 >= 26} hidden={age!==10 || subject!=="ფიზიკა"} value={"SSPTG100930"}> თემურ გაჩეჩილაძე - 09:30 (კლასში დარჩა {26 - SSPTG10} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMEL1112 >= 26} hidden={age!==11 || subject!=="მათემატიკა"} value={"SSMEL11121230"}> ედემ ლაგვილავა - 12:30 (კლასში დარჩა {26 - SSMEL1112} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMEL1112 >= 26} hidden={age!==12 || subject!=="მათემატიკა"} value={"SSMEL11121230"}> ედემ ლაგვილავა - 12:30 (კლასში დარჩა {26 - SSMEL1112} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPGK1112 >= 26} hidden={age!==12 || subject!=="ფიზიკა"} value={"SSPGK11120930"}> გიორგი კაკაბაძე - 09:30 (კლასში დარჩა {26 - SSPGK1112} ადგილი)</MenuItem>
                 </Select>
                 {errors.teachers && <FormHelperText style={{color: "red"}}>საგნის არჩევა აუცილებელია</FormHelperText>}
               </FormControl>
             </Grid>
           </Grid>
           <br />
-          <Button type="submit" variant="contained" fullWidth color="secondary" disabled={!pupilName || !pupilLastName || !pupilId || !age || !fatherFirstName || !fatherLastName || !fatherMobileNumber || !motherFirstName || !motherLastName || !motherMobileNumber || !lawName || !lawLastName || !lawId || !address || !state}>რეგისტრაცია</Button>  
+          <Button type="submit" variant="contained" fullWidth color="secondary" disabled={!pupilName || !pupilLastName || !pupilId || !age || !mobileNumber || !subject || !lawName || !lawLastName || !lawId || !address || !state}>რეგისტრაცია</Button>  
         </form>
         <br />
       </Container>

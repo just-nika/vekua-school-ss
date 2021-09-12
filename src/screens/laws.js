@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from "react-helmet";
 import Covid from './covid';
 
-function laws() {
+function laws(toggleDark) {
     return (
         <div className="">
         <Helmet>
@@ -510,7 +510,7 @@ function laws() {
                     </div>
             </div>
         </div>
-            <Covid />
+            <Covid toggleDark={toggleDark}/>
         </div>
     )
 }

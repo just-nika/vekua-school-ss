@@ -6,23 +6,25 @@ import Button from '@material-ui/core/Button';
 import { firestore } from '../firebase/firebase.config';
 import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet";
+import swal from "sweetalert";
 
-function Contact() {
-    const addMessage = async () => {
-        const name = document.getElementById("name").value;
-        const email = document.getElementById("email").value;
-        const title = document.getElementById("title").value;
-        const content = document.getElementById("content").value;
+function Contact(toggleDark) {
+    const addMessage = async (data) => {
         await firestore.collection("messages").add({
-            name: name,
-            email: email,
-            title: title,
-            content: content
+            name: data.firstName,
+            email: data.email,
+            title: data.title,
+            content: data.content
         }).then(() => {
             document.getElementById("name").value = "";
             document.getElementById("email").value = "";
             document.getElementById("title").value = "";
             document.getElementById("content").value = "";
+            swal(
+                "შეტყობინება წარმატებით გაიგზავნა!",
+                "",
+                "success"
+            );
         })
     }
 
@@ -58,7 +60,7 @@ function Contact() {
                             <br />
                             <TextField label="შეტყობინება" {...register("content", { required: true })} error={errors.content} helperText={errors.content && "შეტყობინების შინაარსი აუცილებელია"} multiline rows={5} variant="filled" id="content" style={{width:"100%"}} required />
                             <br />
-                            <Button variant="contained" color="primary" fullWidth style={{marginTop: "10px"}}>
+                            <Button variant="contained" color="primary" type="submit" fullWidth style={{marginTop: "10px"}}>
                                 გაგზავნა
                             </Button>
                         </form>
@@ -77,7 +79,7 @@ function Contact() {
             </div>
             <QuickLinks />
             <br />
-            <Covid />
+            <Covid toggleDark={toggleDark}/>
         </div>
     )
 }

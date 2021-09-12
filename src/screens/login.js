@@ -42,7 +42,9 @@ function Login() {
                 <br />
                 <TextField label="პაროლი" type="password" className="login-input" id="password" required />
                 <br/>
-                <Button variant="contained" color="primary" onClick={userPassAuth}>შესვლა</Button>
+                <br/>
+                <br/>
+                <Button variant="contained" color="primary" fullWidth onClick={userPassAuth}>შესვლა</Button>
             </form>
         </div>
     </div>
