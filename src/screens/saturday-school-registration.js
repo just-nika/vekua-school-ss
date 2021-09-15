@@ -11,8 +11,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { secondaryApp } from '../firebase/firebase.config'
 import { useForm } from "react-hook-form";
-import CheckPupil from '../utils/CheckSSPupil';
-import CheckSSPupilPhysics from '../utils/CheckSSPupilPhysics'
 import swal from "sweetalert";
 
 const useStyles = makeStyles((theme) => ({

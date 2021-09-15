@@ -82,8 +82,9 @@ function News(toggleDark) {
                 title: title,
                 url: url,
                 date: date,
+                content: content,
                 number: `${id}`,
-                content: content
+                status: "enabled"
             }).then(() => {
                 document.getElementById("title").value = "";
                 document.getElementById("photo").value = "";
@@ -266,8 +267,8 @@ function News(toggleDark) {
                             onChange={handleChange}
                         />
                         <br />
-                            {_DATA.currentData().map(v => {
-                                if (v.status === "enabled") {
+                            {_DATA.currentData().map(v => {  
+                                if (v.status == "enabled") {
                                     
                                     return (
                                         // <ListItem key={v.number} listStyleType="disc">

@@ -27,8 +27,62 @@ import ProjectsRoute from './projectsRoute';
 import SaturdaySchool from './saturday-school';
 import SwitchM from "@material-ui/core/Switch";
 import Messages from './messages';
+import useScrollTrigger from '@material-ui/core/useScrollTrigger';
+import PropTypes from 'prop-types';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Fab from '@material-ui/core/Fab';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import Zoom from '@material-ui/core/Zoom';
 
-function Header({ toggleDark, settoggleDark }) {
+
+function ScrollTop(props) {
+      const useStyles = makeStyles((theme) => ({
+          root: {
+            position: 'fixed',
+            bottom: theme.spacing(2),
+            left: theme.spacing(2),
+          },
+        }));
+    const { children, window } = props;
+    const classes = useStyles();
+    // Note that you normally won't need to set the window ref as useScrollTrigger
+    // will default to window.
+    // This is only being set here because the demo is in an iframe.
+    const trigger = useScrollTrigger({
+      target: window ? window() : undefined,
+      disableHysteresis: true,
+      threshold: 100,
+    });
+  
+    const handleClick = (event) => {
+      const anchor = (event.target.ownerDocument || document).querySelector('#back-to-top-anchor');
+  
+      if (anchor) {
+        anchor.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    };
+  
+    return (
+      <Zoom in={trigger}>
+        <div onClick={handleClick} role="presentation" className={classes.root}>
+          {children}
+        </div>
+      </Zoom>
+    );
+  }
+  
+  ScrollTop.propTypes = {
+    children: PropTypes.element.isRequired,
+    /**
+     * Injected by the documentation to work in an iframe.
+     * You won't need it on your project.
+     */
+    window: PropTypes.func,
+  };
+
+function Header({ toggleDark, settoggleDark, props }) {
     const handleModeChange = () => {
         settoggleDark(!toggleDark);
       };
@@ -41,7 +95,10 @@ function Header({ toggleDark, settoggleDark }) {
             width: 'auto',
         },
         headerClasses: {
-            backgroundColor: toggleDark ? "#383838" : "rgba(159, 216, 237, 0.9)",
+            backgroundColor: toggleDark ? "#383838" : "rgba(159, 216, 237, 1)",
+        },
+        headerCl: {
+            height: "125px"
         },
     });
     const Accordion = withStyles({
@@ -129,7 +186,9 @@ function Header({ toggleDark, settoggleDark }) {
     return (
 <Router>
         <div className="page-main" className={classes.root}>
-            <div className={classes.headerClasses}>
+            <div className={classes.headerCl}>
+            <CssBaseline />
+            <AppBar className={classes.headerClasses}>
                 <div className="header">
                     <nav>
                         <div className="logo">
@@ -320,6 +379,8 @@ function Header({ toggleDark, settoggleDark }) {
                         </ul>
                     </nav>
                 </div>
+                </AppBar>
+                <Toolbar id="back-to-top-anchor" />
             </div>
 
                 <Switch>
@@ -368,6 +429,11 @@ function Header({ toggleDark, settoggleDark }) {
                 </Switch>
                 <Footer toggleDark={toggleDark} />
             </div>
+            <ScrollTop {...props}>
+                <Fab color="primary" size="large" aria-label="scroll back to top">
+                    <KeyboardArrowUpIcon />
+                </Fab>
+            </ScrollTop>
         </Router>
          )
     function Plan() {
