@@ -73,7 +73,7 @@ function News(toggleDark) {
     const addPosts = async () => {
         firestore.collection('posts').get().then(async function (querySnapshot) {
             const size = querySnapshot.size;
-            const id = size + 1;
+            const id = size + 8;
             const title = document.getElementById("title").value;
             const url = document.getElementById("photo").value;
             const content = editorRef.current.getContent();

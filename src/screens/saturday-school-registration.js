@@ -12,6 +12,7 @@ import Select from '@material-ui/core/Select';
 import { secondaryApp } from '../firebase/firebase.config'
 import { useForm } from "react-hook-form";
 import swal from "sweetalert";
+import CheckPupil from '../utils/CheckSSPupil';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,6 +40,7 @@ function SaturdaySchool() {
   const [subject, setSubject] = React.useState('');
   const [time, setTime] = React.useState('');
   const [posts, setPosts] = useState([]);
+  const [subjectBase, setSubjectBase] = React.useState('')
 
   const handleChange = (event) => {
     setAge(event.target.value);
@@ -46,21 +48,14 @@ function SaturdaySchool() {
   const { register, handleSubmit, getValues, formState: { errors } } = useForm();
   // var t0 = performance.now()
   const addPupil = async (data) => {
-    const datas = await secondaryApp.firestore().collection(`${data.subject}`).get();
-    setPosts(datas.docs.map(doc => ({
-        ...doc.data(),
-        id: doc.id
-    })))
-    console.log(data)
-    console.log(posts)
-    posts.map((pupil, index) => {
-      if (pupil.idNumber == data.id) {
+    CheckPupil(data.id, data.subject).then((response) => {
+      if (response.status) {
         return swal(
           "მოსწავლე უკვე რეგისტრირებულია!",
           "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.",
           "error"
         );
-      }else {
+      } else {
         if (data.id !== data.lawId) {
           secondaryApp.firestore().collection(`${data.teachers}`).add({
             firstName: data.firstName,
@@ -75,7 +70,7 @@ function SaturdaySchool() {
             lawMobileNumber: data.MobileNumber,
             teacherTime: data.teachers,            
           }).then(() => {
-            secondaryApp.firestore().collection(`${data.class}`).add({
+            secondaryApp.firestore().collection(`${data.subject}`).add({
               firstName: data.firstName,
               lastName: data.lastName,
               idNumber: data.id,
@@ -86,9 +81,9 @@ function SaturdaySchool() {
               lawLastName: data.lawLastName,
               lawId: data.lawId,
               lawMobileNumber: data.MobileNumber,
-              teacherTime: data.teachers,              
+              teacherTime: data.teachers,                
             }).then(() => {
-              secondaryApp.firestore().collection(`${data.subject}`).add({
+              secondaryApp.firestore().collection(`${data.class}`).add({
                 firstName: data.firstName,
                 lastName: data.lastName,
                 idNumber: data.id,
@@ -99,28 +94,27 @@ function SaturdaySchool() {
                 lawLastName: data.lawLastName,
                 lawId: data.lawId,
                 lawMobileNumber: data.MobileNumber,
-                teacherTime: data.teachers,                
+                teacherTime: data.teachers,
               }).then(() => {
-                secondaryApp.firestore().collection(`all`).add({
-                  firstName: data.firstName,
-                  lastName: data.lastName,
-                  idNumber: data.id,
-                  class: data.class,
-                  subject: data.subject,
-                  address: data.address,
-                  lawName: data.lawName,
-                  lawLastName: data.lawLastName,
-                  lawId: data.lawId,
-                  lawMobileNumber: data.MobileNumber,
-                  teacherTime: data.teachers,                  
-                }).then(() => {
-                  swal(
-                    "მოსწავლე წარმატებით დარეგისტრირდა!",
-                    "",
-                    "success"
-                  );
-                  window.location.reload(false)
-                });
+              secondaryApp.firestore().collection(`all`).add({
+                firstName: data.firstName,
+                lastName: data.lastName,
+                idNumber: data.id,
+                class: data.class,
+                subject: data.subject,
+                address: data.address,
+                lawName: data.lawName,
+                lawLastName: data.lawLastName,
+                lawId: data.lawId,
+                lawMobileNumber: data.MobileNumber,
+                teacherTime: data.teachers,                  
+              }).then(() => {
+                swal(
+                  "მოსწავლე წარმატებით დარეგისტრირდა!",
+                  "",
+                  "success"
+                );
+              });
               });
             });
           });
@@ -532,6 +526,7 @@ function SaturdaySchool() {
                     <MenuItem style={{textAlign: "start"}} disabled={SSPTG10 >= 26} hidden={age!==10 || subject!=="ფიზიკა"} value={"SSPTG100930"}> თემურ გაჩეჩილაძე - 09:30 (კლასში დარჩა {26 - SSPTG10} ადგილი)</MenuItem>
                     <MenuItem style={{textAlign: "start"}} disabled={SSMEL1112 >= 26} hidden={age!==11 || subject!=="მათემატიკა"} value={"SSMEL11121230"}> ედემ ლაგვილავა - 12:30 (კლასში დარჩა {26 - SSMEL1112} ადგილი)</MenuItem>
                     <MenuItem style={{textAlign: "start"}} disabled={SSMEL1112 >= 26} hidden={age!==12 || subject!=="მათემატიკა"} value={"SSMEL11121230"}> ედემ ლაგვილავა - 12:30 (კლასში დარჩა {26 - SSMEL1112} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSPGK1112 >= 26} hidden={age!==11 || subject!=="ფიზიკა"} value={"SSPGK11120930"}> გიორგი კაკაბაძე - 09:30 (კლასში დარჩა {26 - SSPGK1112} ადგილი)</MenuItem>
                     <MenuItem style={{textAlign: "start"}} disabled={SSPGK1112 >= 26} hidden={age!==12 || subject!=="ფიზიკა"} value={"SSPGK11120930"}> გიორგი კაკაბაძე - 09:30 (კლასში დარჩა {26 - SSPGK1112} ადგილი)</MenuItem>
                 </Select>
                 {errors.teachers && <FormHelperText style={{color: "red"}}>საგნის არჩევა აუცილებელია</FormHelperText>}
