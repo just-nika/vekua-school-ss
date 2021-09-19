@@ -12,6 +12,7 @@ import { Link, Router } from 'react-router-dom';
 import Check from './checkClasses';
 import PropTypes from 'prop-types';
 import Tabs from '@material-ui/core/Tabs';
+import Button from '@material-ui/core/Button';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 import AllSSPupils from './allSSPupils'
@@ -74,8 +75,10 @@ function SaturdaySchool() {
     function TeachersClasses() {
         if (user) {
             return <>
+                <Button fullWidth variant="contained" color="primary" href="/contracts" >ხელშეკრულებები</Button>
                 <br />
                 <AllSSPupils />
+                <br />
                 <br />
                 <div className="teacher-names" style={{textAlign: "start", fontSize: "17px"}}>
                 <div className={classes.root} style={{width: "100%", textAlign: "start"}}>

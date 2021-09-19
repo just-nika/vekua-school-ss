@@ -35,6 +35,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Fab from '@material-ui/core/Fab';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Zoom from '@material-ui/core/Zoom';
+import ContractsRoute from './contractsRoute';
 
 
 function ScrollTop(props) {
@@ -419,6 +420,9 @@ function Header({ toggleDark, settoggleDark, props }) {
                     </Route>
                     <Route path="/messages">
                         <Messages toggleDark={toggleDark} />
+                    </Route>
+                    <Route path="/contracts">
+                        <ContractsRoute toggleDark={toggleDark} />
                     </Route>
                     <Route path="/" exact>
                         <Main toggleDark={toggleDark} />
