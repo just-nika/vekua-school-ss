@@ -366,6 +366,11 @@ export default function AllSSPupils() {
         width: 250,
     },
     {
+        field: "lawMobileNumber",
+        headerName: "მშობლის ნომერი ხელშეკრულებისათვის/Last Name For Contract",
+        width: 250,
+    },
+    {
         field: "lawId",
         headerName: "პირადი ნომერი ხელშეკრულებისათვის/ID For Contract",
         width: 250,

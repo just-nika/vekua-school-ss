@@ -763,6 +763,21 @@ div.quick:hover {
   }
 } */
 
+@media print {
+  .contract {
+    padding: 0px;
+  }
+  p {
+    color: black
+  }
+  div {
+    color: black
+  }
+  span {
+    color: black
+  }
+}
+
 /* @media print {
   .some-warnings {
     text-align: center;
