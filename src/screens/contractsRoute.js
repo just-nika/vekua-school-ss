@@ -7,7 +7,7 @@ function ContractsRoute() {
     return (
         <Switch>
             <Route exact path='/contracts' component={Contracts}/>
-            <Route path='/contracts/:id' component={SingleContract} />
+            <Route path='/contracts/:subject/:id' component={SingleContract} />
         </Switch>
     )
 }

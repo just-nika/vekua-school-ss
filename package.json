@@ -13,7 +13,7 @@
     "@mui/material": "^5.0.0",
     "@mui/x-data-grid-generator": "^4.0.0",
     "@mui/x-data-grid-pro": "^4.0.0",
-    "@react-pdf/renderer": "^2.0.15",
+    "@react-pdf/renderer": "^2.0.20",
     "@reduxjs/toolkit": "^1.6.1",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",

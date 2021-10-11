@@ -13,6 +13,9 @@ import { secondaryApp } from '../firebase/firebase.config'
 import { useForm } from "react-hook-form";
 import swal from "sweetalert";
 import CheckPupil from '../utils/CheckSSPupil';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,6 +35,14 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     // marginTop: theme.spacing(2),
   },
+  buttonProgress: {
+    // color: green[500],
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
 }));
 
 function SaturdaySchool() {
@@ -41,40 +52,44 @@ function SaturdaySchool() {
   const [time, setTime] = React.useState('');
   const [posts, setPosts] = useState([]);
   const [subjectBase, setSubjectBase] = React.useState('')
-  const [teacherTimeLimit, getTeacherTimeLimit] = React.useState('')
+  // const [teacherTimeLimit, getTeacherTimeLimit] = React.useState(0)
+  const [loading, setLoading] = React.useState(false)
+
+
+  const [pupilName, setPupilName] = React.useState('');
+  const [pupilLastName, setPupilLastName] = React.useState('');
+  const [pupilId, setPupilId] = React.useState('');
+  const [mobileNumber, setFatherMobileNumber] = React.useState('');
+  const [lawName, setLawName] = React.useState('');
+  const [lawLastName, setLawLastName] = React.useState('');
+  const [lawId, setLawId] = React.useState('');
+  const [address, setAddress] = React.useState('');
 
   const handleChange = (event) => {
     setAge(event.target.value);
   };
   const { register, handleSubmit, getValues, formState: { errors } } = useForm();
   // var t0 = performance.now()
+  const history = useHistory()
   const addPupil = async (data) => {
-    CheckPupil(data.id, data.subject).then((response) => {
-      if (response.status) {
-        return swal(
-          "მოსწავლე უკვე რეგისტრირებულია!",
-          "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.",
-          "error"
-        );
-      } else {
-        secondaryApp.firestore().collection(`${data.teachers}`).get().then( async function (querySnapshot) { const tTime = querySnapshot.size; getTeacherTimeLimit(tTime)});
-        if (teacherTimeLimit !== 0) {
-          if (teacherTimeLimit<26) {
-            if (data.id !== data.lawId) {
-              secondaryApp.firestore().collection(`${data.teachers}`).add({
-                firstName: data.firstName,
-                lastName: data.lastName,
-                idNumber: `${data.id}`,
-                class: data.class,
-                subject: data.subject,
-                address: data.address,
-                lawName: data.lawName,
-                lawLastName: data.lawLastName,
-                lawId: `${data.lawId}`,
-                lawMobileNumber: data.MobileNumber,
-                teacherTime: data.teachers,            
-              }).then(() => {
-                secondaryApp.firestore().collection(`${data.subject}`).add({
+    if (!loading) {
+      setLoading(true);
+      CheckPupil(data.id, data.subject).then((response) => {
+        if (response.status) {
+          setLoading(false);
+          return swal(
+            "მოსწავლე უკვე რეგისტრირებულია!",
+            "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.",
+            "error"
+            );
+          } else {
+          secondaryApp.firestore().collection(`${data.teachers}`).get().then( 
+          async function (querySnapshot) { 
+          const tTime = querySnapshot.size;
+          if (tTime !== 0) {
+            if (tTime<=25) {
+              if (data.id !== data.lawId) {
+                secondaryApp.firestore().collection(`${data.teachers}`).add({
                   firstName: data.firstName,
                   lastName: data.lastName,
                   idNumber: `${data.id}`,
@@ -85,9 +100,9 @@ function SaturdaySchool() {
                   lawLastName: data.lawLastName,
                   lawId: `${data.lawId}`,
                   lawMobileNumber: data.MobileNumber,
-                  teacherTime: data.teachers,                
+                  teacherTime: data.teachers,            
                 }).then(() => {
-                  secondaryApp.firestore().collection(`${data.class}`).add({
+                  secondaryApp.firestore().collection(`${data.subject}`).add({
                     firstName: data.firstName,
                     lastName: data.lastName,
                     idNumber: `${data.id}`,
@@ -98,64 +113,76 @@ function SaturdaySchool() {
                     lawLastName: data.lawLastName,
                     lawId: `${data.lawId}`,
                     lawMobileNumber: data.MobileNumber,
-                    teacherTime: data.teachers,
+                    teacherTime: data.teachers,                
                   }).then(() => {
-                  secondaryApp.firestore().collection(`all`).add({
-                    firstName: data.firstName,
-                    lastName: data.lastName,
-                    idNumber: `${data.id}`,
-                    class: data.class,
-                    subject: data.subject,
-                    address: data.address,
-                    lawName: data.lawName,
-                    lawLastName: data.lawLastName,
-                    lawId: `${data.lawId}`,
-                    lawMobileNumber: data.MobileNumber,
-                    teacherTime: data.teachers,                  
-                  }).then(() => {
-                    swal(
-                      "მოსწავლე წარმატებით დარეგისტრირდა!",
-                      "",
-                      "success"
-                    );
-                  });
+                    secondaryApp.firestore().collection(`${data.class}`).add({
+                      firstName: data.firstName,
+                      lastName: data.lastName,
+                      idNumber: `${data.id}`,
+                      class: data.class,
+                      subject: data.subject,
+                      address: data.address,
+                      lawName: data.lawName,
+                      lawLastName: data.lawLastName,
+                      lawId: `${data.lawId}`,
+                      lawMobileNumber: data.MobileNumber,
+                      teacherTime: data.teachers,
+                    }).then(() => {
+                    secondaryApp.firestore().collection(`all`).add({
+                      firstName: data.firstName,
+                      lastName: data.lastName,
+                      idNumber: `${data.id}`,
+                      class: data.class,
+                      subject: data.subject,
+                      address: data.address,
+                      lawName: data.lawName,
+                      lawLastName: data.lawLastName,
+                      lawId: `${data.lawId}`,
+                      lawMobileNumber: data.MobileNumber,
+                      teacherTime: data.teachers,                  
+                    }).then(() => {
+                      swal(
+                        "მოსწავლე წარმატებით დარეგისტრირდა!",
+                        "",
+                        "success"
+                      );
+                      setLoading(false);
+                    });
+                    });
                   });
                 });
-              });
+              }else {
+                setLoading(false);
+                return swal(
+                  "გთხოვთ მიუთითოთ სხვა პირადი ნომერი ხელშეკრულებისთვის!",
+                  `მშობელის/კანონიერი წარმომადგენლის პირადი ნომერი არ უნდა ემთხვეოდეს მოსწავლის პირად ნომერს.`,
+                  "warning"
+                );
+              }
             }else {
+              setLoading(false);
               return swal(
-                "გთხოვთ მიუთითოთ სხვა პირადი ნომერი ხელშეკრულებისთვის!",
-                `მშობელის/კანონიერი წარმომადგენლის პირადი ნომერი არ უნდა ემთხვეოდეს მოსწავლის პირად ნომერს.`,
+                "მოსწავლის ამ კლასში რეგისტრაცია ვერ მოხერხდა!",
+                `თქვენს მიერ არჩეული კლასი უკვე სავსეა, გთხოვთ აირჩიოთ სხვა კლასი.`,
                 "warning"
               );
             }
           }else {
+            setLoading(false);
             return swal(
-              "მოსწავლის ამ კლასში რეგისტრაცია ვერ მოხერხდა!",
-              ``,
-              "warning"
+              "რეგისტრაციის გავლა ჯერ-ჯერობით შეუძლებელია!",
+              `გთხოვთ აღადგინოთ ინტერნეტთან კავშირი და სცადოთ თავიდან.`,
+              "error"
             );
           }
-        }else {
-          return swal(
-            "რეგისტრაციის გავლა ჯერ-ჯერობით შეუძლებელია!",
-            `ტექნიკური ხარვეზის გამო ჯერ-ჯერობით რეგისტრაცია შეუძლებელია, ბოდიშს გიხდით შეფერხებისთვის.`,
-            "error"
-          );
+        });
         }
-      }
-    })
+      })
+    }
   }
   // var t1 = performance.now()
   // console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
-  const [pupilName, setPupilName] = React.useState('');
-  const [pupilLastName, setPupilLastName] = React.useState('');
-  const [pupilId, setPupilId] = React.useState('');
-  const [mobileNumber, setFatherMobileNumber] = React.useState('');
-  const [lawName, setLawName] = React.useState('');
-  const [lawLastName, setLawLastName] = React.useState('');
-  const [lawId, setLawId] = React.useState('');
-  const [address, setAddress] = React.useState('');
+  
 
   const PupilName = (event) => { setPupilName(event.target.value) }
   const PupilLastName = (event) => { setPupilLastName(event.target.value) }
@@ -243,10 +270,12 @@ function SaturdaySchool() {
   const [SSMGS7, querySizeSeventhOne] = React.useState('');
   const [SSMGS72, querySizeSeventhOne2] = React.useState('');
   const [SSMLM7, querySizeSeventhTwo] = React.useState('');
+  const [SSMLM72, querySizeSeventhTwoTwo] = React.useState('');
   
   secondaryApp.firestore().collection(`SSMGS70930`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeSeventhOne(pupils)});
   secondaryApp.firestore().collection(`SSMGS71230`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeSeventhOne2(pupils)});
   secondaryApp.firestore().collection(`SSMLM70930`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeSeventhTwo(pupils)});
+  secondaryApp.firestore().collection(`SSMLM709302`).get().then( async function (querySnapshot) { const pupils = querySnapshot.size; querySizeSeventhTwoTwo(pupils)});
 
   const [SSPGK7, querySizeSeventhThree] = React.useState('');
   const [SSPGK72, querySizeSeventhThirteen] = React.useState('');
@@ -521,8 +550,8 @@ function SaturdaySchool() {
 
                     <MenuItem style={{textAlign: "start"}} disabled={SSMNM6 >= 26} hidden={age!==6         || subject!=="მათემატიკა"} value={"SSMNM60930"}> ნუგზარ მახათაძე - 09:00 (კლასში დარჩა {26 - SSMNM6} ადგილი)</MenuItem>
                     <MenuItem style={{textAlign: "start"}} disabled={SSMNM62 >= 26} hidden={age!==6        || subject!=="მათემატიკა"} value={"SSMNM61330"}> ნუგზარ მახათაძე - 13:00 (კლასში დარჩა {26 - SSMNM62} ადგილი)</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMNQ6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMNQ60900"}> ნონა ქუშაშვილი - 09:00 (კლასში დარჩა {26 - SSMNQ6} ადგილი)</MenuItem>
-                    <MenuItem style={{textAlign: "start"}} disabled={SSMNQ62 >= 26} hidden={age!==6        || subject!=="მათემატიკა"} value={"SSMNQ61300"}> ნონა ქუშაშვილი - 11:00 (კლასში დარჩა {26 - SSMNQ62} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMNQ60900"}> ნონა ქუშაშვილი - 09:00 (კლასში დარჩა 0 ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled hidden={age!==6        || subject!=="მათემატიკა"} value={"SSMNQ61300"}> ნონა ქუშაშვილი - 11:00 (კლასში დარჩა 0 ადგილი)</MenuItem>
                     <MenuItem style={{textAlign: "start"}} disabled={SSMGS6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMGS61100"}> გურამ სიხარულიძე - 11:00 (კლასში დარჩა {26 - SSMGS6} ადგილი)</MenuItem>
                     <MenuItem style={{textAlign: "start"}} disabled={SSMGS62 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMGS61400"}> გურამ სიხარულიძე - 14:00 (კლასში დარჩა {26 - SSMGS62} ადგილი)</MenuItem>
                     <MenuItem style={{textAlign: "start"}} disabled={SSMMT6 >= 26} hidden={age!==6 || subject!=="მათემატიკა"} value={"SSMMT60915"}> მაია თევდორაშვილი - 09:15 (კლასში დარჩა {26 - SSMMT6} ადგილი)</MenuItem>
@@ -536,6 +565,7 @@ function SaturdaySchool() {
                     <MenuItem style={{textAlign: "start"}} disabled={SSMGS7 >= 26} hidden={age!==7 || subject!=="მათემატიკა"} value={"SSMGS70930"}> გურამ სიხარულიძე - 09:30 (კლასში დარჩა {26 - SSMGS7} ადგილი)</MenuItem>
                     <MenuItem style={{textAlign: "start"}} disabled={SSMGS72 >= 26} hidden={age!==7 || subject!=="მათემატიკა"} value={"SSMGS71230"}> გურამ სიხარულიძე - 12:30 (კლასში დარჩა {26 - SSMGS72} ადგილი)</MenuItem>
                     <MenuItem style={{textAlign: "start"}} disabled={SSMLM7 >= 26} hidden={age!==7         || subject!=="მათემატიკა"} value={"SSMLM70930"}> ლელა მამულაშვილი - 11:00 (კლასში დარჩა {26 - SSMLM7} ადგილი)</MenuItem>
+                    <MenuItem style={{textAlign: "start"}} disabled={SSMLM72 >= 26} hidden={age!==7 || subject!=="მათემატიკა"} value={"SSMLM709302"}> ლელა მამულაშვილი - 09:30 (კლასში დარჩა {26 - SSMLM72} ადგილი)</MenuItem>
                     <MenuItem style={{textAlign: "start"}} disabled={SSPGK7 >= 26} hidden={age!==7 || subject!=="ფიზიკა"} value={"SSPGK71100"}> გიორგი კაკაბაძე - 11:00 (კლასში დარჩა {26 - SSPGK7} ადგილი)</MenuItem>
                     <MenuItem style={{textAlign: "start"}} disabled={SSPGK72 >= 26} hidden={age!==7 || subject!=="ფიზიკა"} value={"SSPGK71230"}> გიორგი კაკაბაძე - 12:30 (კლასში დარჩა {26 - SSPGK72} ადგილი)</MenuItem>
                     <MenuItem style={{textAlign: "start"}} disabled={SSPTG7 >= 26} hidden={age!==7 || subject!=="ფიზიკა"} value={"SSPTG71100"}> თემურ გაჩეჩილაძე - 11:00 (კლასში დარჩა {26 - SSPTG7} ადგილი)</MenuItem>
@@ -562,7 +592,12 @@ function SaturdaySchool() {
             </Grid>
           </Grid>
           <br />
-          <Button type="submit" variant="contained" fullWidth color="secondary" disabled={!pupilName || !pupilLastName || !pupilId || !age || !mobileNumber || !subject || !lawName || !lawLastName || !lawId || !address || !state}>რეგისტრაცია</Button>  
+          <Button type="submit" variant="contained" fullWidth style={{height: "50px"}} color="secondary" disabled={!pupilName || !pupilLastName || !pupilId || !age || !mobileNumber || !subject || !lawName || !lawLastName || !lawId || !address || !state || loading}>{loading && <CircularProgress style={{height: "100%"}} />}&nbsp;&nbsp; რეგისტრაცია</Button>  
+          {/* {loading ? "a" : "ბ" } */}
+          <br />
+          <br />
+          {loading && <LinearProgress />}
+
         </form>
         <br />
         <p style={{textAlign: "start"}}><b>საიტის Admin</b> - <a href="mailto: support@vekua42.edu.ge" rel="noreferrer" target="_blank">support@vekua42.edu.ge</a></p>

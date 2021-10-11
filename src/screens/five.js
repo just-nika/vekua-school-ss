@@ -1,119 +1,120 @@
-import React, {useRef} from 'react'
-import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch, useParams, Redirect } from "react-router-dom";
-import { secondaryApp } from '../firebase/firebase.config';
-import { useReactToPrint } from 'react-to-print';
-import Button from '@material-ui/core/Button'
+import React, { Component, createRef, useEffect, useMemo } from 'react'
+import { secondaryApp } from "../firebase/firebase.config";
+import ReactToPrint from "react-to-print";
+import { useRef } from "react";
+import "../App.css";
 
-
-const SingleContract = () => {
-    let { id } = useParams()
-    let { subject } = useParams()
+function Five() {
     const [posts, setPosts] = React.useState([]);
     React.useEffect(() => {
         getPosts();
     }, [])
     const getPosts = async () => {
-        secondaryApp.firestore().collection(`${subject}`).doc(id).get().then(snapshot => setPosts(snapshot.data()));
+        const data = await secondaryApp.firestore().collection("მათემატიკა").where("class", "==", 4).get();
+        setPosts(data.docs.map(doc => ({
+            ...doc.data(),
+            id: doc.id
+        })))
     }
-    const componentRef = useRef();
-    const handlePrint = useReactToPrint({
-      content: () => componentRef.current,
-    });
-    function ComponentToPrint() {
-        // const [teachers, setTeacher] = React.useState('')
-        function Teacher() {
-            if (posts.teacherTime == "SSMAN31330" || posts.teacherTime == "SSMAN41530" || posts.teacherTime == "SSMAN51130" || posts.teacherTime == "SSMAN60930") {
-                return(
-                    <u>&nbsp; ნემსაძე ალექსანდრე &nbsp;</u>
-                )
+    const DataComponent = React.forwardRef(({ name }, ref) => (
+        <div className="containered" ref={ref} style={{ margin: "0", padding: "0" }}>
+          {posts.map((item) => {
+              function Teachers() {
+                if (item.teacherTime == "SSMAN31330" || item.teacherTime == "SSMAN41530" || item.teacherTime == "SSMAN51130" || item.teacherTime == "SSMAN60930") {
+                    return(
+                        <u>&nbsp; ნემსაძე ალექსანდრე &nbsp;</u>
+                    )
+                }
+                if (item.teacherTime == "SSMEL101230" || item.teacherTime == "SSMEL11121230") {
+                    return(
+                        <u>&nbsp; ლაგვილავა ედემ &nbsp;</u>
+                    )
+                }
+                if (item.teacherTime == "SSMEO30900" || item.teacherTime == "SSMEO41100" || item.teacherTime == "SSMEO51300") {
+                    return(
+                        <u>&nbsp; ონაშვილი ეკა &nbsp;</u>
+                    )
+                }
+                if (item.teacherTime == "SSMGS61100" || item.teacherTime == "SSMGS61400" || item.teacherTime == "SSMGS70930" || item.teacherTime == "SSMGS71230") {
+                    return(
+                        <u>&nbsp; სიხარულიძე გურამ &nbsp;</u>
+                    )
+                }
+                if (item.teacherTime == "SSMKK41115" || item.teacherTime == "SSMKK51315" || item.teacherTime == "SSMKK60915" || item.teacherTime == "SSMKK61515") {
+                    return(
+                        <u>&nbsp; კუპატაძე კოტე &nbsp;</u>
+                    )
+                }
+                if (item.teacherTime == "SSMLM70930" || item.teacherTime == "SSMLM709302" ) {
+                    return(
+                        <u>&nbsp; მამულაშვილი ლელა &nbsp;</u>
+                    )
+                }
+                if (item.teacherTime == "SSMMG61300" || item.teacherTime == "SSMMG81100" || item.teacherTime == "SSMMG81500" || item.teacherTime == "SSMMG90900") {
+                    return(
+                        <u>&nbsp; გურგენაძე მედეია &nbsp;</u>
+                    )
+                }
+                if (item.teacherTime == "SSMMN51100" || item.teacherTime == "SSMMN51500" || item.teacherTime == "SSMMN60900" || item.teacherTime == "SSMMN61300") {
+                    return(
+                        <u>&nbsp; მეტრეველი ნანა &nbsp;</u>
+                    )
+                }
+                if (item.teacherTime == "SSMMT31515" || item.teacherTime == "SSMMT41315" || item.teacherTime == "SSMMT51115" || item.teacherTime == "SSMMT60915") {
+                    return(
+                        <u>&nbsp; თევდორაშვილი მაია &nbsp;</u>
+                    )
+                }
+                if (item.teacherTime == "SSMNM41530" || item.teacherTime == "SSMNM51130" || item.teacherTime == "SSMNM60930" || item.teacherTime == "SSMNM61330") {
+                    return(
+                        <u>&nbsp; მახათაძე ნუგზარ &nbsp;</u>
+                    )
+                }
+                if (item.teacherTime == "SSMNQ51100" || item.teacherTime == "SSMNQ51500" || item.teacherTime == "SSMNQ60900" || item.teacherTime == "SSMNQ61300") {
+                    return(
+                        <u>&nbsp; ქუშაშვილი ნონა &nbsp;</u>
+                    )
+                }
+                if (item.teacherTime == "SSPEKH81300") {
+                    return(
+                        <u>&nbsp; ხიზანიშვილი ესმა &nbsp;</u>
+                    )
+                }
+                if (item.teacherTime == "SSPGK11120930" || item.teacherTime == "SSPGK71100" || item.teacherTime == "SSPGK71230") {
+                    return(
+                        <u>&nbsp; კაკაბაძე გიორგი &nbsp;</u>
+                    )
+                }
+                if (item.teacherTime == "SSPNT91030") {
+                    return(
+                        <u>&nbsp; თოდუა ნონა &nbsp;</u>
+                    )
+                }
+                if (item.teacherTime == "SSPTG100930" || item.teacherTime == "SSPTG71100" || item.teacherTime == "SSPTG71230") {
+                    return(
+                        <u>&nbsp; გაჩეჩილაძე თემური &nbsp;</u>
+                    )
+                }
+                else {
+                    return ""
+                }
             }
-            if (posts.teacherTime == "SSMEL101230" || posts.teacherTime == "SSMEL11121230") {
-                return(
-                    <u>&nbsp; ლაგვილავა ედემ &nbsp;</u>
-                )
-            }
-            if (posts.teacherTime == "SSMEO30900" || posts.teacherTime == "SSMEO41100" || posts.teacherTime == "SSMEO51300") {
-                return(
-                    <u>&nbsp; ონაშვილი ეკა &nbsp;</u>
-                )
-            }
-            if (posts.teacherTime == "SSMGS61100" || posts.teacherTime == "SSMGS61400" || posts.teacherTime == "SSMGS70930" || posts.teacherTime == "SSMGS71230") {
-                return(
-                    <u>&nbsp; სიხარულიძე გურამ &nbsp;</u>
-                )
-            }
-            if (posts.teacherTime == "SSMKK41115" || posts.teacherTime == "SSMKK51315" || posts.teacherTime == "SSMKK60915" || posts.teacherTime == "SSMKK61515") {
-                return(
-                    <u>&nbsp; კუპატაძე კოტე &nbsp;</u>
-                )
-            }
-            if (posts.teacherTime == "SSMLM70930" || posts.teacherTime == "SSMLM709302" ) {
-                return(
-                    <u>&nbsp; მამულაშვილი ლელა &nbsp;</u>
-                )
-            }
-            if (posts.teacherTime == "SSMMG61300" || posts.teacherTime == "SSMMG81100" || posts.teacherTime == "SSMMG81500" || posts.teacherTime == "SSMMG90900") {
-                return(
-                    <u>&nbsp; გურგენაძე მედეია &nbsp;</u>
-                )
-            }
-            if (posts.teacherTime == "SSMMN51100" || posts.teacherTime == "SSMMN51500" || posts.teacherTime == "SSMMN60900" || posts.teacherTime == "SSMMN61300") {
-                return(
-                    <u>&nbsp; მეტრეველი ნანა &nbsp;</u>
-                )
-            }
-            if (posts.teacherTime == "SSMMT31515" || posts.teacherTime == "SSMMT41315" || posts.teacherTime == "SSMMT51115" || posts.teacherTime == "SSMMT60915") {
-                return(
-                    <u>&nbsp; თევდორაშვილი მაია &nbsp;</u>
-                )
-            }
-            if (posts.teacherTime == "SSMNM41530" || posts.teacherTime == "SSMNM51130" || posts.teacherTime == "SSMNM60930" || posts.teacherTime == "SSMNM61330") {
-                return(
-                    <u>&nbsp; მახათაძე ნუგზარ &nbsp;</u>
-                )
-            }
-            if (posts.teacherTime == "SSMNQ51100" || posts.teacherTime == "SSMNQ51500" || posts.teacherTime == "SSMNQ60900" || posts.teacherTime == "SSMNQ61300") {
-                return(
-                    <u>&nbsp; ქუშაშვილი ნონა &nbsp;</u>
-                )
-            }
-            if (posts.teacherTime == "SSPEKH81300") {
-                return(
-                    <u>&nbsp; ხიზანიშვილი ესმა &nbsp;</u>
-                )
-            }
-            if (posts.teacherTime == "SSPGK11120930" || posts.teacherTime == "SSPGK71100" || posts.teacherTime == "SSPGK71230") {
-                return(
-                    <u>&nbsp; კაკაბაძე გიორგი &nbsp;</u>
-                )
-            }
-            if (posts.teacherTime == "SSPNT91030") {
-                return(
-                    <u>&nbsp; თოდუა ნონა &nbsp;</u>
-                )
-            }
-            if (posts.teacherTime == "SSPTG100930" || posts.teacherTime == "SSPTG71100" || posts.teacherTime == "SSPTG71230") {
-                return(
-                    <u>&nbsp; გაჩეჩილაძე თემური &nbsp;</u>
-                )
-            }
-            else {
-                return ""
-            }
-        }
-        return <>
-            <div ref={componentRef} className="contract" style={{fontSize: "11px"}}>
+            return (
+            //   <div style={{ height: "100vh", padding: "5vh" }}>
+            //     page {item.firstName} content
+            //   </div>
+            <div className="contract" style={{fontSize: "11px", height: "200vh"}}>
                 <p style={{textAlign: "center"}}><b>ხ ე ლ შ ე კ რ უ ლ ე ბ ა #</b></p>
                 <div clas="contract-head" style={{width: "100%", display: "flex", justifyContent: "space-between"}}>
                     <span>ქ. თბილისი</span>
                     <span>------  -----------------  2021  წელი</span>
                 </div>
                 <p style={{textAlign: "start"}}> 
-                    ერთის მხრივ, აკადემიკოს ილია ვეკუას სახელობის ფიზიკა-მათემატიკის ქალაქ თბილისის #42 საჯარო სკოლაში მოქმედი საშაბათო სკოლის მსმენელის <u>&nbsp; {posts.firstName} {posts.lastName} &nbsp;</u> #42 საჯარო სკოლაში არარეგისტრირებულ მოსწავლის მშობლის/კანონიერი წარმომადგენლის <u>&nbsp; {posts.lawName} {posts.lawLastName} &nbsp;</u> შემდგომში `დამკვეთად` წოდებული, პირადი #<u>{posts.lawId}</u> მისამართი <u>&nbsp; {posts.address} &nbsp;</u>, საკონტაქტო ტელეფონის ნომერი <u>&nbsp; {posts.lawMobileNumber} &nbsp;</u> და მეორეს მხრივ, აკად. ი. ვეკუას სახ. ფიზიკა-მათემატიკის #42 საჯარო სკოლა, მისამართი: ჩაიკოვსკის ქ. #9, საიდენტიფიკაციო კოდი 203853856,  მისი დირექტორის ნუგზარ კედელაშვილის სახით, შემდგომში `შემსრულებლად~ წოდებული, საქართველოს კანონის ზოგადი განათლების შესახებ  მუხლი 51 პუნქტი 2-ის; საჯარო სკოლის წესდების მუხლი 18 პუნქტი 3-ის, ზოგადსაგანმანათლებლო სკოლებისათვის ეროვნული სასწავლო გეგმისა და სასკოლო სასწავლო გეგმის თანახმად,  ხელშეკრულებას დებენ მასზე, რომ დამკვეთს, ნებაყოფლობითობისა და არჩევანის თავისუფლების პრინციპების საფუძველზე, სურს მიიღოს შემსრულებლისაგან მუხლი 1-ში აღწერილი მომსახურება, ხოლო შემსრულებელი მზადაა გაუწიოს დამკვეთს ეს მომსახურება ხელშეკრულების პირობების დაცვით: 
+                    ერთის მხრივ, აკადემიკოს ილია ვეკუას სახელობის ფიზიკა-მათემატიკის ქალაქ თბილისის #42 საჯარო სკოლაში მოქმედი საშაბათო სკოლის მსმენელის <u>&nbsp; {item.firstName} {item.lastName} &nbsp;</u> #42 საჯარო სკოლაში არარეგისტრირებულ მოსწავლის მშობლის/კანონიერი წარმომადგენლის <u>&nbsp; {item.lawName} {item.lawLastName} &nbsp;</u> შემდგომში `დამკვეთად` წოდებული, პირადი #<u>{item.lawId}</u> მისამართი <u>&nbsp; {item.address} &nbsp;</u>, საკონტაქტო ტელეფონის ნომერი <u>&nbsp; {item.lawMobileNumber} &nbsp;</u> და მეორეს მხრივ, აკად. ი. ვეკუას სახ. ფიზიკა-მათემატიკის #42 საჯარო სკოლა, მისამართი: ჩაიკოვსკის ქ. #9, საიდენტიფიკაციო კოდი 203853856,  მისი დირექტორის ნუგზარ კედელაშვილის სახით, შემდგომში `შემსრულებლად~ წოდებული, საქართველოს კანონის ზოგადი განათლების შესახებ  მუხლი 51 პუნქტი 2-ის; საჯარო სკოლის წესდების მუხლი 18 პუნქტი 3-ის, ზოგადსაგანმანათლებლო სკოლებისათვის ეროვნული სასწავლო გეგმისა და სასკოლო სასწავლო გეგმის თანახმად,  ხელშეკრულებას დებენ მასზე, რომ დამკვეთს, ნებაყოფლობითობისა და არჩევანის თავისუფლების პრინციპების საფუძველზე, სურს მიიღოს შემსრულებლისაგან მუხლი 1-ში აღწერილი მომსახურება, ხოლო შემსრულებელი მზადაა გაუწიოს დამკვეთს ეს მომსახურება ხელშეკრულების პირობების დაცვით: 
                 </p>
                 <p style={{textAlign: "center"}}><strong>1. ხელშეკრულების საგანი</strong></p>
                 <p style={{textAlign: "start"}}> 
-                    1.1. ამ ხელშეკრულების საგანია 2021-2022 სასწავლო წლის განმავლობაში, # &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ჯგუფის ფარგლებში,  დამკვეთის წარმომადგენლისთვის საშაბათო სკოლის პროგრამით  გათგათვალისწინებული სასწავლო კურსის წარმართვა <u>&nbsp; {posts.subject} &nbsp;</u> (საგანი) <u>&nbsp; {posts.class} &nbsp;</u> (კლასი) რომელიც მოიცავს 80 აკადემიურ საათს, ფასილიტატორ <Teacher /> (გვარი, სახელი)  შესრულებით.
+                    1.1. ამ ხელშეკრულების საგანია 2021-2022 სასწავლო წლის განმავლობაში, # &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ჯგუფის ფარგლებში,  დამკვეთის წარმომადგენლისთვის საშაბათო სკოლის პროგრამით  გათგათვალისწინებული სასწავლო კურსის წარმართვა <u>&nbsp; {item.subject} &nbsp;</u> (საგანი) <u>&nbsp; {item.class} &nbsp;</u> (კლასი) რომელიც მოიცავს 80 აკადემიურ საათს, ფასილიტატორ <Teachers /> (გვარი, სახელი) შესრულებით.
                 </p>
                 <p style={{textAlign: "center"}}><strong>2.	მხარეთა უფლება-მოვალეობები</strong></p>
                 <p style={{textAlign: "start"}}><strong>2.1. დამკვეთი:</strong></p>
@@ -182,15 +183,34 @@ const SingleContract = () => {
                     <span style={{width: "210px", textAlign: "center"}}>-------------------------------------------</span>
                 </div>
             </div>
-        </>
-    }
+            );
+          })}
+        </div>
+      ));
+      const dataRef = useMemo(
+        () =>
+          Array(posts.length)
+            .fill()
+            .map(() => createRef()),
+        [posts]
+      );
+      const printRef = useRef();
+    
+      useEffect(() => {
+        printRef.current.handleClick();
+      }, []);
     return (
-      <div>
-        <br />
-        <ComponentToPrint />
-        <Button variant="outlined" color="primary" type="submit" onClick={handlePrint}>ამობეჭვდა</Button>
-      </div>
-    );
+        <div>
+            <React.Fragment>
+                <ReactToPrint
+                    trigger={() => <a href="#">Print this out!</a>}
+                    content={() => dataRef.current}
+                    ref={printRef}
+                />
+                <DataComponent ref={dataRef} />
+            </React.Fragment>
+        </div>
+    )
 }
 
-export default SingleContract
+export default Five

@@ -20,7 +20,7 @@ import Error from './error';
 import SchoolTeachers from './teachers';
 import { makeStyles } from '@material-ui/core/styles';
 import Footer from './footer';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, BrowserRouter } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import NewsRoute from './newsRoute';
 import ProjectsRoute from './projectsRoute';
@@ -36,7 +36,7 @@ import Fab from '@material-ui/core/Fab';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Zoom from '@material-ui/core/Zoom';
 import ContractsRoute from './contractsRoute';
-
+import Loading from './loading';
 
 function ScrollTop(props) {
       const useStyles = makeStyles((theme) => ({
@@ -87,7 +87,7 @@ function Header({ toggleDark, settoggleDark, props }) {
     const handleModeChange = () => {
         settoggleDark(!toggleDark);
       };
-    const dark = toggleDark.toggleDark;
+    // const dark = toggleDark.toggleDark;
     const useStyles = makeStyles({
         list: {
             width: 250,
@@ -186,6 +186,7 @@ function Header({ toggleDark, settoggleDark, props }) {
 
     return (
 <Router>
+
         <div className="page-main" className={classes.root}>
             <div className={classes.headerCl}>
             <CssBaseline />
@@ -383,7 +384,6 @@ function Header({ toggleDark, settoggleDark, props }) {
                 </AppBar>
                 <Toolbar id="back-to-top-anchor" />
             </div>
-
                 <Switch>
                     <Route path="/news">
                         <NewsRoute toggleDark={toggleDark} />
@@ -424,6 +424,9 @@ function Header({ toggleDark, settoggleDark, props }) {
                     <Route path="/contracts">
                         <ContractsRoute toggleDark={toggleDark} />
                     </Route>
+                    {/* <Route path="/loading">
+                        <Loading toggleDark={toggleDark} />
+                    </Route> */}
                     <Route path="/" exact>
                         <Main toggleDark={toggleDark} />
                     </Route>
