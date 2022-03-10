@@ -37,6 +37,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Zoom from '@material-ui/core/Zoom';
 import ContractsRoute from './contractsRoute';
 import Loading from './loading';
+import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 
 function ScrollTop(props) {
       const useStyles = makeStyles((theme) => ({
@@ -444,10 +445,55 @@ function Header({ toggleDark, settoggleDark, props }) {
         </Router>
          )
     function Plan() {
+        const [numPages, setNumPages] = React.useState(null)
+        const [pageNumber, setPageNumber] = React.useState(1);
+
+        function onDocumentLoadSuccess({ numPages }) {
+            setNumPages(numPages);
+        }
+        function changePage(offSet) {
+            setPageNumber(prevPageNumber => prevPageNumber + offSet);
+        }
+        function changePageBack() {
+            changePage(-1);
+        }
+        function changePageNext() {
+            changePage(+1);
+        }
         return <>
             <br />
-            <p>სასწავლო გეგმა იხილეთ მიმაგრებულ <a target="blanc_" href="./2020-2021-სასწავლო-წლის-სასკოლო-სასწავლო-გეგმა.pdf">ფაილში</a></p>
+            <h2>სასკოლო სასწავლო გეგმა</h2>
+            <p><a target="blanc_" href="/plan.pdf">სასკოლო სასწავლო გეგმის გადმოწერა</a></p>
+            {
+                pageNumber > 1 && 
+                <Button variant='outlined' color='primary' onClick={changePageBack}>წინა გვერდი</Button>
+            }
+            {
+                pageNumber < numPages && 
+                <Button variant='outlined' color='primary' onClick={changePageNext}>შემდეგი გვერდი</Button>
+            }
             <br />
+            <br />
+            <center>
+                <Document file="/plan.pdf" onLoadSuccess={onDocumentLoadSuccess} style={{margin: "auto"}}>
+                    <Page style={{width: "100%", height: "auto", margin: "auto"}} pageNumber={pageNumber} />
+                </Document>
+            </center>
+            <br />
+            <p><b>გვერდი {pageNumber}/{numPages}</b></p>
+            {/* <center>
+                <Document file="/plan.pdf" onLoadSuccess={onDocumentLoadSuccess}>
+                    {Array.from(
+                        new Array(numPages),
+                        (el,index) => (
+                            <Page 
+                                key={`page_${index+1}`}
+                                pageNumber={index+1}
+                            />
+                        )
+                    )}
+                </Document>
+            </center> */}
         </>
     }
 }
