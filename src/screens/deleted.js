@@ -21,7 +21,7 @@ import TextField from '@material-ui/core/TextField';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 
-function News(toggleDark) {
+function Deleted(toggleDark) {
     let [page, setPage] = useState(1);
     const [posts, setPosts] = useState([]);
     const [size, getSize] = useState([])
@@ -64,7 +64,7 @@ function News(toggleDark) {
     const classes = useStyles();
     const classesSecond = useStylesSecond();
     const PER_PAGE = 10;
-    firestore.collection('posts').where("status", "==", "enabled").get().then(async function (querySnapshot) {
+    firestore.collection('posts').where("status", "==", "disabled").get().then(async function (querySnapshot) {
         const size = querySnapshot.size;
         getSize(size)
     });
@@ -118,58 +118,12 @@ function News(toggleDark) {
         return (
             <Route>
                 <Helmet>
-                    <title>სიახლეები</title>
+                    <title>წაშლილი სიახლეები</title>
                 </Helmet>
                 <br />
-                <h2>სიახლეები</h2>
+                <h2>წაშლილი სიახლეები</h2>
                 <br />
                 <Link to="/"><Button variant="contained" color="secondary" onClick={signOut}>გასვლა</Button></Link>
-                <div className="post-form">
-                    <form action="" className="add-post">
-                        <br />
-                <br />
-                        <p>
-                            <Link to="/deleted">
-                                <IconButton aria-label="delete" className={classesSecond.margin}>
-                                    <DeleteIcon />
-                                </IconButton>
-                            </Link> 
-                            - წაშლილები
-                        </p>
-                        <br />
-                        <h2 style={{textAlign: "center"}}>სიახლის დამატება</h2>
-                        <br />
-                        <br />
-                        <TextField id="title" label="სათაური" variant="filled" style={{width: "100%"}}/>
-                        <br />
-                        <br />
-                        <TextField id="photo" label="ფოტოს URL" variant="filled" style={{width: "100%"}}/>
-                        <br />
-                        <br />
-                        <Editor
-                            // initialValue="<p>Initial content</p>"
-                            onInit={(evt, editor) => editorRef.current = editor}
-                            init={{
-                                height: 500,
-                                menubar: false,
-                                plugins: [
-                                    'advlist autolink lists link image charmap print preview anchor',
-                                    'searchreplace visualblocks code fullscreen',
-                                    'insertdatetime media table paste code help wordcount'
-                                ],
-                                toolbar: 'undo redo | formatselect | ' +
-                                'bold italic backcolor image | alignleft aligncenter ' +
-                                'alignright alignjustify | bullist numlist outdent indent | ' +
-                                'removeformat | help',
-                                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-                            }}
-                            
-                            id="content"
-                        />
-                        <br />
-                        <Button variant="contained" fullWidth color="primary" onClick={() => addPosts()} style={{textAlign: "center"}}>დამატება</Button>
-                    </form>
-                </div>
                 <div className="news">
                     <div className="other-staff">
                         <div className="quick-link">
@@ -200,7 +154,7 @@ function News(toggleDark) {
                         />
                         <br />
                             {_DATA.currentData().map(v => {
-                                if (v.status == "enabled") {
+                                if (v.status == "disabled") {
                                     return (
                                         // <ListItem key={v.number} listStyleType="disc">
                                         // <span>{v.title}</span>{" "}
@@ -253,100 +207,7 @@ function News(toggleDark) {
                 </div>
             </Route>
         )
-    }else {
-        return (
-            <Route>
-                <Helmet>
-                    <title>სიახლეები</title>
-                </Helmet>
-                <br />
-                <h2>სიახლეები</h2>
-                <div className="news">
-                    <div className="other-staff">
-                        <div className="quick-link">
-                            <a href="https://mes.gov.ge" title="განათლების სამინისტრო" target="_blank" className="mes"><div className="quick" style={{clear: "both", marginTop: "20px"}}><img src="/mes.png" style={{height: "70px"}} alt="" className="quck-img" /></div></a>
-                            <a href="http://www.emis.ge/" title="განათლების მართვის საინფორმაციო სისტემა" target="_blank" className="mes"><div className="quick" style={{clear: "both", marginTop: "20px"}}><img src="/emisi.png" alt="" className="quck-img" /></div></a>
-                            <a href="https://www.naec.ge/" title="შეფასებისა და გამოცდების ეროვნული ცენტრი" target="_blank" className="mes"><div className="quick" style={{clear: "both", marginTop: "20px"}}><img src="/naeci.png" alt="" className="quck-img" /></div></a>
-                            <a href="http://www.rustaveli.org.ge/" title="შოთა რუსთაველის ეროვნული სამეცნიერო ფონდი" target="_blank" className="mes"><div className="quick" style={{clear: "both", marginTop: "20px"}}><img src="/rustavel.png" alt="" className="quck-img" /></div></a>
-                            <a href="http://mandaturi.gov.ge" title="საგანმანათლებლო დაწესებულების მანდატურის სამსახური" target="_blank" className="mes"><div className="quick" style={{clear: "both", marginTop: "20px"}}><img src="/mandatur.png" alt="" className="quck-img" /></div></a>
-                            <a href="http://www.tpdc.ge/" title="მასწავლებელთა პროფესიული განვითარების ეროვნული ცენტრი" target="_blank" className="mes"><div className="quick" style={{clear: "both", marginTop: "20px"}}><img src="/maswavlebel.png" alt="" className="quck-img" /></div></a>
-                            <a href="http://www.eqe.ge/" title="განათლების ხარისხის განვითარების ეროვნული ცენტრი" target="_blank" className="mes"><div className="quick" style={{clear: "both", marginTop: "20px", marginBottom: "20px"}}><img src="/eqe.png" alt="" className="quck-img" /></div></a>
-                        </div>
-                        <Calendar 
-                            value={dateState}
-                            onChange={changeDate}
-                            style={{margin: "auto"}}
-                        />
-                    </div>
-                    <div className="news-container">
-                        <br />
-                        <br />
-                        <br />
-                        <Pagination
-                            count={count}
-                            size="large"
-                            page={page}
-                            color="primary"
-                            onChange={handleChange}
-                        />
-                        <br />
-                            {_DATA.currentData().map(v => {  
-                                if (v.status == "enabled") {
-                                    
-                                    return (
-                                        // <ListItem key={v.number} listStyleType="disc">
-                                        // <span>{v.title}</span>{" "}
-                                        // <Divider display="inline" orientation="vertical" />
-                                        // <span> {v.content}</span>{" "}
-                                        // <Divider display="inline" orientation="vertical" />
-                                        // <span>
-                                        // </span>
-                                        // </ListItem>
-                                        <Grid item xs={12} md={6}>
-                                            <Link to={`${url}/${v.id}`}>
-                                                <CardActionArea component="a">
-                                                    <Card className={classes.card}>
-                                                    <div className={classes.cardDetails}>
-                                                        <CardContent>
-                                                        <Typography component="h2" variant="h5">
-                                                            {v.title}
-                                                        </Typography>
-                                                        <Typography variant="subtitle1" color="textSecondary">
-                                                            {v.date}
-                                                        </Typography>
-                                                        {/* <Typography variant="subtitle1" paragraph>
-                                                            {v.content}
-                                                        </Typography> */}
-                                                        <Typography variant="subtitle1" color="primary">
-                                                            მეტი...
-                                                        </Typography>
-                                                        </CardContent>
-                                                    </div>
-                                                    <Hidden xsDown>
-                                                        <CardMedia className={classes.cardMedia} image={v.url} title={v.title} />
-                                                    </Hidden>
-                                                    </Card>
-                                                </CardActionArea>
-                                            </Link>
-                                        </Grid>
-                                    );
-                                }
-                            })}
-                        <br />
-                        <Pagination
-                            count={count}
-                            size="large"
-                            page={page}
-                            color="primary"
-                            onChange={handleChange}
-                        />
-                        <br />
-                    </div>
-                </div>
-            </Route>
-        )
-    }
-    
+    }    
 }
 
-export default News
+export default Deleted

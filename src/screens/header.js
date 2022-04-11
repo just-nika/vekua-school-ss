@@ -38,6 +38,7 @@ import Zoom from '@material-ui/core/Zoom';
 import ContractsRoute from './contractsRoute';
 import Loading from './loading';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
+import DeletedRoute from './deletedRoute'
 
 function ScrollTop(props) {
       const useStyles = makeStyles((theme) => ({
@@ -187,8 +188,7 @@ function Header({ toggleDark, settoggleDark, props }) {
 
     return (
 <Router>
-
-        <div className="page-main" className={classes.root}>
+        <div className="page-main">
             <div className={classes.headerCl}>
             <CssBaseline />
             <AppBar className={classes.headerClasses}>
@@ -388,6 +388,9 @@ function Header({ toggleDark, settoggleDark, props }) {
                 <Switch>
                     <Route path="/news">
                         <NewsRoute toggleDark={toggleDark} />
+                    </Route>
+                    <Route path="/deleted">
+                        <DeletedRoute toggleDark={toggleDark} />
                     </Route>
                     <Route path="/history">
                         <History toggleDark={toggleDark} />

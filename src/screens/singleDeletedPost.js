@@ -10,7 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import Error from './error';
 import swal from 'sweetalert';
 
-function SinglePost() {
+function SingleDeletedPost() {
     let { id } = useParams();
     const [posts, setPosts] = useState([]);
     useEffect(() => {
@@ -44,7 +44,7 @@ function SinglePost() {
     var user = firebase.auth().currentUser;
     const editorRef = useRef(null);
     const disPost = async (id) => {
-        await firestore.collection("posts").doc(id).update({status: 'disabled'}).then(() => {getPosts(); swal("პოსტი წარმატებით განახლდა!", "", "success")});
+        await firestore.collection("posts").doc(id).update({status: 'enabled'}).then(() => {getPosts(); swal("პოსტი წარმატებით განახლდა!", "", "success")});
     }
     if (user) {
         return (
@@ -148,7 +148,7 @@ function SinglePost() {
                                         <br />
                                         <div className="edit-group" style={{display: "flex", justifyContent: "space-around"}}>
                                             <Button variant="contained" style={{width: "45%", textAlign: "center"}} fullWidth color="primary" onClick={() => updatePost(post.id)}>პოსტის ჩასწორება</Button>
-                                            <Button variant="contained" style={{width: "45%", textAlign: "center"}} fullWidth color="secondary" onClick={() => disPost(post.id)}>პოსტის წაშლა</Button>
+                                            <Button variant="contained" style={{width: "45%", textAlign: "center"}} fullWidth onClick={() => disPost(post.id)}>პოსტის თავიდან დადება</Button>
                                         </div>
                                     </form>
                                     <br />
@@ -162,70 +162,7 @@ function SinglePost() {
                 }
             </div>
         )
-    }else {
-        return (
-            <div>
-                {
-                posts.map((post, index) => {
-                    if (post.status === "enabled") {
-                        if (post.id == id) {
-                            const html = post.content
-                            if (post.url == "") {
-                                return (
-                                    <div>
-                                        <br />
-                                        <br />
-                                        <Helmet>
-                                            {/* <meta property="og:title" content="vekua" />
-                                            <meta property="og:image" content="https://i.postimg.cc/3RBbXVRq/TV.png"/>
-                                            <meta property="og:description" content="DESCRIPTION OF YOUR SITE" />
-                                            <meta property="og:url" content="URL OF YOUR WEBSITE"/>
-                                            <meta property="og:image:width" content="1200" />
-                                            <meta property="og:image:height" content="627" /> */}
-                                            <title>{post.title}</title>
-                                        </Helmet>
-                                        <h2>{post.title}</h2>
-                                        <div className="post-text" style={{textAlign: "start", padding: "20px", width: "100%"}}>
-                                            <p>{ ReactHtmlParser(html) }</p>
-                                        </div>
-                                        <br />
-                                        <br />
-                                        <p style={{textAlign: "right", padding: "20px"}}><small><i>{post.date}</i></small></p>
-                                    </div>
-                                )
-                            }else {
-                                return (
-                                    <div>
-                                        <br />
-                                        <br />
-                                        <Helmet>
-                                            {/* <meta property="og:title" content="vekua" />
-                                            <meta property="og:image" content="https://i.postimg.cc/3RBbXVRq/TV.png"/>
-                                            <meta property="og:description" content="DESCRIPTION OF YOUR SITE" />
-                                            <meta property="og:url" content="URL OF YOUR WEBSITE"/>
-                                            <meta property="og:image:width" content="1200" />
-                                            <meta property="og:image:height" content="627" /> */}
-                                            <title>{post.title}</title>
-                                        </Helmet>
-                                        <div style={{backgroundImage: `url(${post.url})`, maxWidth: "100%", height: "700px", backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat"}}></div>
-                                        <h2>{post.title}</h2>
-                                        <div className="post-text" style={{textAlign: "start", padding: "20px", width: "100%"}}>
-                                            <p>{ ReactHtmlParser(html) }</p>
-                                        </div>
-                                        <br />
-                                        <br />
-                                        <p style={{textAlign: "right", padding: "20px"}}><small><i>{post.date}</i></small></p>
-                                    </div>
-
-                                )
-                            }
-                        }
-                    }
-                })
-                }
-            </div>
-        )
     }
 }
 
-export default SinglePost
+export default SingleDeletedPost
