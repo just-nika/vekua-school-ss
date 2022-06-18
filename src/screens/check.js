@@ -57,125 +57,86 @@ const Check = () => {
   });
   function DatesA() {
     if (forCard.class === 7) {
-      if (forCard.point) {
-        return <>
-          {/* <p className="test-dates" style={{ textAlign: "start", margin: "0" }}><i><b>მათემატიკა</b></i> სარეკომენდაციო გამოცდის თარიღი: <b>02.07.2021 წ.</b></p> 
-          <p className="test-dates" style={{ textAlign: "start", margin: "0" }}>სარეკომენდაციო გამოცდის დაწყების დრო: <b>09:00 სთ.</b> <small>მოსწავლე უნდა გამოცხადდეს გამოცდის დაწყებამდე ნახევარი საათით ადრე!</small> </p> */}
-          <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}>02.07.2021-ის მათემატიკის მისაღებ გამოცდაზე მოსწავლემ უნიკალური კოდით {forCard.class}-{forCard.code}, მიიღო {forCard.point} ქულა.</p>
-          <br />
-        </>
-      }else {
-        swal(`მოსწავლის ნიშნები ვერ მოიძებნა!`)
-        return <>
-          {/* <p className="test-dates" style={{ textAlign: "start", margin: "0" }}><i><b>მათემატიკა</b></i> სარეკომენდაციო გამოცდის თარიღი: <b>02.07.2021 წ.</b></p> 
-          <p className="test-dates" style={{ textAlign: "start", margin: "0" }}>სარეკომენდაციო გამოცდის დაწყების დრო: <b>09:00 სთ.</b> <small>მოსწავლე უნდა გამოცხადდეს გამოცდის დაწყებამდე ნახევარი საათით ადრე!</small> </p> */}
-          {/* <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}>მოსწავლეს უნიკალური კოდით {forCard.class}-{forCard.code} აპელაცია არ გაუვლია.</p>
-          <br /> */}
-        </>
-        // swal(`ასეთი რეგისტრირებული მოსწავლე არ არსებობს!`, `მოსწავლე პირადი ნომრით ${forCard.idNumber} არ არის რეგისტრირებული, თუ თვლით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით სკოლის ნომერზე ან ელ. ფოსტებზე.`, "error")
-      }
+      return <>
+        <p className="test-dates" style={{ textAlign: "start", margin: "0" }}><i><b>მათემატიკა</b></i> სარეკომენდაციო გამოცდის თარიღი: <b>02.07.2021 წ.</b></p> 
+        <p className="test-dates" style={{ textAlign: "start", margin: "0" }}>სარეკომენდაციო გამოცდის დაწყების დრო: <b>09:00 სთ.</b> <small>მოსწავლე უნდა გამოცხადდეს გამოცდის დაწყებამდე ნახევარი საათით ადრე!</small> </p>
+        <br />
+      </>
     }else if (forCard.class === 8 || forCard.class === 9 || forCard.class === 10 || forCard.class === 11) {
-      if (forCard.m || forCard.p) {
-        return <>
-          <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}>მოსწავლის, უნიკალური კოდით {forCard.class}-{forCard.code} შეფასებებია:</p>
-          <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}><i>03.07.2021 <b>მათემატიკა</b></i> {forCard.m}</p> 
-          <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}><i>04.07.2021 <b>ფიზიკა</b></i> {forCard.p}</p> 
-          <br />
-        </>
-      }else {
-        swal(`მოსწავლის ნიშნები ვერ მოიძებნა!`)
-        return <>
-          {/* <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}>მოსწავლეს, უნიკალური კოდით {forCard.class}-{forCard.code} აპელაცია არ გაუვლია.</p> */}
-          {/* <br /> */}
-        </>
-      }
+      return <>
+        <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}>მოსწავლის, უნიკალური კოდით {forCard.class}-{forCard.code} შეფასებებია:</p>
+        <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}><i>03.07.2021 <b>მათემატიკა</b></i> {forCard.m}</p> 
+        <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}><i>04.07.2021 <b>ფიზიკა</b></i> {forCard.p}</p> 
+        <br />
+      </>
     }
-    // if (forCard.class === 7) {
-    //   return <>
-    //     {/* <p className="test-dates" style={{ textAlign: "start", margin: "0" }}><i><b>მათემატიკა</b></i> სარეკომენდაციო გამოცდის თარიღი: <b>02.07.2021 წ.</b></p> 
-    //     <p className="test-dates" style={{ textAlign: "start", margin: "0" }}>სარეკომენდაციო გამოცდის დაწყების დრო: <b>09:00 სთ.</b> <small>მოსწავლე უნდა გამოცხადდეს გამოცდის დაწყებამდე ნახევარი საათით ადრე!</small> </p> */}
-    //     <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}>02.07.2021-ის მათემატიკის მისაღებ გამოცდაზე მოსწავლემ უნიკალური კოდით {forCard.class}-{forCard.code}, მიიღო {forCard.point} ქულა.</p>
-    //     <br />
-    //   </>
-    // }else if (forCard.class === 8 || forCard.class === 9 || forCard.class === 10 || forCard.class === 11) {
-    //   return <>
-    //     <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}>მოსწავლის, უნიკალური კოდით {forCard.class}-{forCard.code} შეფასებებია:</p>
-    //     <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}><i>03.07.2021 <b>მათემატიკა</b></i> {forCard.m}</p> 
-    //     <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}><i>04.07.2021 <b>ფიზიკა</b></i> {forCard.p}</p> 
-    //     <br />
-    //   </>
-    // }
   }
   function ComponentToPrint() {
     return (
-        <div>
-          <br />
-          <DatesA />
+      <div className="pupil-card" id="card"  ref={componentRef}>
+        <p style={{ fontSize: "30px" }} className="card-code">
+          <strong>
+            {" "}
+            <br />
+            {forCard.class}-{forCard.code}
+          </strong>
+        </p>
+        <div className="first">
+          <div className="card-" style={{backgroundImage: `url(${forCard.imgUrl})`, backgroundSize: "cover", width: "192px", height: "256px", backgroundPosition: "center"}}></div>
+          <div className="pupil-info">
+            <p style={{ textAlign: "start", margin: "0" }}>
+              სახელი: <b>{forCard.firstName}</b>
+            </p>
+            <p style={{ textAlign: "start", margin: "0" }}>
+              გვარი: <b>{forCard.lastName}</b>
+            </p>
+            <p style={{ textAlign: "start", margin: "0" }}>
+              პირადი ნომერი: <b>{forCard.idNumber}</b>
+            </p>
+            <DatesA />
+          </div>
+          <div className="card-logo" style={{width: "125px", height: "125px", backgroundImage: `url(logo.png)`, backgroundSize: "cover", backgroundPosition: "center"}}></div>
         </div>
-      // <div className="pupil-card" id="card"  ref={componentRef}>
-      //   <p style={{ fontSize: "30px" }} className="card-code">
-      //     <strong>
-      //       {" "}
-      //       <br />
-      //       {forCard.class}-{forCard.code}
-      //     </strong>
-      //   </p>
-      //   <div className="first">
-      //     <div className="card-" style={{backgroundImage: `url(${forCard.imgUrl})`, backgroundSize: "cover", width: "192px", height: "256px", backgroundPosition: "center"}}></div>
-      //     <div className="pupil-info">
-      //       <p style={{ textAlign: "start", margin: "0" }}>
-      //         სახელი: <b>{forCard.firstName}</b>
-      //       </p>
-      //       <p style={{ textAlign: "start", margin: "0" }}>
-      //         გვარი: <b>{forCard.lastName}</b>
-      //       </p>
-      //       <p style={{ textAlign: "start", margin: "0" }}>
-      //         პირადი ნომერი: <b>{forCard.idNumber}</b>
-      //       </p>
-      //       <Dates />
-      //     </div>
-      //     <div className="card-logo" style={{width: "125px", height: "125px", backgroundImage: `url(logo.png)`, backgroundSize: "cover", backgroundPosition: "center"}}></div>
-      //   </div>
-      //   <div className="second">
-      //     <div className="test-laws">
-      //       <h6><strong>პროცედურული მოთხოვნები და პირობები:</strong></h6>
-      //       <div className="small-group" style={{textAlign: "start", fontSize: "12px" }}>
-      //         <p style={{marginBottom: "5px", marginTop: "5px"}}><strong>გამოცდაზე გამომსვლელი ვალდებულია:</strong></p>
-      //         <ul style={{textAlign: "start", marginBottom: "3px"}}>
-      //           <li>დროულად გამოცხადდეს  სარეგისტრაციო ბარათით;</li>
-      //           <li>ჰქონდეს პირბადე, საწერი კალამი, სახაზავი, ფანქარი, საშლელი; </li>
-      //           <li>დაიცვას სოციალური დისტანცია.</li>
-      //         </ul>
-      //         <p style={{marginBottom: "5px", marginTop: "5px"}}><strong>გამოცდაზე გამომსვლელს უფლება აქვს:</strong></p>
-      //         <ul style={{textAlign: "start", marginBottom: "3px"}}>
-      //           <li>ტექნიკურ  საკითხებთან  დაკავშირებით კონსულტაციისა და განმარტებისათვის მიმართოს მეთვალყურეს;</li>
-      //           <li>ჰქონდეს წყალი პოლიეთილენის ბოთლით;</li>
-      //         </ul>
-      //         <p style={{marginBottom: "5px", marginTop: "5px"}}><strong>გამოცდის მონაწილეს ეკრძალება:</strong></p>
-      //         <ul style={{textAlign: "start", marginBottom: "3px"}}>
-      //           <li>გამოცდის მსვლელობის პერიოდში მოიხსნას პირბადე;</li>
-      //           <li>თან ჰქონდეს მობილური ტელეფონი;</li>
-      //           <li>გამოიყენოს ნებისმიერი საინფორმაციო წყარო;</li>
-      //           <li>გამოცდის მსვლელობის დროს  ვერბალური და არავერბალური კომუნიკაცია სხვა მონაწილესთან.</li>
-      //           <li><strong>VII კლასში  გადამსვლელებს  მათემატიკის გამოცდაზე კალკულატორის გამოყენება</strong> <small><i>(დანარჩენ კლასებში კალკულატორის გამოყენება დაშვებულია)</i></small>;</li>
-      //         </ul>
-      //         <p style={{marginBottom: "5px", marginTop: "5px"}}><strong>ნამუშევრის შეფასება და აპელაცია:</strong></p>
-      //         <ul style={{textAlign: "start", marginBottom: "3px"}}>
-      //           <li>ნამუშევრები გამსწორებლამდე  მიდის კოდირებული ფორმით;</li>
-      //           <li>ინფიცირების რისკის შემცირების მიზნით, საგამოცდო რვეულები შეფასებამდე დამუშავდება და განთავსდება ორდღიან კარანტინში.</li>
-      //           <li>შეფასებები გამოქვეყნდება სკოლის საიტზე  გამოცდიდან 10 კალენდარული დღის განმავლობაში  სარეგისტრაციო ბარათის ნომრის შესაბამისად;</li>
-      //           <li>სააპელაციო განაცხადის ფორმების შევსება მოხდება სკოლაში შედეგების გამოქვეყნებიდან ორი სამუშაო დღის განმავლობაში.</li>
-      //           <li>აპელაციას გაივლის მხოლოდ კოდირებული ნაშრომი მოსწავლისა და მშობლის გარეშე;</li>
-      //           <li>აპელაციის შედეგები გამოქვეყნდება სკოლის ვებგვერდზე <a href="https://vekua42.edu.ge">vekua42.edu.ge</a> აპელაციის დასრულებისთანავე.</li>
-      //         </ul>
-      //         <p style={{textAlign: "center"}}><u style={{textAlign: "center"}}>დამატებითი ინფორმაციისთვის დაგვიკავშირდით სკოლის ტელ. ნომერზე: <a href="tel:0322-99-00-73">(995) 032 2 99 00 73</a></u></p>
-      //         <p style={{textAlign: "center"}}><u style={{textAlign: "center"}}>ან ელექტრონულ ფოსტებზე: <a href="mailto: support@vekua42.edu.ge" rel="noreferrer" target="_blank">support@vekua42.edu.ge</a>; <a href="mailto: it@vekua42.edu.ge" rel="noreferrer" target="_blank">it@vekua42.edu.ge</a>.</u></p>
-      //         <p className="some-warnings" style={{marginBottom: "0"}}><b>გთხოვთ,  ტემპერატურის ან ვირუსის სხვა სიმპტომების არსებობის შემთხვევაში არ გამოცხადდეთ გამოცდაზე.</b></p>
-      //         <p className="some-warnings"><b>სკოლაში დაცულია შრომის, ჯანმრთელობისა და სოციალური დაცვის სამინისტროს მიერ მოცემული რეკომენდაციები.</b></p>
-      //       </div>
-      //     </div>
-      //   </div>
-      // </div>
+        <div className="second">
+          <div className="test-laws">
+            <h6><strong>პროცედურული მოთხოვნები და პირობები:</strong></h6>
+            <div className="small-group" style={{textAlign: "start", fontSize: "12px" }}>
+              <p style={{marginBottom: "5px", marginTop: "5px"}}><strong>გამოცდაზე გამომსვლელი ვალდებულია:</strong></p>
+              <ul style={{textAlign: "start", marginBottom: "3px"}}>
+                <li>დროულად გამოცხადდეს  სარეგისტრაციო ბარათით;</li>
+                <li>ჰქონდეს პირბადე, საწერი კალამი, სახაზავი, ფანქარი, საშლელი; </li>
+                <li>დაიცვას სოციალური დისტანცია.</li>
+              </ul>
+              <p style={{marginBottom: "5px", marginTop: "5px"}}><strong>გამოცდაზე გამომსვლელს უფლება აქვს:</strong></p>
+              <ul style={{textAlign: "start", marginBottom: "3px"}}>
+                <li>ტექნიკურ  საკითხებთან  დაკავშირებით კონსულტაციისა და განმარტებისათვის მიმართოს მეთვალყურეს;</li>
+                <li>ჰქონდეს წყალი პოლიეთილენის ბოთლით;</li>
+              </ul>
+              <p style={{marginBottom: "5px", marginTop: "5px"}}><strong>გამოცდის მონაწილეს ეკრძალება:</strong></p>
+              <ul style={{textAlign: "start", marginBottom: "3px"}}>
+                <li>გამოცდის მსვლელობის პერიოდში მოიხსნას პირბადე;</li>
+                <li>თან ჰქონდეს მობილური ტელეფონი;</li>
+                <li>გამოიყენოს ნებისმიერი საინფორმაციო წყარო;</li>
+                <li>გამოცდის მსვლელობის დროს  ვერბალური და არავერბალური კომუნიკაცია სხვა მონაწილესთან.</li>
+                <li><strong>VII კლასში  გადამსვლელებს  მათემატიკის გამოცდაზე კალკულატორის გამოყენება</strong> <small><i>(დანარჩენ კლასებში კალკულატორის გამოყენება დაშვებულია)</i></small>;</li>
+              </ul>
+              <p style={{marginBottom: "5px", marginTop: "5px"}}><strong>ნამუშევრის შეფასება და აპელაცია:</strong></p>
+              <ul style={{textAlign: "start", marginBottom: "3px"}}>
+                <li>ნამუშევრები გამსწორებლამდე  მიდის კოდირებული ფორმით;</li>
+                <li>ინფიცირების რისკის შემცირების მიზნით, საგამოცდო რვეულები შეფასებამდე დამუშავდება და განთავსდება ორდღიან კარანტინში.</li>
+                <li>შეფასებები გამოქვეყნდება სკოლის საიტზე  გამოცდიდან 10 კალენდარული დღის განმავლობაში  სარეგისტრაციო ბარათის ნომრის შესაბამისად;</li>
+                <li>სააპელაციო განაცხადის ფორმების შევსება მოხდება სკოლაში შედეგების გამოქვეყნებიდან ორი სამუშაო დღის განმავლობაში.</li>
+                <li>აპელაციას გაივლის მხოლოდ კოდირებული ნაშრომი მოსწავლისა და მშობლის გარეშე;</li>
+                <li>აპელაციის შედეგები გამოქვეყნდება სკოლის ვებგვერდზე <a href="https://vekua42.edu.ge">vekua42.edu.ge</a> აპელაციის დასრულებისთანავე.</li>
+              </ul>
+              <p style={{textAlign: "center"}}><u style={{textAlign: "center"}}>დამატებითი ინფორმაციისთვის დაგვიკავშირდით სკოლის ტელ. ნომერზე: <a href="tel:0322-99-00-73">(995) 032 2 99 00 73</a></u></p>
+              <p style={{textAlign: "center"}}><u style={{textAlign: "center"}}>ან ელექტრონულ ფოსტებზე: <a href="mailto: support@vekua42.edu.ge" rel="noreferrer" target="_blank">support@vekua42.edu.ge</a>; <a href="mailto: tbilisi42@mes.gov.ge" rel="noreferrer" target="_blank">tbilisi42@mes.gov.ge</a>.</u></p>
+              <p className="some-warnings" style={{marginBottom: "0"}}><b>გთხოვთ,  ტემპერატურის ან ვირუსის სხვა სიმპტომების არსებობის შემთხვევაში არ გამოცხადდეთ გამოცდაზე.</b></p>
+              <p className="some-warnings"><b>სკოლაში დაცულია შრომის, ჯანმრთელობისა და სოციალური დაცვის სამინისტროს მიერ მოცემული რეკომენდაციები.</b></p>
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
   return (
@@ -187,26 +148,11 @@ const Check = () => {
         {forCard ? (
           <div>
             <ComponentToPrint />
-            {/* <Button variant="outlined" color="primary" onClick={handlePrint}>ამობეჭვდა</Button> */}
+            <Button variant="outlined" color="primary" onClick={handlePrint}>ამობეჭვდა</Button>
           </div>
         ) : (
           <>
             <br />
-            <h1>
-            2021 წლის 2, 3 და 4 ივლისს ჩატარებული სარეკომენდაციო წერის შედეგები გადაამოწმეთ მოსწავლის პირადი ნომრის მიხედვით
-            </h1>
-            <div className="info-text" style={{ textAlign: "start", margin: "0", fontSize: "16px" }}>
-              <p>მიმდინარე წლის 2, 3 და 4 ივლისს ჩატარებული სარეკომენდაციო წერების შედეგები შეგიძლიათ იხილოთ სკოლის ვებ. გვერდზე <a href="/#checking">vekua42.edu.ge</a> მოსწავლის პირადი ნომრის მითითებით.</p>
-              <br />
-              <p>სააპელაციო განაცხადის ფორმების შევსება მოხდება სკოლაში 8-9 ივლისს, 17 საათამდე.</p>
-              <br />
-              <p><i><b>ნამუშევრის შეფასება და აპელაცია:</b></i></p>
-              <ul>
-                <li><b>ნამუშევრები გამსწორებლამდე მიდის კოდირებული ფორმით;</b></li>
-                <li><b>აპელაციას გაივლის მხოლოდ კოდირებული ნაშრომი მოსწავლისა და მშობლის გარეშე;</b></li>
-                <li><b>აპელაციის შედეგები გამოქვეყნდება სკოლის ვებგვერდზე vekua42.edu.ge აპელაციის დასრულებისთანავე.</b></li>
-              </ul>
-            </div>
             <Container component="main" maxWidth="xs">
               <CssBaseline />
               <div className={classes.paper} >
@@ -251,7 +197,7 @@ const Check = () => {
                     fullWidth
                     style={{ width: "100%" }}
                     className={classes.submit}>
-                      მოსწავლის ქულის ხილვა
+                      მოსწავლის ბარათის ხილვა
                   </Button>
                 </form>
               </div>

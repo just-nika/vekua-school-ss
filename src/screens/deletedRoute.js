@@ -7,16 +7,12 @@ import Error from './error';
 
 var user = firebase.auth().currentUser;
 function DeletedRoute() {
-    if (user) {  
-        return (
-            <Switch>
-                <Route exact path='/deleted' component={Deleted}/>
-                <Route path='/deleted/:id' component={SingleDeletedPost} />
-            </Switch>
-        )
-    }else if (user == null) {
-        return <><Error/></>
-    }
+    return (
+        <Switch>
+            <Route exact path='/deleted' component={Deleted}/>
+            <Route path='/deleted/:id' component={SingleDeletedPost} />
+        </Switch>
+    )
 }
 
 export default DeletedRoute

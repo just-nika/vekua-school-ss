@@ -39,6 +39,8 @@ import ContractsRoute from './contractsRoute';
 import Loading from './loading';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import DeletedRoute from './deletedRoute'
+import Exams from './exams'
+import Check from './check'
 
 function ScrollTop(props) {
       const useStyles = makeStyles((theme) => ({
@@ -306,6 +308,13 @@ function Header({ toggleDark, settoggleDark, props }) {
                                 </ListItem>
                             </List>
                         </a>
+                        <a href="https://mtatsminda42.blogspot.com/p/blog-page.html" target="_blank">
+                            <List>
+                                <ListItem button>
+                                    ანა სალაყაიას ბლოგი მოსწავლეებისათვის
+                                </ListItem>
+                            </List>
+                        </a>
                         <a href="https://vekua-tv.netlify.app" target="_blank">
                             <List>
                                 <ListItem button>
@@ -354,6 +363,9 @@ function Header({ toggleDark, settoggleDark, props }) {
                             <li className="header-link">
                                 <Link to="/saturday-school" style={aStyle}>საშაბათო სკოლა</Link>
                             </li>
+                            <li className="header-link">
+                                <Link to="/exams" style={aStyle}>მისაღები გამოცდები</Link>
+                            </li>
                             
                             <li className="header-link">
                                 <Link to="/contact" style={aStyle}>კონტაქტი</Link>
@@ -364,8 +376,9 @@ function Header({ toggleDark, settoggleDark, props }) {
                                 </Link>
                                 <Menu id="simple-menu" anchorEl={anchorEl2} keepMounted open={Boolean(anchorEl2)} onClose={handleClose2}>
                                     <a href="https://geocodna.wordpress.com" target="_blank"><MenuItem onClick={handleClose2}>ნინო მთიულიშვილის ბლოგი</MenuItem></a>
-                                    <a href="http://nino42.blogspot.com" target="_blank"><MenuItem onClick={handleClose2}><a href="http://nino42.blogspot.com" target="_blank">ნინო ნასყიდაშვილის ბლოგი</a></MenuItem></a>
-                                    <a href="http://moscavleebs.blogspot.com" target="_blank"><MenuItem onClick={handleClose2}><a href="http://moscavleebs.blogspot.com" target="_blank">ნინო ნასყიდაშვილის ბლოგი მოსწავლეებისათვის</a></MenuItem></a>
+                                    <a href="http://nino42.blogspot.com" target="_blank"><MenuItem onClick={handleClose2}>ნინო ნასყიდაშვილის ბლოგი</MenuItem></a>
+                                    <a href="http://moscavleebs.blogspot.com" target="_blank"><MenuItem onClick={handleClose2}>ნინო ნასყიდაშვილის ბლოგი მოსწავლეებისათვის</MenuItem></a>
+                                    <a href="https://mtatsminda42.blogspot.com/p/blog-page.html" target="_blank"><MenuItem onClick={handleClose2}>ანა სალაყაიას ბლოგი</MenuItem></a>
                                 </Menu>
                             </li>
                             <li className="header-link">
@@ -421,6 +434,12 @@ function Header({ toggleDark, settoggleDark, props }) {
                     </Route>
                     <Route path="/login">
                         <Login toggleDark={toggleDark} />
+                    </Route>
+                    <Route path="/exams">
+                        <Exams toggleDark={toggleDark} />
+                    </Route>
+                    <Route path="/check">
+                        <Check toggleDark={toggleDark} />
                     </Route>
                     <Route path="/messages">
                         <Messages toggleDark={toggleDark} />

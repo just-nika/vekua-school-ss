@@ -14,7 +14,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Covid from "./covid";
 import Avatar from "@material-ui/core/Avatar";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import IconButton from "@material-ui/core/IconButton";
@@ -136,18 +135,20 @@ function Exams() {
           .collection(`${data.class}`)
           .get()
           .then(async function (querySnapshot) {
+            const school = "42 sajaro skola"
             const code = querySnapshot.size;
             const storageRef = storage.ref();
-            const fileRef = storageRef.child(data.file[0].name);
+            const fileRef = storageRef.child(`FILE_${data.idRequired}`);
             await fileRef.put(data.file[0]);
-
-            const imageRef = storageRef.child(data.img[0].name);
+            
+            const imageRef = storageRef.child(`IMAGE_${data.idRequired}`);
             await imageRef.put(data.img[0]);
-
+            
             const imgUrl = await imageRef.getDownloadURL();
             const fileUrl = await fileRef.getDownloadURL();
             if (data.class == '7') {
-              const uniqueCode = 299 + code;
+              const uniqueCode = 399 + code;
+              const text = `მოგესალმებით, მოსწავლე ${data.firstName} ${data.lastName} წარმატებით დარეგისტრირდა ვეკუას სკოლის სარეკომენდაციო წერაზე. მისი უნიკალური კოდია ${data.class}-${uniqueCode}. გისურვებთ წარმატებებს!`
               firestore
                 .collection(`${data.class}`)
                 .add({
@@ -155,7 +156,6 @@ function Exams() {
                   firstName: data.firstName,
                   lastName: data.lastName,
                   idNumber: data.idRequired,
-                  FatherName: data.fatherName,
                   ParentFirstName: data.parentName,
                   ParentLastName: data.parentLastName,
                   oldSchool: data.oldSchool,
@@ -169,7 +169,6 @@ function Exams() {
                   document.getElementById("firstName").value = "";
                   document.getElementById("lastName").value = "";
                   document.getElementById("idNumber").value = "";
-                  document.getElementById("FatherName").value = "";
                   document.getElementById("ParentFirstName").value = "";
                   document.getElementById("ParentLastName").value = "";
                   document.getElementById("oldSchool").value = "";
@@ -179,10 +178,32 @@ function Exams() {
                     "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.",
                     "success"
                   );
+                  fetch(`http://smsoffice.ge/api/v2/send?key=514f29a0cc3448a79bf32d1ee005bddb&destination=995${data.mobileNumber}&sender=VEKUA&content=${text}`, {
+                    "method": "POST",
+                    "headers": {
+                      "content-type": "application/x-www-form-urlencoded",
+                      "Access-Control-Allow-Origin": "*"
+                    }},)
+                  .then(res => res.json())
+                  .then(
+                    (result) => {
+                      if (result.Success == true) {
+                        alert("ოპაა");
+                      }else if (result.Success == false){
+                        alert("ეხლა რაღა უნდა");
+                      }
+                    },
+                    (error) => {
+                      alert(`ხოოო... ${error}`);
+                    }
+                  )
+                  setSuccess(true);
+                  setLoading(false);
                 });
             }
             else if (data.class == '8' || data.class == '9' || data.class == '10' || data.class == '11') {
               const uniqueCode = 99 + code;
+              const text = `მოგესალმებით, მოსწავლე ${data.firstName} ${data.lastName} წარმატებით დარეგისტრირდა ვეკუას სკოლის სარეკომენდაციო წერაზე. მისი უნიკალური კოდია ${data.class}-${uniqueCode}. გისურვებთ წარმატებებს!`
               firestore
                 .collection(`${data.class}`)
                 .add({
@@ -190,7 +211,6 @@ function Exams() {
                   firstName: data.firstName,
                   lastName: data.lastName,
                   idNumber: data.idRequired,
-                  FatherName: data.fatherName,
                   ParentFirstName: data.parentName,
                   ParentLastName: data.parentLastName,
                   oldSchool: data.oldSchool,
@@ -204,7 +224,6 @@ function Exams() {
                   document.getElementById("firstName").value = "";
                   document.getElementById("lastName").value = "";
                   document.getElementById("idNumber").value = "";
-                  document.getElementById("FatherName").value = "";
                   document.getElementById("ParentFirstName").value = "";
                   document.getElementById("ParentLastName").value = "";
                   document.getElementById("oldSchool").value = "";
@@ -214,13 +233,11 @@ function Exams() {
                     "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.",
                     "success"
                   );
+                  setSuccess(true);
+                  setLoading(false);
                 });
             }
           });
-          timer.current = window.setTimeout(() => {
-            setSuccess(true);
-            setLoading(false);
-          }, 4500);
         }
       }
     });
@@ -243,7 +260,9 @@ function Exams() {
           <form
             className={classes.form}
             noValidate
-            onSubmit={handleSubmit(addPupil)}>
+            onSubmit={handleSubmit(addPupil)}
+            method="post"
+            enctype="application/x-www-form-urlencoded">
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -296,22 +315,6 @@ function Exams() {
                   type="number"
                   name="idRequired"
                   autoComplete="id"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  {...register("fatherName", { required: true })}
-                  error={errors.fatherName}
-                  helperText={
-                    errors.fatherName && "მამის ან კანონიერი წარმომადგენლის სახელის მითითება აუცილებელია"
-                  }
-                  variant="standard"
-                  required
-                  fullWidth
-                  id="FatherName"
-                  label="მოსწავლის მამის/კანონიერი წარმომადგენლის სახელი"
-                  name="fatherName"
-                  autoComplete="fatherName"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -367,11 +370,11 @@ function Exams() {
               </Grid>
               <Grid item xs={12} lg={12}>
                 <TextField
-                  {...register("mobileNumber", { required: true })}
+                  {...register("mobileNumber", { required: true, maxLength: 9, minLength: 9 })}
                   error={errors.mobileNumber}
                   helperText={
                     errors.mobileNumber &&
-                    "მშობლის ან კანონიერი წარმომადგენლის ტელეფონის ნომრის მითითება აუცილებელია"
+                    "მშობლის ან კანონიერი წარმომადგენლის ტელეფონის ნომრი უნდა შეიცავდეს 9 ციფრს"
                   }
                   variant="standard"
                   required
@@ -452,7 +455,7 @@ function Exams() {
               <Grid item xs={12} lg={12} style={{ textAlign: "start" }}>
                 <p style={{ textAlign: "start" }}>
                   ცნობა სკოლიდან მოსწავლის შესახებ{" "}
-                  <small>(სკოლის მიერ დამოწმებული საბუთი)</small>
+                  <small>(სკოლის მიერ ბეჭდით დამოწმებული ფოტოსურათიანი საბუთი - ბეჭედი ნაწილობრივ უნდა ფარავდეს ფოტოსურათს)</small>
                 </p>
                 <input
                   accept="image/*"
@@ -488,7 +491,7 @@ function Exams() {
               color="secondary"
               className={buttonClassname}
               disabled={loading}
-              fullWidth>
+              >
                 რეგისტრაცია
             </Button>
             {loading && <CircularProgress size={24} className={classes.buttonProgress} />}

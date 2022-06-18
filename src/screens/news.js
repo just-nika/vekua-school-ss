@@ -82,6 +82,7 @@ function News(toggleDark) {
     const minutes = new Date().getMinutes();
     const mainMonth = month + 1;
     const addPosts = async () => {
+        console.log("entering firestore");
         firestore.collection('posts').get().then(async function (querySnapshot) {
             const size = querySnapshot.size;
             const id = size + 8;
@@ -89,16 +90,18 @@ function News(toggleDark) {
             const url = document.getElementById("photo").value;
             const content = editorRef.current.getContent();
             const date = `${day}.${mainMonth}.${year} წ.`
+            console.log("firestore found");
             await firestore.collection("posts").add({
                 title: title,
                 url: url,
                 date: date,
                 content: content,
-                number: `${id}`,
+                number: id,
                 status: "enabled"
             }).then(() => {
                 document.getElementById("title").value = "";
                 document.getElementById("photo").value = "";
+                console.log("post added");
             })
         });
     }
@@ -238,6 +241,8 @@ function News(toggleDark) {
                                             </Link>
                                         </Grid>
                                     );
+                                }else {
+                                    return
                                 }
                             })}
                         <br />
@@ -308,18 +313,18 @@ function News(toggleDark) {
                                                     <Card className={classes.card}>
                                                     <div className={classes.cardDetails}>
                                                         <CardContent>
-                                                        <Typography component="h2" variant="h5">
-                                                            {v.title}
-                                                        </Typography>
-                                                        <Typography variant="subtitle1" color="textSecondary">
-                                                            {v.date}
-                                                        </Typography>
-                                                        {/* <Typography variant="subtitle1" paragraph>
-                                                            {v.content}
-                                                        </Typography> */}
-                                                        <Typography variant="subtitle1" color="primary">
-                                                            მეტი...
-                                                        </Typography>
+                                                            <Typography component="h2" variant="h5">
+                                                                {v.title}
+                                                            </Typography>
+                                                            <Typography variant="subtitle1" color="textSecondary">
+                                                                {v.date}
+                                                            </Typography>
+                                                            {/* <Typography variant="subtitle1" paragraph>
+                                                                {v.content}
+                                                            </Typography> */}
+                                                            <Typography variant="subtitle1" color="primary">
+                                                                მეტი...
+                                                            </Typography>
                                                         </CardContent>
                                                     </div>
                                                     <Hidden xsDown>
@@ -330,6 +335,8 @@ function News(toggleDark) {
                                             </Link>
                                         </Grid>
                                     );
+                                }else {
+                                    return
                                 }
                             })}
                         <br />
