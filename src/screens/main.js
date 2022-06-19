@@ -35,7 +35,7 @@ const tutorialSteps = [
   {
     label: 'ჩვენ ვხსნით შესაძლებლობების კარს და ვხელმძღვანელობთ ჩვენს მოსწავლეებს, რადგან ისინი წარმოადგენენ ჩვენი საერთო მომავალს.',
     imgPath:
-      './chess.jpg',
+      './last_bell_2022.jpeg',
   },
 ];
 
@@ -72,7 +72,7 @@ function Main(toggleDark) {
             backgroundColor: theme.palette.background.default,
         },
         img: {
-            height: "100%",
+            height: "Calc(100% - 125px)",
             display: 'block',
             maxWidth: "100%",
             overflow: 'hidden',
@@ -129,51 +129,6 @@ function Main(toggleDark) {
                     }
                 />
             </div>
-            {/* <div id="carouselExampleCaptions" className="carousel slide" data-bs-ride="carousel" style={{maxHeight: "calc(100vh - 125px)", color: "white"}}>
-            <div className="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
-            </div>
-            <div className="carousel-inner" style={{maxHeight: "calc(100vh - 125px)"}}>
-                <div className="carousel-item active" style={{maxHeight: "calc(100vh - 125px)"}}>
-                    <img src="1947-2.jpg" className="d-block w-100 h-100" alt="..." />
-                    <div className="carousel-caption d-none d-md-block">
-                        <h3>სსიპ აკადემიკოს ილია ვეკუას სახელობის ფიზიკა-მათემატიკის ქალაქ თბილისის N 42 საჯარო სკოლა</h3>
-                    </div>
-                </div>
-                <div className="carousel-item" style={{maxHeight: "calc(100vh - 125px)"}}>
-                    <img src="cos.jpg" className="d-block w-100 h-100" alt="..." />
-                    <div className="carousel-caption d-none d-md-block">
-                        <h3>სწავლება</h3>
-                        <h6>აქ ყველა პირობაა შექმნილი იმისათვის, რომ მოსწავლეებმა გაიღრმავონ მათემატიკისა და ფიზიკის ცოდნა, დაეუფლონ უმაღლესი მათემატიკის ელემენტებს.</h6>
-                    </div>
-                </div>
-                <div className="carousel-item" style={{maxHeight: "calc(100vh - 125px)"}}>
-                    <img src="carousel.jpg" className="d-block w-100 h-100" alt="..." />
-                    <div className="carousel-caption d-none d-md-block">
-                        <h3 style={{color: "black"}}>ჩვენ გვჯერა!</h3>
-                        <h6 style={{color: "white"}}>ჩვენი ქვეყანა გაძლიერდება, როდესაც თითოეულ ახალ ვეკუელს შეეძლება ხელი შეუწყოს ჩვენს კეთილდღეობასა და ინოვაციას მათემატიკისა და მეცნიერების საშუალებებით.</h6>
-                    </div>
-                </div>
-                <div className="carousel-item" style={{maxHeight: "calc(100vh - 125px)"}}>
-                    <img src="chess.jpg" className="d-block w-100 h-100" alt="..."/>
-                    <div className="carousel-caption d-none d-md-block">
-                        <h3>ყოველ დღე</h3>
-                        <h6>ჩვენ ვხსნით შესაძლებლობების კარს და ვხელმძღვანელობთ ჩვენს მოსწავლეებს, რადგან ისინი წარმოადგენენ ჩვენი საერთო მომავალს.</h6>
-                    </div>
-                </div>
-            </div>
-            <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span className="visually-hidden">Previous</span>
-            </button>
-            <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                <span className="visually-hidden">Next</span>
-            </button>
-            </div> */}
             <div className={classes.root}>
                 <div className="main-text">
                     <p>

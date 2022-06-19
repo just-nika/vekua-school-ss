@@ -109,36 +109,6 @@ export default function BiologyTeachers() {
                 <Card >
                   <CardMedia
                     className={classes.cardMedia}
-                    image="./chemistry_1.png"
-                    title="Image title"
-                    style={{position: "top"}}
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        ეთერ ელოშვილი
-                    </Typography>
-                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll"}}>
-                        1998  წლიდან  დღემდე -  აკადემიკოს ილია  ვეკუას სახელობის  ფიზიკა-მათემატიკის ქალაქ თბილისის  #42 საჯარო სკოლა, ქიმიის მასწავლებელი;
-                        1967-1972 წწ.-ში-  თსუ, ქიმიის ფაკულტეტი , სპეციალობა - ორგანული ქიმია, ქიმიის მასწავლებელი;
-                        1996წ.- წლის საუკეთესო მასწავლებლი;
-                        2011წ.-  წლის საუკეთესო მასწავლებელი.
-                        ეთერ ელოშვილის  მოსწავლეები   ყოველწლიურად წარმატებით  მონაწილეობენ  ეროვნულ ოლიმპიადებში.
-                    </Typography>
-                  </CardContent>
-                  {/* <CardActions>
-                    <Button size="small" color="primary">
-                      View
-                    </Button>
-                    <Button size="small" color="primary">
-                      Edit
-                    </Button>
-                  </CardActions> */}
-                </Card>
-              </Grid>
-              <Grid item  xs={12} sm={6} md={4}>
-                <Card >
-                  <CardMedia
-                    className={classes.cardMedia}
                     image="./chemistry_2.png"
                     title="Image title"
                   />

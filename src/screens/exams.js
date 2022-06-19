@@ -100,13 +100,26 @@ function Exams() {
   };
   const classes = useStyles();
   const [image, setImage] = useState(null);
-  const [file, setFile] = useState(null);
+  const [fileName, setFileName] = React.useState("No File Chosen")
+  
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
   const timer = React.useRef();
   const buttonClassname = clsx({
     [classes.buttonSuccess]: success,
   });
+  const handleChangeFile = e => {
+    var files = e.target.files;
+    var filesArray = [].slice.call(files);
+    filesArray.forEach(e => {
+      const fileName = e.name;
+      setFileName(fileName);
+      console.log(e.name);
+      console.log(e.size);
+      console.log(e.type);
+      console.log(e.lastModifiedDate);
+    });
+  };
 
   React.useEffect(() => {
     return () => {
@@ -448,7 +461,7 @@ function Exams() {
                   accept="image/*"
                   className={classes.input}
                   onChange={(e) => {
-                    setImage(e.target.files[0]);
+                    setImage(e.target.files[0].name);
                   }}
                   {...register("img", { required: true })}
                   required
@@ -460,9 +473,10 @@ function Exams() {
                     color="primary"
                     aria-label="upload picture"
                     component="span">
-                    <PhotoCamera />
+                      <PhotoCamera />
                   </IconButton>
                 </label>
+                {image}
                 <p style={{ color: "red", textAlign: "start" }}>
                   {errors.img?.type === "required" &&
                     "მოსწავლის ფოტოს ატვირთვა აუცილებელია მოსწავლის"}
@@ -476,9 +490,7 @@ function Exams() {
                 <input
                   accept=".pdf, .PDF"
                   className={classes.input}
-                  onChange={(e) => {
-                    setImage(e.target.files[0]);
-                  }}
+                  onChange={e => handleChangeFile(e)}
                   {...register("file", { required: true })}
                   required
                   id="icon-button-files"

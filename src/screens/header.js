@@ -189,7 +189,7 @@ function Header({ toggleDark, settoggleDark, props }) {
     }
 
     return (
-<Router>
+    <Router>
         <div className="page-main">
             <div className={classes.headerCl}>
             <CssBaseline />
@@ -197,7 +197,7 @@ function Header({ toggleDark, settoggleDark, props }) {
                 <div className="header">
                     <nav>
                         <div className="logo">
-                            <a href="/"><img src="/logo.png" className="header-logo"/></a>
+                            <a href="/"><img src="/vekua_simplified.png" className="header-logo"/></a>
                         </div>
                         <div className="responsive-icon">
                         {['top'].map((anchor) => (
@@ -270,6 +270,13 @@ function Header({ toggleDark, settoggleDark, props }) {
                             <List>
                                 <ListItem button>
                                     საშაბათო სკოლა
+                                </ListItem>
+                            </List>
+                        </Link>
+                        <Link to="/exams">
+                            <List>
+                                <ListItem button>
+                                    მისაღები გამოცდები
                                 </ListItem>
                             </List>
                         </Link>
@@ -503,19 +510,6 @@ function Header({ toggleDark, settoggleDark, props }) {
             </center>
             <br />
             <p><b>გვერდი {pageNumber}/{numPages}</b></p>
-            {/* <center>
-                <Document file="/plan.pdf" onLoadSuccess={onDocumentLoadSuccess}>
-                    {Array.from(
-                        new Array(numPages),
-                        (el,index) => (
-                            <Page 
-                                key={`page_${index+1}`}
-                                pageNumber={index+1}
-                            />
-                        )
-                    )}
-                </Document>
-            </center> */}
         </>
     }
 }

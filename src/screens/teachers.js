@@ -18,6 +18,7 @@ import HistoryTeachers from './HistoryTeachers';
 import GeographyTeachers from './GeographyTeachers';
 import { Helmet } from "react-helmet";
 import Container from '@material-ui/core/Container';
+import PassedAwayTeachers from './PassedAwayTeachers';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -102,6 +103,7 @@ export default function SchoolTeachers() {
           <Tab label="საბუნებისმეტყველო კათედრა" {...a11yProps(2)} />
           <Tab label="უცხო ენის კათედრა" {...a11yProps(3)} />
           <Tab label="საზოგადოებრივ მეცნიერებათა კათედრა" {...a11yProps(4)} />
+          <Tab label="სკოლის ღვაწლმოსილი პედაგოგები" {...a11yProps(5)} />
         </Tabs>
       </AppBar>
       <SwipeableViews
@@ -263,6 +265,12 @@ export default function SchoolTeachers() {
                 </ol>
                 </Grid>
             </Container>
+          </div>
+        </TabPanel>
+        <TabPanel value={value} index={5} dir={theme.direction}>
+        <h2>სკოლის ღვაწლმოსილი პედაგოგები</h2>
+          <div className="teachers-info">
+            <PassedAwayTeachers />
           </div>
         </TabPanel>
       </SwipeableViews>

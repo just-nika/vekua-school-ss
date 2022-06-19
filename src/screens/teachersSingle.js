@@ -54,62 +54,6 @@ export default function Teachers() {
                 <Card >
                   <CardMedia
                     className={classes.cardMedia}
-                    image="./math_one.png"
-                    title="Image title"
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        ედემ ლაგვილავა
-                    </Typography>
-                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll", overflowY: "none"}}>
-                        1966-1968 წწ-ში სწავლობდა ივანე ჯავახიშვილის სახელობის თბილისის სახელმწიფო უნივერსიტეტში მათემატიკის ფაკულტეტზე და 1972 წელს დაამთავრა მოსკოვის ლომონოსოვის სახელობის უნივერსიტეტის მექანიკა-მათემატიკის ფაკულტეტი.
-                        ბატონი ედემი თავად გახლავთ 42-ე საჯარო სკოლის კურსდამთავრებული და 1997წ-დან-დღემდე  მუშაობს მათემატიკის მასწავლებლად ამავე სკოლაში.  ედემ ლაგვილავა  გახლავთ  საქართველოს მეცნიერებათა აკადემიის ა.რაზმაძის სახელობის მათემატიკის ინსტიტუტის ასოცირებული მეცნიერ თანამშრომელი. ის მრავალი გამოცემისა და სტატიის ავტორია.
-                        მისი მოსწავლეები წარმატებით მონაწილეობენ რესპუბლიკურ და საერთაშორისო ტურნირებსა და ოლიმპიადებში.
-                    </Typography>
-                  </CardContent>
-                  {/* <CardActions>
-                    <Button size="small" color="primary">
-                      View
-                    </Button>
-                    <Button size="small" color="primary">
-                      Edit
-                    </Button>
-                  </CardActions> */}
-                </Card>
-              </Grid>
-              <Grid item  xs={12} sm={6} md={4}>
-                <Card >
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image="./math_2.png"
-                    title="Image title"
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        ოლეგ კვენეტაძე
-                    </Typography>
-                    <Typography style={{textAlign: "start", fontSize: "13px", height: "200px", overflowX: "scroll", overflowY: "none"}}>
-                        1976 წელს დაამთავრა ივანე ჯავახიშვილის სახელობის თბილისის სახელმწიფო უნივერსიტეტის მათემატიკის ფაკულტეტი. სპეციალობა - მათემატიკოსი.
-                        1982 წლიდან დღემდე ბატონი ოლეგი მუშაობს აკ. ილია ვეკუას სახ. ფიზიკა-მათემატიკის  №42 საჯარო სკოლაში მათემატიკის მასწავლებლად.
-                        ოლეგ კვეტენაძეს  2007 წელს   მიენიჭა საქართველოს პრეზიდენტის „ღირსების ორდენი“.
-                        2010 წლიდან ის  სერტიფიცირებული მასწავლებლია.
-                        მისი მოსწავლეები წარმატებით მონაწილეობენ რესპუბლიკურ და საერთაშორისო ტურნირებსა და ოლიმპიადებში.
-                    </Typography>
-                  </CardContent>
-                  {/* <CardActions>
-                    <Button size="small" color="primary">
-                      View
-                    </Button>
-                    <Button size="small" color="primary">
-                      Edit
-                    </Button>
-                  </CardActions> */}
-                </Card>
-              </Grid>
-              <Grid item  xs={12} sm={6} md={4}>
-                <Card >
-                  <CardMedia
-                    className={classes.cardMedia}
                     image="./math_3.png"
                     title="Image title"
                   />
