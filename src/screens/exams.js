@@ -29,6 +29,8 @@ import clsx from 'clsx';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { green } from '@material-ui/core/colors';
 import Data from './classesScroll';
+import axios from "axios";
+import qs from 'qs'
 
 function Exams() {
   const [value, setValue] = useState("");
@@ -168,14 +170,13 @@ function Exams() {
                       document.getElementById("ParentLastName").value = "";
                       document.getElementById("oldSchool").value = "";
                       document.getElementById("mobileNumber").value = "";
-                      fetch(`http://smsoffice.ge/api/v2/send/?key=514f29a0cc3448a79bf32d1ee005bddb&destination=995${data.mobileNumber}&sender=VEKUA&content=${text}`, {
-                        "method": "GET",
-                        "mode": "no-cors",
-                        "headers": {
-                          "content-type": "application/x-www-form-urlencoded",
-                          "Access-Control-Allow-Origin": "*",
-                      }},)
-                      .then((res) => console.log(res.text()))
+                      axios.post('http://smsoffice.ge/api/v2/send/', qs.stringify({
+                        key: '514f29a0cc3448a79bf32d1ee005bddb',
+                        destination: `995${data.mobileNumber}`,
+                        sender: `VEKUA`,
+                        content: `${text}`,
+                        urgent: true
+                      }))
                       swal(
                         "თქვენ წარმატებით დარეგისტრირდით!",
                         "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.",
@@ -212,14 +213,13 @@ function Exams() {
                       document.getElementById("ParentLastName").value = "";
                       document.getElementById("oldSchool").value = "";
                       document.getElementById("mobileNumber").value = "";
-                      fetch(`http://smsoffice.ge/api/v2/send/?key=514f29a0cc3448a79bf32d1ee005bddb&destination=995${data.mobileNumber}&sender=VEKUA&content=${text}`, {
-                        "method": "GET",
-                        "mode": "no-cors",
-                        "headers": {
-                          "content-type": "application/x-www-form-urlencoded",
-                          "Access-Control-Allow-Origin": "*",
-                      }},)
-                      .then((res) => console.log(res.text()))
+                      axios.post('http://smsoffice.ge/api/v2/send/', qs.stringify({
+                        key: '514f29a0cc3448a79bf32d1ee005bddb',
+                        destination: `995${data.mobileNumber}`,
+                        sender: `VEKUA`,
+                        content: `${text}`,
+                        urgent: true
+                      }))
                       swal(
                         "თქვენ წარმატებით დარეგისტრირდით!",
                         "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.",
