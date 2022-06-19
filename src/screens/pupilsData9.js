@@ -286,11 +286,6 @@ const columns = [
       headerName: "სახელი/First Name", 
       width: 200 
   },
-  {
-      field: "FatherName",
-      headerName: "მამის სახელი/Father Name",
-      width: 275,
-  },
   { 
       field: "idNumber", 
       headerName: "პირადი ნომერი/Personal Number", 

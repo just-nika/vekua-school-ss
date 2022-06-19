@@ -3,6 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import {
   firestore,
   storage,
+  auth
 } from "../firebase/firebase.config";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -27,10 +28,12 @@ import Alert from '@material-ui/lab/Alert';
 import clsx from 'clsx';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { green } from '@material-ui/core/colors';
+import Data from './classesScroll';
 
 function Exams() {
   const [value, setValue] = useState("");
-
+  
+  var user = auth.currentUser;
   const selectClass = (e) => setValue(e.target.value);
   const {
     register,
@@ -109,6 +112,7 @@ function Exams() {
     };
   }, []);
   const addPupil = async (data) => {
+    console.log(data.file[0].size);
     console.log(data);
     CheckPupil(data.idRequired).then((response) => {
       if (response.status) {
@@ -121,119 +125,133 @@ function Exams() {
         if (!loading) {
           setSuccess(false);
           setLoading(true);
-          
-          firestore
-          .collection(`${data.class}`)
-          .get()
-          .then(async function (querySnapshot) {
-            const code = querySnapshot.size;
-            const storageRef = storage.ref();
-            const fileRef = storageRef.child(`FILE_${data.idRequired}`);
-            await fileRef.put(data.file[0]);
-            
-            const imageRef = storageRef.child(`IMAGE_${data.idRequired}`);
-            await imageRef.put(data.img[0]);
-            
-            const imgUrl = await imageRef.getDownloadURL();
-            const fileUrl = await fileRef.getDownloadURL();
-            if (data.class == '7') {
-              const uniqueCode = 399 + code;
-              const text = `მოგესალმებით, მოსწავლე ${data.firstName} ${data.lastName} წარმატებით დარეგისტრირდა ვეკუას სკოლის სარეკომენდაციო წერაზე. მისი უნიკალური კოდია ${data.class}-${uniqueCode}. გისურვებთ წარმატებებს!`
+          if ((data.file[0].size / 1048576) <= 5) {
+            if ((data.img[0].size / 1048576) <= 3) {
               firestore
-                .collection(`${data.class}`)
-                .add({
-                  code: uniqueCode,
-                  firstName: data.firstName,
-                  lastName: data.lastName,
-                  idNumber: data.idRequired,
-                  ParentFirstName: data.parentName,
-                  ParentLastName: data.parentLastName,
-                  oldSchool: data.oldSchool,
-                  mobileNumber: data.mobileNumber,
-                  language: data.language,
-                  class: data.class,
-                  imgUrl: imgUrl,
-                  fileUrl: fileUrl,
-                })
-                .then(() => {
-                  document.getElementById("firstName").value = "";
-                  document.getElementById("lastName").value = "";
-                  document.getElementById("idNumber").value = "";
-                  document.getElementById("ParentFirstName").value = "";
-                  document.getElementById("ParentLastName").value = "";
-                  document.getElementById("oldSchool").value = "";
-                  document.getElementById("mobileNumber").value = "";
-                  swal(
-                    "თქვენ წარმატებით დარეგისტრირდით!",
-                    "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.",
-                    "success"
-                  );
-                  fetch(`http://smsoffice.ge/api/v2/send/?key=514f29a0cc3448a79bf32d1ee005bddb&destination=995${data.mobileNumber}&sender=VEKUA&content=${text}`, {
-                    "method": "POST",
-                    "headers": {
-                      "content-type": "application/x-www-form-urlencoded",
-                      "Access-Control-Allow-Origin": "*"
-                    }},)
-                  .then(res => res.json())
-                  .then(
-                    (result) => {
-                      if (result.Success == true) {
-                        alert("ოპაა");
-                      }else if (result.Success == false){
-                        alert("ეხლა რაღა უნდა");
-                      }
-                    },
-                    (error) => {
-                      alert(`ხოოო... ${error}`);
-                    }
-                  )
-                  setSuccess(true);
-                  setLoading(false);
-                });
+              .collection(`${data.class}`)
+              .get()
+              .then(async function (querySnapshot) {
+                const code = querySnapshot.size;
+                const storageRef = storage.ref();
+                const fileRef = storageRef.child(`FILE_${data.idRequired}`);
+                await fileRef.put(data.file[0]);
+                
+                const imageRef = storageRef.child(`IMAGE_${data.idRequired}`);
+                await imageRef.put(data.img[0]);
+                
+                const imgUrl = await imageRef.getDownloadURL();
+                const fileUrl = await fileRef.getDownloadURL();
+                if (data.class == '7') {
+                  const uniqueCode = 399 + code;
+                  const text = `მოგესალმებით, მოსწავლე ${data.firstName} ${data.lastName} წარმატებით დარეგისტრირდა ვეკუას სკოლის სარეკომენდაციო წერაზე. მისი უნიკალური კოდია ${data.class}-${uniqueCode}. გისურვებთ წარმატებებს!`
+                  firestore
+                    .collection(`${data.class}`)
+                    .add({
+                      code: uniqueCode,
+                      firstName: data.firstName,
+                      lastName: data.lastName,
+                      idNumber: data.idRequired,
+                      ParentFirstName: data.parentName,
+                      ParentLastName: data.parentLastName,
+                      oldSchool: data.oldSchool,
+                      mobileNumber: data.mobileNumber,
+                      language: data.language,
+                      class: data.class,
+                      imgUrl: imgUrl,
+                      fileUrl: fileUrl,
+                    })
+                    .then(() => {
+                      document.getElementById("firstName").value = "";
+                      document.getElementById("lastName").value = "";
+                      document.getElementById("idNumber").value = "";
+                      document.getElementById("ParentFirstName").value = "";
+                      document.getElementById("ParentLastName").value = "";
+                      document.getElementById("oldSchool").value = "";
+                      document.getElementById("mobileNumber").value = "";
+                      swal(
+                        "თქვენ წარმატებით დარეგისტრირდით!",
+                        "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.",
+                        "success"
+                      );
+                      fetch(`http://smsoffice.ge/api/v2/send/?key=514f29a0cc3448a79bf32d1ee005bddb&destination=995${data.mobileNumber}&sender=VEKUA&content=${text}`, {
+                        "method": "GET",
+                        "mode": "no-cors",
+                        "headers": {
+                          "content-type": "application/x-www-form-urlencoded",
+                          "Access-Control-Allow-Origin": "*",
+                        }},)
+                      .then((res) => console.log(res.text()))
+                      setSuccess(true);
+                      setLoading(false);
+                    });
+                }
+                else if (data.class == '8' || data.class == '9' || data.class == '10' || data.class == '11') {
+                  const uniqueCode = 99 + code;
+                  const text = `მოგესალმებით, მოსწავლე ${data.firstName} ${data.lastName} წარმატებით დარეგისტრირდა ვეკუას სკოლის სარეკომენდაციო წერაზე. მისი უნიკალური კოდია ${data.class}-${uniqueCode}. გისურვებთ წარმატებებს!`
+                  firestore
+                    .collection(`${data.class}`)
+                    .add({
+                      code: uniqueCode,
+                      firstName: data.firstName,
+                      lastName: data.lastName,
+                      idNumber: data.idRequired,
+                      ParentFirstName: data.parentName,
+                      ParentLastName: data.parentLastName,
+                      oldSchool: data.oldSchool,
+                      mobileNumber: data.mobileNumber,
+                      language: data.language,
+                      class: data.class,
+                      imgUrl: imgUrl,
+                      fileUrl: fileUrl,
+                    })
+                    .then(() => {
+                      document.getElementById("firstName").value = "";
+                      document.getElementById("lastName").value = "";
+                      document.getElementById("idNumber").value = "";
+                      document.getElementById("ParentFirstName").value = "";
+                      document.getElementById("ParentLastName").value = "";
+                      document.getElementById("oldSchool").value = "";
+                      document.getElementById("mobileNumber").value = "";
+                      swal(
+                        "თქვენ წარმატებით დარეგისტრირდით!",
+                        "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.",
+                        "success"
+                      );
+                      setSuccess(true);
+                      setLoading(false);
+                    });
+                }
+              });
+            }else {
+              swal(
+                "ფოტოს ზომა არ უნდა აღემატებოდეს 3 MB",
+                "გთხოვთ გადაამოწმოთ თქვენს მიერ ატვირთული ფოტო და ატვირთოთ თავიდან.",
+                "warning"
+              );
+              setLoading(false);
             }
-            else if (data.class == '8' || data.class == '9' || data.class == '10' || data.class == '11') {
-              const uniqueCode = 99 + code;
-              const text = `მოგესალმებით, მოსწავლე ${data.firstName} ${data.lastName} წარმატებით დარეგისტრირდა ვეკუას სკოლის სარეკომენდაციო წერაზე. მისი უნიკალური კოდია ${data.class}-${uniqueCode}. გისურვებთ წარმატებებს!`
-              firestore
-                .collection(`${data.class}`)
-                .add({
-                  code: uniqueCode,
-                  firstName: data.firstName,
-                  lastName: data.lastName,
-                  idNumber: data.idRequired,
-                  ParentFirstName: data.parentName,
-                  ParentLastName: data.parentLastName,
-                  oldSchool: data.oldSchool,
-                  mobileNumber: data.mobileNumber,
-                  language: data.language,
-                  class: data.class,
-                  imgUrl: imgUrl,
-                  fileUrl: fileUrl,
-                })
-                .then(() => {
-                  document.getElementById("firstName").value = "";
-                  document.getElementById("lastName").value = "";
-                  document.getElementById("idNumber").value = "";
-                  document.getElementById("ParentFirstName").value = "";
-                  document.getElementById("ParentLastName").value = "";
-                  document.getElementById("oldSchool").value = "";
-                  document.getElementById("mobileNumber").value = "";
-                  swal(
-                    "თქვენ წარმატებით დარეგისტრირდით!",
-                    "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.",
-                    "success"
-                  );
-                  setSuccess(true);
-                  setLoading(false);
-                });
-            }
-          });
+          }else {
+            swal(
+              "ფაილის ზომა არ უნდა აღემატებოდეს 5 MB",
+              "გგთხოვთ გადაამოწმოთ თქვენს მიერ ატვირთული ფაილი და ატვირთოთ თავიდან.",
+              "warning"
+            );
+            setLoading(false);
+          }
         }
       }
     });
   };
+  const DataDisplay = () => {
+    if (user) {
+      return <Data/>
+    }else {
+      return ""
+    }
+  }
   return (
     <div>
+      <DataDisplay/>
       <Container component="main" maxWidth="md">
         <Helmet>
           <title>მოსწავლის მისაღები გამოცდებისათვის რეგისტრაცია</title>
@@ -448,7 +466,7 @@ function Exams() {
                   <small>(სკოლის მიერ ბეჭდით დამოწმებული ფოტოსურათიანი საბუთი - ბეჭედი ნაწილობრივ უნდა ფარავდეს ფოტოსურათს)</small>
                 </p>
                 <input
-                  accept="image/*"
+                  accept=".pdf, .PDF"
                   className={classes.input}
                   onChange={(e) => {
                     setImage(e.target.files[0]);

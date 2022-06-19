@@ -270,78 +270,73 @@ export default function PupilsData() {
     console.log(data);
 }
   
-  const columns = [
-    { 
-        field: "id", 
-        headerName: "ბაზის ID/Base ID", 
-        width: 200 
-    },
-    { 
-        field: "lastName", 
-        headerName: "გვარი/Last Name", 
-        width: 200 
-    },
-    { 
-        field: "firstName", 
-        headerName: "სახელი/First Name", 
-        width: 200 
-    },
-    {
-        field: "FatherName",
-        headerName: "მამის სახელი/Father Name",
-        width: 275,
-    },
-    { 
-        field: "idNumber", 
-        headerName: "პირადი ნომერი/Personal Number", 
-        width: 300 
-    },
-    {
-        field: "class",
-        headerName: "კლასი/Class",
-        width: 175,
-    },
-    {
-        field: "code",
-        headerName: "უნიკალური კოდი/Unique Code",
-        width: 300,
-    },
-    {
-        field: "ParentFirstName",
-        headerName: "მშობლის სახელი/Parent First Name",
-        width: 310,
-    },
-    {
-        field: "ParentLastName",
-        headerName: "მშობლის გვარი/Parent Last Name",
-        width: 300,
-    },
-    {
-        field: "mobileNumber",
-        headerName: "მშობლის ტელეფონის ნომერი/Parent Mobile Number",
-        width: 430,
-    },
-    {
-        field: "oldSchool",
-        headerName: "სკოლა საიდანაც გადმოდის/Active School",
-        width: 350,
-    },
-    {
-        field: "language",
-        headerName: "მეორე უცხო ენა/Second Language",
-        width: 330,
-    },
-    {
-        field: "imgUrl",
-        headerName: "მოსწავლის ფოტო/Pupil Photo",
-        width: 290,
-    },
-    {
-        field: "fileUrl",
-        headerName: "სკოლის საბუთი/Pupil File",
-        width: 250,
-    },
-  ];
+const columns = [
+  { 
+      field: "id", 
+      headerName: "ბაზის ID/Base ID", 
+      width: 200 
+  },
+  { 
+      field: "lastName", 
+      headerName: "გვარი/Last Name", 
+      width: 200 
+  },
+  { 
+      field: "firstName", 
+      headerName: "სახელი/First Name", 
+      width: 200 
+  },
+  { 
+      field: "idNumber", 
+      headerName: "პირადი ნომერი/Personal Number", 
+      width: 300 
+  },
+  {
+      field: "class",
+      headerName: "კლასი/Class",
+      width: 175,
+  },
+  {
+      field: "code",
+      headerName: "უნიკალური კოდი/Unique Code",
+      width: 300,
+  },
+  {
+      field: "ParentFirstName",
+      headerName: "მშობლის სახელი/Parent First Name",
+      width: 310,
+  },
+  {
+      field: "ParentLastName",
+      headerName: "მშობლის გვარი/Parent Last Name",
+      width: 300,
+  },
+  {
+      field: "mobileNumber",
+      headerName: "მშობლის ტელეფონის ნომერი/Parent Mobile Number",
+      width: 430,
+  },
+  {
+      field: "oldSchool",
+      headerName: "სკოლა საიდანაც გადმოდის/Active School",
+      width: 350,
+  },
+  {
+      field: "language",
+      headerName: "მეორე უცხო ენა/Second Language",
+      width: 330,
+  },
+  {
+      field: "imgUrl",
+      headerName: "მოსწავლის ფოტო/Pupil Photo",
+      width: 290,
+  },
+  {
+      field: "fileUrl",
+      headerName: "სკოლის საბუთი/Pupil File",
+      width: 250,
+  },
+];
   pupils.map((pupil, index) => {
     return (
         <>
