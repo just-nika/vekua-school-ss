@@ -143,7 +143,7 @@ function Exams() {
                 const fileUrl = await fileRef.getDownloadURL();
                 if (data.class == '7') {
                   const uniqueCode = 399 + code;
-                  const text = `მოგესალმებით, მოსწავლე ${data.firstName} ${data.lastName} წარმატებით დარეგისტრირდა ვეკუას სკოლის სარეკომენდაციო წერაზე. მისი უნიკალური კოდია ${data.class}-${uniqueCode}. გისურვებთ წარმატებებს!`
+                  const text = `მოგესალმებით, მოსწავლე ${data.firstName} ${data.lastName} წარმატებით დარეგისტრირდა N42 საჯარო სკოლის სარეკომენდაციო წერაზე. მისი უნიკალური კოდია ${data.class}-${uniqueCode}. სარეგისტრაციო ბარათის გარეშე მოსწავლე წერაზე არ დაიშვება. მისი ჩამოტვირთვა შეგიძლიათ ლინკიდან: https://vekua42.edu.ge/check მოსწავლის პირადი ნომრის მითითებით. გისურვებთ წარმატებებს!`
                   firestore
                     .collection(`${data.class}`)
                     .add({
@@ -168,26 +168,26 @@ function Exams() {
                       document.getElementById("ParentLastName").value = "";
                       document.getElementById("oldSchool").value = "";
                       document.getElementById("mobileNumber").value = "";
-                      swal(
-                        "თქვენ წარმატებით დარეგისტრირდით!",
-                        "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.",
-                        "success"
-                      );
                       fetch(`http://smsoffice.ge/api/v2/send/?key=514f29a0cc3448a79bf32d1ee005bddb&destination=995${data.mobileNumber}&sender=VEKUA&content=${text}`, {
                         "method": "GET",
                         "mode": "no-cors",
                         "headers": {
                           "content-type": "application/x-www-form-urlencoded",
                           "Access-Control-Allow-Origin": "*",
-                        }},)
+                      }},)
                       .then((res) => console.log(res.text()))
+                      swal(
+                        "თქვენ წარმატებით დარეგისტრირდით!",
+                        "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.",
+                        "success"
+                      );
                       setSuccess(true);
                       setLoading(false);
                     });
                 }
                 else if (data.class == '8' || data.class == '9' || data.class == '10' || data.class == '11') {
                   const uniqueCode = 99 + code;
-                  const text = `მოგესალმებით, მოსწავლე ${data.firstName} ${data.lastName} წარმატებით დარეგისტრირდა ვეკუას სკოლის სარეკომენდაციო წერაზე. მისი უნიკალური კოდია ${data.class}-${uniqueCode}. გისურვებთ წარმატებებს!`
+                  const text = `მოგესალმებით, მოსწავლე ${data.firstName} ${data.lastName} წარმატებით დარეგისტრირდა N42 საჯარო სკოლის სარეკომენდაციო წერაზე. მისი უნიკალური კოდია ${data.class}-${uniqueCode}. სარეგისტრაციო ბარათის გარეშე მოსწავლე წერაზე არ დაიშვება. მისი ჩამოტვირთვა შეგიძლიათ ლინკიდან: https://vekua42.edu.ge/check მოსწავლის პირადი ნომრის მითითებით. გისურვებთ წარმატებებს!`
                   firestore
                     .collection(`${data.class}`)
                     .add({
@@ -212,6 +212,14 @@ function Exams() {
                       document.getElementById("ParentLastName").value = "";
                       document.getElementById("oldSchool").value = "";
                       document.getElementById("mobileNumber").value = "";
+                      fetch(`http://smsoffice.ge/api/v2/send/?key=514f29a0cc3448a79bf32d1ee005bddb&destination=995${data.mobileNumber}&sender=VEKUA&content=${text}`, {
+                        "method": "GET",
+                        "mode": "no-cors",
+                        "headers": {
+                          "content-type": "application/x-www-form-urlencoded",
+                          "Access-Control-Allow-Origin": "*",
+                      }},)
+                      .then((res) => console.log(res.text()))
                       swal(
                         "თქვენ წარმატებით დარეგისტრირდით!",
                         "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.",
