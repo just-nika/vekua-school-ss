@@ -168,7 +168,7 @@ function Exams() {
                     "მოსწავლემ რეგისტრაცია წარმატებულად გაიარა, გთხოვთ ქვემოთ გადაამოწმოთ რეგისტრირებული მოსწავლე.",
                     "success"
                   );
-                  fetch(`http://smsoffice.ge/api/v2/send?key=514f29a0cc3448a79bf32d1ee005bddb&destination=995${data.mobileNumber}&sender=VEKUA&content=${text}`, {
+                  fetch(`http://smsoffice.ge/api/v2/send/?key=514f29a0cc3448a79bf32d1ee005bddb&destination=995${data.mobileNumber}&sender=VEKUA&content=${text}`, {
                     "method": "POST",
                     "headers": {
                       "content-type": "application/x-www-form-urlencoded",
