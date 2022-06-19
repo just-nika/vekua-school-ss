@@ -94,9 +94,6 @@ function Exams() {
     setAge(event.target.value);
   };
   const classes = useStyles();
-  // const onSubmit = (data) => {
-  //     console.log(data);
-  // };
   const [image, setImage] = useState(null);
   const [file, setFile] = useState(null);
   const [loading, setLoading] = React.useState(false);
@@ -111,12 +108,6 @@ function Exams() {
       clearTimeout(timer.current);
     };
   }, []);
-  const imgUpload = (e) => {
-    setImage(e.target.files[0]);
-  };
-  const fileUpload = (e) => {
-    setFile(e.target.files[0]);
-  };
   const addPupil = async (data) => {
     console.log(data);
     CheckPupil(data.idRequired).then((response) => {
@@ -135,7 +126,6 @@ function Exams() {
           .collection(`${data.class}`)
           .get()
           .then(async function (querySnapshot) {
-            const school = "42 sajaro skola"
             const code = querySnapshot.size;
             const storageRef = storage.ref();
             const fileRef = storageRef.child(`FILE_${data.idRequired}`);
@@ -516,7 +506,6 @@ function Exams() {
           <br />
         </div>
       </Container>
-      {/* <Covid /> */}
     </div>
   );
 }
