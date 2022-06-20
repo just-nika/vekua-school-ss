@@ -64,9 +64,9 @@ const Check = () => {
       </>
     }else if (forCard.class === 8 || forCard.class === 9 || forCard.class === 10 || forCard.class === 11) {
       return <>
-        <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}>მოსწავლის, უნიკალური კოდით {forCard.class}-{forCard.code} შეფასებებია:</p>
-        <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}><i>04.07.2021 <b>მათემატიკა</b></i> {forCard.m}</p> 
-        <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}><i>05.07.2021 <b>ფიზიკა</b></i> {forCard.p}</p> 
+        <p className="test-dates" style={{ textAlign: "start", margin: "0" }}><i>04.07.2021 <b>მათემატიკა</b></i> {forCard.m}</p> 
+        <p className="test-dates" style={{ textAlign: "start", margin: "0" }}><i>05.07.2021 <b>ფიზიკა</b></i> {forCard.p}</p> 
+        <p className="test-dates" style={{ textAlign: "start", margin: "0" }}>სარეკომენდაციო გამოცდის დაწყების დრო: <b>09:00 სთ.</b> <small>მოსწავლე უნდა გამოცხადდეს გამოცდის დაწყებამდე ნახევარი საათით ადრე!</small> </p>
         <br />
       </>
     }
@@ -101,31 +101,29 @@ const Check = () => {
           <div className="test-laws">
             <h6><strong>პროცედურული მოთხოვნები და პირობები:</strong></h6>
             <div className="small-group" style={{textAlign: "start", fontSize: "12px" }}>
-              <p style={{marginBottom: "5px", marginTop: "5px"}}><strong>გამოცდაზე გამომსვლელი ვალდებულია:</strong></p>
+              <p style={{marginBottom: "5px", marginTop: "5px"}}><strong>სარეკომენდაციო წერაზე გამომსვლელი ვალდებულია:</strong></p>
               <ul style={{textAlign: "start", marginBottom: "3px"}}>
                 <li>დროულად გამოცხადდეს  სარეგისტრაციო ბარათით;</li>
                 <li>ჰქონდეს საწერი კალამი, სახაზავი, ფანქარი, საშლელი;</li>
                 <li>დაიცვას სოციალური დისტანცია.</li>
               </ul>
-              <p style={{marginBottom: "5px", marginTop: "5px"}}><strong>გამოცდაზე გამომსვლელს უფლება აქვს:</strong></p>
+              <p style={{marginBottom: "5px", marginTop: "5px"}}><strong>სარეკომენდაციო წერაზე გამომსვლელს უფლება აქვს:</strong></p>
               <ul style={{textAlign: "start", marginBottom: "3px"}}>
                 <li>ტექნიკურ  საკითხებთან  დაკავშირებით კონსულტაციისა და განმარტებისათვის მიმართოს მეთვალყურეს;</li>
                 <li>ჰქონდეს წყალი პოლიეთილენის ბოთლით;</li>
               </ul>
-              <p style={{marginBottom: "5px", marginTop: "5px"}}><strong>გამოცდის მონაწილეს ეკრძალება:</strong></p>
+              <p style={{marginBottom: "5px", marginTop: "5px"}}><strong>სარეკომენდაციო წერის მონაწილეს ეკრძალება:</strong></p>
               <ul style={{textAlign: "start", marginBottom: "3px"}}>
-                <li>გამოცდის მსვლელობის პერიოდში მოიხსნას პირბადე;</li>
                 <li>თან ჰქონდეს მობილური ტელეფონი;</li>
                 <li>გამოიყენოს ნებისმიერი საინფორმაციო წყარო;</li>
-                <li>გამოცდის მსვლელობის დროს  ვერბალური და არავერბალური კომუნიკაცია სხვა მონაწილესთან.</li>
-                <li><strong>VII და VIII გადამსვლელებს  მათემატიკის გამოცდაზე კალკულატორის გამოყენება</strong> <small><i>(დანარჩენ კლასებში კალკულატორის გამოყენება დაშვებულია)</i></small>;</li>
+                <li>გამოცდის მსვლელობის დროს ვერბალური და არავერბალური კომუნიკაცია სხვა მონაწილესთან.</li>
+                <li><strong>VII და VIII კლასებში გადამსვლელებს მათემატიკის გამოცდაზე კალკულატორის გამოყენება</strong> <small><i>(დანარჩენ კლასებში კალკულატორის გამოყენება დაშვებულია)</i></small>;</li>
               </ul>
               <p style={{marginBottom: "5px", marginTop: "5px"}}><strong>ნამუშევრის შეფასება და აპელაცია:</strong></p>
               <ul style={{textAlign: "start", marginBottom: "3px"}}>
                 <li>ნამუშევრები გამსწორებლამდე მიდის კოდირებული ფორმით;</li>
-                <li>ინფიცირების რისკის შემცირების მიზნით, საგამოცდო რვეულები შეფასებამდე დამუშავდება და განთავსდება ორდღიან კარანტინში.</li>
-                <li>შეფასებები გამოქვეყნდება სკოლის საიტზე  გამოცდიდან 10 კალენდარული დღის განმავლობაში  სარეგისტრაციო ბარათის ნომრის შესაბამისად;</li>
-                <li>სააპელაციო განაცხადის ფორმების შევსება მოხდება სკოლაში შედეგების გამოქვეყნებიდან ორი სამუშაო დღის განმავლობაში.</li>
+                <li>შეფასებები გამოქვეყნდება სკოლის საიტზე სარეკომენდაციო წერიდან 10 კალენდარული დღის განმავლობაში სარეგისტრაციო ბარათის ნომრის შესაბამისად;</li>
+                <li>სააპელაციო განაცხადის ფორმების შევსება მოხდება სკოლაში შედეგების გამოქვეყნებიდან ორი სამუშაო დღის განმავლობაში, შემდეგ მისამართზე პეტრე ჩაიკოვსკის N9;</li>
                 <li>აპელაციას გაივლის მხოლოდ კოდირებული ნაშრომი მოსწავლისა და მშობლის გარეშე;</li>
                 <li>აპელაციის შედეგები გამოქვეყნდება სკოლის ვებგვერდზე <a href="https://vekua42.edu.ge">vekua42.edu.ge</a> აპელაციის დასრულებისთანავე.</li>
               </ul>
