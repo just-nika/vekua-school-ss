@@ -104,7 +104,7 @@ const Check = () => {
               <p style={{marginBottom: "5px", marginTop: "5px"}}><strong>გამოცდაზე გამომსვლელი ვალდებულია:</strong></p>
               <ul style={{textAlign: "start", marginBottom: "3px"}}>
                 <li>დროულად გამოცხადდეს  სარეგისტრაციო ბარათით;</li>
-                <li>ჰქონდეს პირბადე, საწერი კალამი, სახაზავი, ფანქარი, საშლელი;</li>
+                <li>ჰქონდეს საწერი კალამი, სახაზავი, ფანქარი, საშლელი;</li>
                 <li>დაიცვას სოციალური დისტანცია.</li>
               </ul>
               <p style={{marginBottom: "5px", marginTop: "5px"}}><strong>გამოცდაზე გამომსვლელს უფლება აქვს:</strong></p>
