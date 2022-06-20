@@ -65,8 +65,8 @@ const Check = () => {
     }else if (forCard.class === 8 || forCard.class === 9 || forCard.class === 10 || forCard.class === 11) {
       return <>
         <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}>მოსწავლის, უნიკალური კოდით {forCard.class}-{forCard.code} შეფასებებია:</p>
-        <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}><i>03.07.2021 <b>მათემატიკა</b></i> {forCard.m}</p> 
-        <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}><i>04.07.2021 <b>ფიზიკა</b></i> {forCard.p}</p> 
+        <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}><i>04.07.2021 <b>მათემატიკა</b></i> {forCard.m}</p> 
+        <p className="test-dates" style={{ textAlign: "start", margin: "0", fontSize: "19px" }}><i>05.07.2021 <b>ფიზიკა</b></i> {forCard.p}</p> 
         <br />
       </>
     }
@@ -104,7 +104,7 @@ const Check = () => {
               <p style={{marginBottom: "5px", marginTop: "5px"}}><strong>გამოცდაზე გამომსვლელი ვალდებულია:</strong></p>
               <ul style={{textAlign: "start", marginBottom: "3px"}}>
                 <li>დროულად გამოცხადდეს  სარეგისტრაციო ბარათით;</li>
-                <li>ჰქონდეს პირბადე, საწერი კალამი, სახაზავი, ფანქარი, საშლელი; </li>
+                <li>ჰქონდეს პირბადე, საწერი კალამი, სახაზავი, ფანქარი, საშლელი;</li>
                 <li>დაიცვას სოციალური დისტანცია.</li>
               </ul>
               <p style={{marginBottom: "5px", marginTop: "5px"}}><strong>გამოცდაზე გამომსვლელს უფლება აქვს:</strong></p>
@@ -118,11 +118,11 @@ const Check = () => {
                 <li>თან ჰქონდეს მობილური ტელეფონი;</li>
                 <li>გამოიყენოს ნებისმიერი საინფორმაციო წყარო;</li>
                 <li>გამოცდის მსვლელობის დროს  ვერბალური და არავერბალური კომუნიკაცია სხვა მონაწილესთან.</li>
-                <li><strong>VII კლასში  გადამსვლელებს  მათემატიკის გამოცდაზე კალკულატორის გამოყენება</strong> <small><i>(დანარჩენ კლასებში კალკულატორის გამოყენება დაშვებულია)</i></small>;</li>
+                <li><strong>VII და VIII გადამსვლელებს  მათემატიკის გამოცდაზე კალკულატორის გამოყენება</strong> <small><i>(დანარჩენ კლასებში კალკულატორის გამოყენება დაშვებულია)</i></small>;</li>
               </ul>
               <p style={{marginBottom: "5px", marginTop: "5px"}}><strong>ნამუშევრის შეფასება და აპელაცია:</strong></p>
               <ul style={{textAlign: "start", marginBottom: "3px"}}>
-                <li>ნამუშევრები გამსწორებლამდე  მიდის კოდირებული ფორმით;</li>
+                <li>ნამუშევრები გამსწორებლამდე მიდის კოდირებული ფორმით;</li>
                 <li>ინფიცირების რისკის შემცირების მიზნით, საგამოცდო რვეულები შეფასებამდე დამუშავდება და განთავსდება ორდღიან კარანტინში.</li>
                 <li>შეფასებები გამოქვეყნდება სკოლის საიტზე  გამოცდიდან 10 კალენდარული დღის განმავლობაში  სარეგისტრაციო ბარათის ნომრის შესაბამისად;</li>
                 <li>სააპელაციო განაცხადის ფორმების შევსება მოხდება სკოლაში შედეგების გამოქვეყნებიდან ორი სამუშაო დღის განმავლობაში.</li>
