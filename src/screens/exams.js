@@ -183,7 +183,7 @@ function Exams() {
                       document.getElementById("ParentLastName").value = "";
                       document.getElementById("oldSchool").value = "";
                       document.getElementById("mobileNumber").value = "";
-                      axios.post('http://smsoffice.ge/api/v2/send/', qs.stringify({
+                      axios.post('https://smsoffice.ge/api/v2/send/', qs.stringify({
                         key: '514f29a0cc3448a79bf32d1ee005bddb',
                         destination: `995${data.mobileNumber}`,
                         sender: `VEKUA`,
@@ -226,7 +226,7 @@ function Exams() {
                       document.getElementById("ParentLastName").value = "";
                       document.getElementById("oldSchool").value = "";
                       document.getElementById("mobileNumber").value = "";
-                      axios.post('http://smsoffice.ge/api/v2/send/', qs.stringify({
+                      axios.post('https://smsoffice.ge/api/v2/send/', qs.stringify({
                         key: '514f29a0cc3448a79bf32d1ee005bddb',
                         destination: `995${data.mobileNumber}`,
                         sender: `VEKUA`,
@@ -275,7 +275,7 @@ function Exams() {
       <DataDisplay/>
       <Container component="main" maxWidth="md">
         <Helmet>
-          <title>მოსწავლის მისაღები გამოცდებისათვის რეგისტრაცია</title>
+          <title>მოსწავლის სარეკომენდაციო წერაზე რეგისტრაცია</title>
         </Helmet>
         <CssBaseline />
         <div className={classes.paper}>
@@ -283,7 +283,7 @@ function Exams() {
             <PersonAddIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            მოსწავლის მისაღები გამოცდებისათვის რეგისტრაცია
+            მოსწავლის სარეკომენდაციო წერაზე რეგისტრაცია
           </Typography>
           <br />
           <form

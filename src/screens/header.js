@@ -276,7 +276,7 @@ function Header({ toggleDark, settoggleDark, props }) {
                         <Link to="/exams">
                             <List>
                                 <ListItem button>
-                                    მისაღები გამოცდები
+                                    სარეკომენდაციო წერა
                                 </ListItem>
                             </List>
                         </Link>
@@ -371,7 +371,7 @@ function Header({ toggleDark, settoggleDark, props }) {
                                 <Link to="/saturday-school" style={aStyle}>საშაბათო სკოლა</Link>
                             </li>
                             <li className="header-link">
-                                <Link to="/exams" style={aStyle}>მისაღები გამოცდები</Link>
+                                <Link to="/exams" style={aStyle}>სარეკომენდაციო წერა</Link>
                             </li>
                             
                             <li className="header-link">
