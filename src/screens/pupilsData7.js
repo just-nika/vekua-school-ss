@@ -261,7 +261,7 @@ export default function PupilsData7() {
   const [type, setType] = React.useState('Commodity');
   const [size, setSize] = React.useState(100);
   const getPupils = async () => {
-    const data = await firestore.collection("7").get();
+    const data = await firestore.collection("7").where("idNumber", "!=", "").get();
     console.log(data);
     setPupils(data.docs.map(doc => ({
         ...doc.data(),
@@ -271,11 +271,11 @@ export default function PupilsData7() {
 }
   
 const columns = [
-  { 
-      field: "id", 
-      headerName: "ბაზის ID/Base ID", 
-      width: 200 
-  },
+  // { 
+  //     field: "id", 
+  //     headerName: "ბაზის ID/Base ID", 
+  //     width: 200 
+  // },
   { 
       field: "lastName", 
       headerName: "გვარი/Last Name", 
@@ -291,51 +291,61 @@ const columns = [
       headerName: "პირადი ნომერი/Personal Number", 
       width: 300 
   },
-  {
-      field: "class",
-      headerName: "კლასი/Class",
-      width: 175,
-  },
+  // {
+  //     field: "class",
+  //     headerName: "კლასი/Class",
+  //     width: 175,
+  // },
   {
       field: "code",
       headerName: "უნიკალური კოდი/Unique Code",
       width: 300,
   },
   {
-      field: "ParentFirstName",
-      headerName: "მშობლის სახელი/Parent First Name",
-      width: 310,
-  },
-  {
-      field: "ParentLastName",
-      headerName: "მშობლის გვარი/Parent Last Name",
+      field: "m",
+      headerName: "მათემატიკის შეფასება/Mathematics Grade",
       width: 300,
   },
-  {
-      field: "mobileNumber",
-      headerName: "მშობლის ტელეფონის ნომერი/Parent Mobile Number",
-      width: 430,
-  },
-  {
-      field: "oldSchool",
-      headerName: "სკოლა საიდანაც გადმოდის/Active School",
-      width: 350,
-  },
-  {
-      field: "language",
-      headerName: "მეორე უცხო ენა/Second Language",
-      width: 330,
-  },
-  {
-      field: "imgUrl",
-      headerName: "მოსწავლის ფოტო/Pupil Photo",
-      width: 290,
-  },
-  {
-      field: "fileUrl",
-      headerName: "სკოლის საბუთი/Pupil File",
-      width: 250,
-  },
+  // {
+  //     field: "p",
+  //     headerName: "ფიზიკის შეფასება/Physics Grade",
+  //     width: 300,
+  // },
+  // {
+  //     field: "ParentFirstName",
+  //     headerName: "მშობლის სახელი/Parent First Name",
+  //     width: 310,
+  // },
+  // {
+  //     field: "ParentLastName",
+  //     headerName: "მშობლის გვარი/Parent Last Name",
+  //     width: 300,
+  // },
+  // {
+  //     field: "mobileNumber",
+  //     headerName: "მშობლის ტელეფონის ნომერი/Parent Mobile Number",
+  //     width: 430,
+  // },
+  // {
+  //     field: "oldSchool",
+  //     headerName: "სკოლა საიდანაც გადმოდის/Active School",
+  //     width: 350,
+  // },
+  // {
+  //     field: "language",
+  //     headerName: "მეორე უცხო ენა/Second Language",
+  //     width: 330,
+  // },
+  // {
+  //     field: "imgUrl",
+  //     headerName: "მოსწავლის ფოტო/Pupil Photo",
+  //     width: 290,
+  // },
+  // {
+  //     field: "fileUrl",
+  //     headerName: "სკოლის საბუთი/Pupil File",
+  //     width: 250,
+  // },
 ];
     const { loading, data, setRowLength, loadNewData } = useDemoData({
         dataSet: type,

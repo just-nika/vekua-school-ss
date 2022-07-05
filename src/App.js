@@ -43,15 +43,18 @@ function App() {
     function Load() {
       setLoading(false)
     }
+    // return (
+    //   pageLoading ? 
+    //     <> 
+    //       <Loading />
+    //     </>
+    //       :
+    //     <>
+    //       <Main />
+    //     </>
+    // )
     return (
-      pageLoading ? 
-        <> 
-          <Loading />
-        </>
-          :
-        <>
-          <Main />
-        </>
+      <Main />
     )
 }
 

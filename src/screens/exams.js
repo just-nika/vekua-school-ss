@@ -127,19 +127,18 @@ function Exams() {
     };
   }, []);
   const addPupil = async (data) => {
-    console.log(data.file[0].size);
-    console.log(data);
+    setLoading(true);
+    setSuccess(false);
     CheckPupil(data.idRequired).then((response) => {
       if (response.status) {
+        setLoading(false);
         return swal(
           "მოსწავლე უკვე რეგისტრირებულია!",
           "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.",
           "error"
         );
-      } else {
+      }else {
         if (!loading) {
-          setSuccess(false);
-          setLoading(true);
           if ((data.file[0].size / 1048576) <= 5) {
             if ((data.img[0].size / 1048576) <= 3) {
               firestore
@@ -147,19 +146,27 @@ function Exams() {
               .get()
               .then(async function (querySnapshot) {
                 const code = querySnapshot.size;
-                const storageRef = storage.ref();
-                const fileRef = storageRef.child(`FILE_${data.idRequired}`);
-                await fileRef.put(data.file[0]);
-                
-                const imageRef = storageRef.child(`IMAGE_${data.idRequired}`);
-                await imageRef.put(data.img[0]);
-                
-                const imgUrl = await imageRef.getDownloadURL();
-                const fileUrl = await fileRef.getDownloadURL();
-                if (data.class == '7') {
-                  const uniqueCode = 399 + code;
-                  const text = `მოგესალმებით, მოსწავლე ${data.firstName} ${data.lastName} წარმატებით დარეგისტრირდა N42 საჯარო სკოლის სარეკომენდაციო წერაზე. მისი უნიკალური კოდია ${data.class}-${uniqueCode}. სარეგისტრაციო ბარათის გარეშე მოსწავლე წერაზე არ დაიშვება. მისი ჩამოტვირთვა შეგიძლიათ ლინკიდან: https://vekua42.edu.ge/check მოსწავლის პირადი ნომრის მითითებით. გისურვებთ წარმატებებს!`
-                  firestore
+                if (code == 0) {
+                  setLoading(false);
+                  return swal(
+                    "წარუმატებელი რეგისტრაცია",
+                    "თქვენი რეგისტრაცია ვერ განხორციელდა, გთხოვთ შეამოწმოთ ინტერნეტის კავშირი.",
+                    "warning"
+                  );
+                }else {
+                  const storageRef = storage.ref();
+                  const fileRef = storageRef.child(`FILE_${data.idRequired}`);
+                  await fileRef.put(data.file[0]);
+                  
+                  const imageRef = storageRef.child(`IMAGE_${data.idRequired}`);
+                  await imageRef.put(data.img[0]);
+                  
+                  const imgUrl = await imageRef.getDownloadURL();
+                  const fileUrl = await fileRef.getDownloadURL();
+                  if (data.class == '7') {
+                    const uniqueCode = 399 + code;
+                    const text = `მოგესალმებით, მოსწავლე ${data.firstName} ${data.lastName} წარმატებით დარეგისტრირდა N42 საჯარო სკოლის სარეკომენდაციო წერაზე. მისი უნიკალური კოდია ${data.class}-${uniqueCode}. სარეგისტრაციო ბარათის გარეშე მოსწავლე წერაზე არ დაიშვება. მისი ჩამოტვირთვა შეგიძლიათ ლინკიდან: https://vekua42.edu.ge/check მოსწავლის პირადი ნომრის მითითებით. გისურვებთ წარმატებებს!`
+                    firestore
                     .collection(`${data.class}`)
                     .add({
                       code: uniqueCode,
@@ -198,11 +205,11 @@ function Exams() {
                       setSuccess(true);
                       setLoading(false);
                     });
-                }
-                else if (data.class == '8' || data.class == '9' || data.class == '10' || data.class == '11') {
-                  const uniqueCode = 99 + code;
-                  const text = `მოგესალმებით, მოსწავლე ${data.firstName} ${data.lastName} წარმატებით დარეგისტრირდა N42 საჯარო სკოლის სარეკომენდაციო წერაზე. მისი უნიკალური კოდია ${data.class}-${uniqueCode}. სარეგისტრაციო ბარათის გარეშე მოსწავლე წერაზე არ დაიშვება. მისი ჩამოტვირთვა შეგიძლიათ ლინკიდან: https://vekua42.edu.ge/check მოსწავლის პირადი ნომრის მითითებით. გისურვებთ წარმატებებს!`
-                  firestore
+                  }
+                  else if (data.class == '8' || data.class == '9' || data.class == '10' || data.class == '11') {
+                    const uniqueCode = 99 + code;
+                    const text = `მოგესალმებით, მოსწავლე ${data.firstName} ${data.lastName} წარმატებით დარეგისტრირდა N42 საჯარო სკოლის სარეკომენდაციო წერაზე. მისი უნიკალური კოდია ${data.class}-${uniqueCode}. სარეგისტრაციო ბარათის გარეშე მოსწავლე წერაზე არ დაიშვება. მისი ჩამოტვირთვა შეგიძლიათ ლინკიდან: https://vekua42.edu.ge/check მოსწავლის პირადი ნომრის მითითებით. გისურვებთ წარმატებებს!`
+                    firestore
                     .collection(`${data.class}`)
                     .add({
                       code: uniqueCode,
@@ -241,6 +248,7 @@ function Exams() {
                       setSuccess(true);
                       setLoading(false);
                     });
+                  }
                 }
               });
             }else {

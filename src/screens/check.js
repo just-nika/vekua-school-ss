@@ -58,14 +58,14 @@ const Check = () => {
   function DatesA() {
     if (forCard.class === 7) {
       return <>
-        <p className="test-dates" style={{ textAlign: "start", margin: "0" }}><i><b>მათემატიკა</b></i> სარეკომენდაციო გამოცდის თარიღი: <b>02.07.2021 წ.</b></p> 
+        <p className="test-dates" style={{ textAlign: "start", margin: "0" }}><i><b>მათემატიკა</b></i> სარეკომენდაციო გამოცდის თარიღი: <b>02.07.2022 წ.</b></p> 
         <p className="test-dates" style={{ textAlign: "start", margin: "0" }}>სარეკომენდაციო გამოცდის დაწყების დრო: <b>09:00 სთ.</b> <small>მოსწავლე უნდა გამოცხადდეს გამოცდის დაწყებამდე ნახევარი საათით ადრე!</small> </p>
         <br />
       </>
     }else if (forCard.class === 8 || forCard.class === 9 || forCard.class === 10 || forCard.class === 11) {
       return <>
-        <p className="test-dates" style={{ textAlign: "start", margin: "0" }}><i>04.07.2021 <b>მათემატიკა</b></i> {forCard.m}</p> 
-        <p className="test-dates" style={{ textAlign: "start", margin: "0" }}><i>05.07.2021 <b>ფიზიკა</b></i> {forCard.p}</p> 
+        <p className="test-dates" style={{ textAlign: "start", margin: "0" }}><i>04.07.2022 <b>მათემატიკა</b></i> {forCard.m}</p> 
+        <p className="test-dates" style={{ textAlign: "start", margin: "0" }}><i>05.07.2022 <b>ფიზიკა</b></i> {forCard.p}</p> 
         <p className="test-dates" style={{ textAlign: "start", margin: "0" }}>სარეკომენდაციო გამოცდის დაწყების დრო: <b>09:00 სთ.</b> <small>მოსწავლე უნდა გამოცხადდეს გამოცდის დაწყებამდე ნახევარი საათით ადრე!</small> </p>
         <br />
       </>

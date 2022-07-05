@@ -41,6 +41,8 @@ import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import DeletedRoute from './deletedRoute'
 import Exams from './exams'
 import Check from './check'
+import CheckGrade from './CheckGrade';
+import AddGrade from './AddGrade'
 
 function ScrollTop(props) {
       const useStyles = makeStyles((theme) => ({
@@ -443,7 +445,10 @@ function Header({ toggleDark, settoggleDark, props }) {
                         <Login toggleDark={toggleDark} />
                     </Route>
                     <Route path="/exams">
-                        <Exams toggleDark={toggleDark} />
+                        <CheckGrade toggleDark={toggleDark} />
+                    </Route>
+                    <Route path="/add-grade">
+                        <AddGrade toggleDark={toggleDark} />
                     </Route>
                     <Route path="/check">
                         <Check toggleDark={toggleDark} />
@@ -510,6 +515,29 @@ function Header({ toggleDark, settoggleDark, props }) {
             </center>
             <br />
             <p><b>გვერდი {pageNumber}/{numPages}</b></p>
+        </>
+    }
+    function Examss() {
+        return <>
+        <Exams/>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <h1>სარეკომენდაციო წერაზე რეგისტრაცია დასრულებულია!</h1>
+            <br />
+            <h2>სარეგისტრაციო ბარათის დასაბეჭდად მიჰყევით ბმულს: <a href="/check">რეგისტრაციის სისწორე</a>.</h2>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
         </>
     }
 }
