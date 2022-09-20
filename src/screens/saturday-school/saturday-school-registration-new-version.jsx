@@ -150,66 +150,51 @@ export default function SaturdaySchoolRegistrationNewVersion() {
 
       }else {
         if (!loading) {
-          firestore.collection("projects").get().then(async function (querySnapshot) {
-            const code = querySnapshot.size;
-            if (code == 0) {
-              setLoading(false);
-              localStorage.removeItem("StudentFirstName")
-              localStorage.removeItem("StudentLastName")
-              localStorage.removeItem("StudentPersonalNumber")
-              localStorage.removeItem("LawName")
-              localStorage.removeItem("LawLastName")
-              localStorage.removeItem("LawId")
-              localStorage.removeItem("LawMobileNumber")
-              localStorage.removeItem("LawAddress")
-              localStorage.removeItem("StudentClass")
-              localStorage.removeItem("subject")
-              localStorage.removeItem("TeacherName")
-              localStorage.removeItem("TeacherTime")
-              return swal(
-                "წარუმატებელი რეგისტრაცია",
-                "თქვენი მონაცემების დამუშავება ვერ მოხერხდა, გთხოვთ შეამოწმოთ ინტერნეტის კავშირი.",
-                "warning"
-              );
-            }else {
-              firestore.collection("saturday-school").where("group", "==", `${localStorage.getItem("group")}`).get().then(async function (querySnapshot) {
-                const code = querySnapshot.size;
-                if (code >= 25) {
-                  localStorage.removeItem("StudentFirstName")
-                  localStorage.removeItem("StudentLastName")
-                  localStorage.removeItem("StudentPersonalNumber")
-                  localStorage.removeItem("LawName")
-                  localStorage.removeItem("LawLastName")
-                  localStorage.removeItem("LawId")
-                  localStorage.removeItem("LawMobileNumber")
-                  localStorage.removeItem("LawAddress")
-                  localStorage.removeItem("StudentClass")
-                  localStorage.removeItem("subject")
-                  localStorage.removeItem("TeacherName")
-                  localStorage.removeItem("TeacherTime")
-                  return swal(
-                    "ამ ჯგუფში რეგისტრაცია ვერ განხორციელდა!",
-                    "მოსწავლე ამ ჯგუფში ვერ დარეგისტრირდება ადგილების არ ქონის გამო.",
-                    "error"
-                    );
-                }else {
-                  firestore.collection(`saturday-school`).add({
-                    StudentFirstName: `${localStorage.getItem("StudentFirstName")}`,
-                    StudentLastName: `${localStorage.getItem("StudentLastName")}`,
-                    StudentPersonalNumber: `${localStorage.getItem("StudentPersonalNumber")}`,
-                    LawName: `${localStorage.getItem("LawName")}`,
-                    LawLastName: `${localStorage.getItem("LawLastName")}`,
-                    LawId: `${localStorage.getItem("LawId")}`,
-                    LawMobileNumber: `${localStorage.getItem("LawMobileNumber")}`,
-                    LawAddress: `${localStorage.getItem("LawAddress")}`,
-                    StudentClass: `${localStorage.getItem("StudentClass")}`,
-                    subject: `${localStorage.getItem("subject")}`,
-                    TeacherName: `${localStorage.getItem("TeacherName")}`,
-                    TeacherTime: `${localStorage.getItem("TeacherTime")}`,
-                    group: `${localStorage.getItem("TeacherName")} - ${localStorage.getItem("TeacherTime")}`,
-                  })
-                  .then(() => {
-                    firestore.collection(`${localStorage.getItem("subject")}`).add({
+          if (localStorage.getItem("TeacherName") && localStorage.getItem("TeacherTime")) {
+            firestore.collection("projects").get().then(async function (querySnapshot) {
+              const code = querySnapshot.size;
+              if (code == 0) {
+                setLoading(false);
+                localStorage.removeItem("StudentFirstName")
+                localStorage.removeItem("StudentLastName")
+                localStorage.removeItem("StudentPersonalNumber")
+                localStorage.removeItem("LawName")
+                localStorage.removeItem("LawLastName")
+                localStorage.removeItem("LawId")
+                localStorage.removeItem("LawMobileNumber")
+                localStorage.removeItem("LawAddress")
+                localStorage.removeItem("StudentClass")
+                localStorage.removeItem("subject")
+                localStorage.removeItem("TeacherName")
+                localStorage.removeItem("TeacherTime")
+                return swal(
+                  "წარუმატებელი რეგისტრაცია",
+                  "თქვენი მონაცემების დამუშავება ვერ მოხერხდა, გთხოვთ შეამოწმოთ ინტერნეტის კავშირი.",
+                  "warning"
+                );
+              }else {
+                firestore.collection("saturday-school").where("group", "==", `${localStorage.getItem("group")}`).get().then(async function (querySnapshot) {
+                  const code = querySnapshot.size;
+                  if (code >= 25) {
+                    localStorage.removeItem("StudentFirstName")
+                    localStorage.removeItem("StudentLastName")
+                    localStorage.removeItem("StudentPersonalNumber")
+                    localStorage.removeItem("LawName")
+                    localStorage.removeItem("LawLastName")
+                    localStorage.removeItem("LawId")
+                    localStorage.removeItem("LawMobileNumber")
+                    localStorage.removeItem("LawAddress")
+                    localStorage.removeItem("StudentClass")
+                    localStorage.removeItem("subject")
+                    localStorage.removeItem("TeacherName")
+                    localStorage.removeItem("TeacherTime")
+                    return swal(
+                      "ამ ჯგუფში რეგისტრაცია ვერ განხორციელდა!",
+                      "მოსწავლე ამ ჯგუფში ვერ დარეგისტრირდება ადგილების არ ქონის გამო.",
+                      "error"
+                      );
+                  }else {
+                    firestore.collection(`saturday-school`).add({
                       StudentFirstName: `${localStorage.getItem("StudentFirstName")}`,
                       StudentLastName: `${localStorage.getItem("StudentLastName")}`,
                       StudentPersonalNumber: `${localStorage.getItem("StudentPersonalNumber")}`,
@@ -225,34 +210,58 @@ export default function SaturdaySchoolRegistrationNewVersion() {
                       group: `${localStorage.getItem("TeacherName")} - ${localStorage.getItem("TeacherTime")}`,
                     })
                     .then(() => {
-                      const text = `მოგესალმებით, ${localStorage.getItem("StudentFirstName")} ${localStorage.getItem("StudentLastName")} წარმატებით დარეგისტრირდა სსიპ აკადემიკოს ილია ვეკუას სახელობის ფიზიკა-მათემატიკის ქალაქ თბილისის N 42 საჯარო სკოლის საშაბათო სკოლაში. საგანი - ${localStorage.getItem("subject")}, მასწავლებელი - ${localStorage.getItem("TeacherName")} - ${localStorage.getItem("TeacherTime")}. გისურვებთ წარმატებებს!`;
-                      axios.post('https://smsoffice.ge/api/v2/send/', qs.stringify({
-                        key: '514f29a0cc3448a79bf32d1ee005bddb',
-                        destination: `995${localStorage.getItem("LawMobileNumber")}`,
-                        sender: `VEKUA`,
-                        content: `${text}`,
-                        urgent: true
-                      }))
-                      localStorage.removeItem("StudentFirstName")
-                      localStorage.removeItem("StudentLastName")
-                      localStorage.removeItem("StudentPersonalNumber")
-                      localStorage.removeItem("LawName")
-                      localStorage.removeItem("LawLastName")
-                      localStorage.removeItem("LawId")
-                      localStorage.removeItem("LawMobileNumber")
-                      localStorage.removeItem("LawAddress")
-                      localStorage.removeItem("StudentClass")
-                      localStorage.removeItem("subject")
-                      localStorage.removeItem("TeacherName")
-                      localStorage.removeItem("TeacherTime")
-                      setLoading(false);
-                      setSuccess(true);
+                      firestore.collection(`${localStorage.getItem("subject")}`).add({
+                        StudentFirstName: `${localStorage.getItem("StudentFirstName")}`,
+                        StudentLastName: `${localStorage.getItem("StudentLastName")}`,
+                        StudentPersonalNumber: `${localStorage.getItem("StudentPersonalNumber")}`,
+                        LawName: `${localStorage.getItem("LawName")}`,
+                        LawLastName: `${localStorage.getItem("LawLastName")}`,
+                        LawId: `${localStorage.getItem("LawId")}`,
+                        LawMobileNumber: `${localStorage.getItem("LawMobileNumber")}`,
+                        LawAddress: `${localStorage.getItem("LawAddress")}`,
+                        StudentClass: `${localStorage.getItem("StudentClass")}`,
+                        subject: `${localStorage.getItem("subject")}`,
+                        TeacherName: `${localStorage.getItem("TeacherName")}`,
+                        TeacherTime: `${localStorage.getItem("TeacherTime")}`,
+                        group: `${localStorage.getItem("TeacherName")} - ${localStorage.getItem("TeacherTime")}`,
+                      })
+                      .then(() => {
+                        const text = `მოგესალმებით, ${localStorage.getItem("StudentFirstName")} ${localStorage.getItem("StudentLastName")} წარმატებით დარეგისტრირდა სსიპ აკადემიკოს ილია ვეკუას სახელობის ფიზიკა-მათემატიკის ქალაქ თბილისის N 42 საჯარო სკოლის საშაბათო სკოლაში. საგანი - ${localStorage.getItem("subject")}, მასწავლებელი - ${localStorage.getItem("TeacherName")} - ${localStorage.getItem("TeacherTime")}. გისურვებთ წარმატებებს!`;
+                        axios.post('https://smsoffice.ge/api/v2/send/', qs.stringify({
+                          key: '514f29a0cc3448a79bf32d1ee005bddb',
+                          destination: `995${localStorage.getItem("LawMobileNumber")}`,
+                          sender: `VEKUA`,
+                          content: `${text}`,
+                          urgent: true
+                        }))
+                        setActiveStep(activeStep + 1)
+                        localStorage.removeItem("StudentFirstName")
+                        localStorage.removeItem("StudentLastName")
+                        localStorage.removeItem("StudentPersonalNumber")
+                        localStorage.removeItem("LawName")
+                        localStorage.removeItem("LawLastName")
+                        localStorage.removeItem("LawId")
+                        localStorage.removeItem("LawMobileNumber")
+                        localStorage.removeItem("LawAddress")
+                        localStorage.removeItem("StudentClass")
+                        localStorage.removeItem("subject")
+                        localStorage.removeItem("TeacherName")
+                        localStorage.removeItem("TeacherTime")
+                        setLoading(false);
+                        setSuccess(true);
+                      })
                     })
-                  })
-                }
-              });
-            }
-          });
+                  }
+                });
+              }
+            });
+          }else {
+            return swal(
+              "წარუმატებელი რეგისტრაცია!",
+              "გთხოვთ შეავსოთ მასწავლებლის ინფორმაცია და სცადოთ თავიდან",
+              "warning"
+            );
+          }
         }
       }
     });
