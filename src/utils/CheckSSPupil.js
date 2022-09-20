@@ -1,8 +1,8 @@
-import { secondaryApp } from '../firebase/firebase.config';
+import { firestore } from '../firebase/firebase.config';
 
-function CheckPupil(personalNumber, item) {
+function CheckPupil(personalNumber) {
     let promise = new Promise((res, rej) => {
-      secondaryApp.firestore().collection(`${item}`).where("idNumber", "==", `${personalNumber}`).get()
+      firestore.collection(`${localStorage.getItem("subject")}`).where("StudentId", "==", `${personalNumber}`).get()
       .then((querySnapshot) => {
         if(querySnapshot.empty){
           res({

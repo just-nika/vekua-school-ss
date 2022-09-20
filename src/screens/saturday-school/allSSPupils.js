@@ -11,7 +11,7 @@ import Select from '@material-ui/core/Select';
 import FormGroup from '@material-ui/core/FormGroup';
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
-import { secondaryApp } from '../firebase/firebase.config';
+import { secondaryApp } from '../../firebase/firebase.config';
 import { Helmet } from "react-helmet";
 
 const defaultTheme = createTheme();

@@ -6,8 +6,8 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Helmet } from "react-helmet";
-import Registration from './saturday-school-registration';
-import { firebase } from '../firebase/firebase.config'
+// import Registration from './saturday-school-registration';
+import { firebase } from '../../firebase/firebase.config'
 import { Link, Router } from 'react-router-dom';
 import Check from './checkClasses';
 import PropTypes from 'prop-types';
@@ -16,6 +16,7 @@ import Button from '@material-ui/core/Button';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 import AllSSPupils from './allSSPupils'
+import SaturdaySchoolRegistrationNewVersion from './saturday-school-registration-new-version';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -194,7 +195,8 @@ function SaturdaySchool() {
             </div>
             <br />
             <br />
-            <h1>2022-2023 სასწავლო წელს საშაბათო სკოლაში ონლაინ რეგისტრაცია დაიწყება 2022 წლის 20 სექტემბრიდან!</h1>
+            {/* <h1>2022-2023 სასწავლო წელს საშაბათო სკოლაში ონლაინ რეგისტრაცია დაიწყება 2022 წლის 21 სექტემბერს 10 საათიდან!</h1> */}
+            <SaturdaySchoolRegistrationNewVersion/>
             <br />
             <br />
         </div>

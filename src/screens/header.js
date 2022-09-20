@@ -24,7 +24,7 @@ import { BrowserRouter as Router, Switch, Route, Link, BrowserRouter } from "rea
 import Button from '@material-ui/core/Button';
 import NewsRoute from './newsRoute';
 import ProjectsRoute from './projectsRoute';
-import SaturdaySchool from './saturday-school';
+import SaturdaySchool from './saturday-school/saturday-school';
 import SwitchM from "@material-ui/core/Switch";
 import Messages from './messages';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';

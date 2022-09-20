@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import Container from "@material-ui/core/Container";
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { secondaryApp } from '../firebase/firebase.config'
 import { useForm } from "react-hook-form";
+import Grid from '@material-ui/core/Grid';
+import Container from "@material-ui/core/Container";
+import { secondaryApp } from '../firebase/firebase.config'
 import swal from "sweetalert";
 import CheckPupil from '../utils/CheckSSPupil';
 import LinearProgress from '@material-ui/core/LinearProgress';

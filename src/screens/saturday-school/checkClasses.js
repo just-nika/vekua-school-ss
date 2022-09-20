@@ -8,10 +8,10 @@ import Container from "@material-ui/core/Container";
 import Avatar from "@material-ui/core/Avatar";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useForm } from "react-hook-form";
-import CheckPupil from "../utils/CheckPupil";
+import CheckPupil from "../../utils/CheckPupil";
 import swal from "sweetalert";
 import { useReactToPrint } from 'react-to-print';
-import { secondaryApp } from "../firebase/firebase.config";
+import { secondaryApp } from "../../firebase/firebase.config";
 import PropTypes from 'prop-types';
 // import { XGrid, GridToolbar } from '@material-ui/x-grid';
 import { DataGridPro, GridToolbar } from '@mui/x-data-grid-pro';
@@ -23,7 +23,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import FullFeaturedDemo from './data.js'
+import FullFeaturedDemo from '../data.js'
 
 const Check = () => {
   const [forCard, setPupilCard] = useState(null);
