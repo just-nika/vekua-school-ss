@@ -142,6 +142,8 @@ export default function SaturdaySchoolRegistrationNewVersion() {
         localStorage.removeItem("subject")
         localStorage.removeItem("TeacherName")
         localStorage.removeItem("TeacherTime")
+        localStorage.removeItem("StudentEmail")
+        localStorage.removeItem("LawEmail")
         return swal(
           "მოსწავლე უკვე რეგისტრირებულია!",
           "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია ამ საგანზე, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.",
@@ -167,6 +169,8 @@ export default function SaturdaySchoolRegistrationNewVersion() {
                 localStorage.removeItem("subject")
                 localStorage.removeItem("TeacherName")
                 localStorage.removeItem("TeacherTime")
+                localStorage.removeItem("StudentEmail")
+                localStorage.removeItem("LawEmail")
                 return swal(
                   "წარუმატებელი რეგისტრაცია",
                   "თქვენი მონაცემების დამუშავება ვერ მოხერხდა, გთხოვთ შეამოწმოთ ინტერნეტის კავშირი.",
@@ -189,7 +193,7 @@ export default function SaturdaySchoolRegistrationNewVersion() {
                     localStorage.removeItem("TeacherName")
                     localStorage.removeItem("TeacherTime")
                     localStorage.removeItem("StudentEmail")
-                    localStorage.removeItem("TeacherTime")
+                    localStorage.removeItem("LawEmail")
                     return swal(
                       "ამ ჯგუფში რეგისტრაცია ვერ განხორციელდა!",
                       "მოსწავლე ამ ჯგუფში ვერ დარეგისტრირდება ადგილების არ ქონის გამო.",
@@ -253,6 +257,8 @@ export default function SaturdaySchoolRegistrationNewVersion() {
                         localStorage.removeItem("subject")
                         localStorage.removeItem("TeacherName")
                         localStorage.removeItem("TeacherTime")
+                        localStorage.removeItem("StudentEmail")
+                        localStorage.removeItem("LawEmail")
                         setLoading(false);
                         setSuccess(true);
                       })
