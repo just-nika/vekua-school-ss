@@ -56,7 +56,7 @@ export default function TeacherInfo() {
   const HandleCh = (event) => {
     setSubject(event.target.value);
     localStorage.setItem("TeacherName", event.target.value)
-    CheckPupil(localStorage.getItem("StudentPersonalNumber")).then((response) => {
+    CheckPupil(localStorage.getItem("StudentPersonalNumber")).then(async (response) => {
       if (response.status) {
         setLoading(false);
         return swal(
@@ -76,19 +76,26 @@ export default function TeacherInfo() {
                 "warning"
               );
             }else {
-              const data = await firestore.collection("saturday-school").where("teacher_name", "==", `${localStorage.getItem("TeacherName")}`).get()
-              setStudents(data.docs.map(doc => ({
-                ...doc.data(),
-                id: doc.id
-              })))
+              setLoading(false)
+              return
             }
           });
         }
       }
     });
   };
+
+  const GetStudentData = async () => {
+    const data = await firestore.collection("saturday-school").where("StudentClass", "==", `${localStorage.getItem("StudentClass")}`).get()
+    setStudents(data.docs.map(doc => ({
+      ...doc.data(),
+      id: doc.id
+    })))
+  }
+
   React.useEffect(() => {
-    setStudentClass(localStorage.getItem("StudentClass"));
+    // setStudentClass(localStorage.getItem("StudentClass"));
+    GetStudentData();
   }, [])
   const TeacherAndTime = async (data) => {
     // setLoading(true);
@@ -159,16 +166,16 @@ export default function TeacherInfo() {
     }else if (localStorage.getItem("StudentClass") == 6) {
       return <>
         <Select {...register("teacher", { required: true })} error={errors.teacher} id="teacher" name="teacher" value={localStorage.getItem("TeacherName")} onChange={HandleCh} style={{textAlign: "start"}}>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("subject") == "ფიზიკა"} value='ნუგზარ მახათაძე'>ნუგზარ მახათაძე</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("subject") == "ფიზიკა"} value='ნონა ქუშაშვილი'>ნონა ქუშაშვილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("subject") == "ფიზიკა"} value='გურამ სიხარულიძე'>გურამ სიხარულიძე</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("subject") == "ფიზიკა"} value='მედეია გურგენაძე'>მედეია გურგენაძე</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("subject") == "ფიზიკა"} value='მაია თევდორაშვილი'>მაია თევდორაშვილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("subject") == "ფიზიკა"} value='ნანა მეტრეველი'>ნანა მეტრეველი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("subject") == "ფიზიკა"} value='ალექსანდრე ნემსაძე'>ალექსანდრე ნემსაძე</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("subject") == "ფიზიკა"} value='კოტე კუპატაძე'>კოტე კუპატაძე</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("subject") == "ფიზიკა"} value='ეკა ონაშვილი'>ეკა ონაშვილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("subject") == "წერისა და კითხვის სტრატეგიები"} value='ქეთი იოსელიანი'>ქეთი იოსელიანი</MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("subject") != "მათემატიკა"} value='ნუგზარ მახათაძე'>ნუგზარ მახათაძე</MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("subject") != "მათემატიკა"} value='ნონა ქუშაშვილი'>ნონა ქუშაშვილი</MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("subject") != "მათემატიკა"} value='გურამ სიხარულიძე'>გურამ სიხარულიძე</MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("subject") != "მათემატიკა"} value='მედეია გურგენაძე'>მედეია გურგენაძე</MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("subject") != "მათემატიკა"} value='მაია თევდორაშვილი'>მაია თევდორაშვილი</MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("subject") != "მათემატიკა"} value='ნანა მეტრეველი'>ნანა მეტრეველი</MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("subject") != "მათემატიკა"} value='ალექსანდრე ნემსაძე'>ალექსანდრე ნემსაძე</MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("subject") != "მათემატიკა"} value='კოტე კუპატაძე'>კოტე კუპატაძე</MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("subject") != "მათემატიკა"} value='ეკა ონაშვილი'>ეკა ონაშვილი</MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("subject") != "წერისა და კითხვის სტრატეგიები"} value='ქეთი იოსელიანი'>ქეთი იოსელიანი</MenuItem>
         </Select>
       </>
     }else if (localStorage.getItem("StudentClass") == 7) {
@@ -232,8 +239,14 @@ const SetTeacherGroup = () => {
     const group_2 = students.filter((student) => {return student.group.includes('ალექსანდრე ნემსაძე - 13:00')}).map((student, index) => {console.log(student)})
     return <>
       <Select {...register("teachers", { required: true })} error={errors.teachers} id="teachers" name="teachers" value={localStorage.getItem("TeacherTime")} onChange={getTime} style={{textAlign: "start"}}>
-        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "მაია თევდორაშვილი"} disabled={(25 - group_1.length) <= 0} value='14:15'>14:15 - {25 - group_1.length} ადგილი</MenuItem>
-        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ალექსანდრე ნემსაძე"} disabled={(25 - group_2.length) <= 0} value='13:00'>13:00 - {25 - group_2.length} ადგილი</MenuItem>
+        <MenuItem disabled>
+            <em>მაია თევდორაშვილი - 14:15 ({25 - group_1.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "მაია თევდორაშვილი"} disabled={(25 - group_1.length) <= 0} value='14:15'>14:15</MenuItem>
+        <MenuItem disabled>
+            <em>ალექსანდრე ნემსაძე - 13:00 ({25 - group_2.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ალექსანდრე ნემსაძე"} disabled={(25 - group_2.length) <= 0} value='13:00'>13:00</MenuItem>
       </Select>
     </>
   }else if (localStorage.getItem("StudentClass") == 4) {
@@ -243,10 +256,22 @@ const SetTeacherGroup = () => {
     const group_4 = students.filter((student) => {return student.group.includes('ეკა ონაშვილი - 09:00')}).map((student, index) => {console.log(student)})
     return <>
       <Select {...register("teachers", { required: true })} error={errors.teachers} id="teachers" name="teachers" value={localStorage.getItem("TeacherTime")} onChange={getTime} style={{textAlign: "start"}}>
-        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "მაია თევდორაშვილი"} disabled={(25 - group_1.length) <= 0} value='12:45'>12:45 - {25 - group_1.length} ადგილი</MenuItem>
-        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ალექსანდრე ნემსაძე"} disabled={(25 - group_2.length) <= 0} value='14:30'>14:30 - {25 - group_2.length} ადგილი</MenuItem>
-        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "კოტე კუპატაძე"} disabled={(25 - group_3.length) <= 0} value='10:45'>10:45 - {25 - group_3.length} ადგილი</MenuItem>
-        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ეკა ონაშვილი"} disabled={(25 - group_4.length) <= 0} value='09:00'>09:00 - {25 - group_4.length} ადგილი</MenuItem>
+        <MenuItem disabled>
+            <em>მაია თევდორაშვილი - 12:45 ({25 - group_1.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "მაია თევდორაშვილი"} disabled={(25 - group_1.length) <= 0} value='12:45'>12:45</MenuItem>
+        <MenuItem disabled>
+            <em>ალექსანდრე ნემსაძე - 14:30 ({25 - group_2.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ალექსანდრე ნემსაძე"} disabled={(25 - group_2.length) <= 0} value='14:30'>14:30</MenuItem>
+        <MenuItem disabled>
+            <em>კოტე კუპატაძე - 10:45 ({25 - group_3.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "კოტე კუპატაძე"} disabled={(25 - group_3.length) <= 0} value='10:45'>10:45</MenuItem>
+        <MenuItem disabled>
+            <em>ეკა ონაშვილი - 09:00 ({25 - group_4.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ეკა ონაშვილი"} disabled={(25 - group_4.length) <= 0} value='09:00'>09:00</MenuItem>
       </Select>
     </>
   }else if (localStorage.getItem("StudentClass") == 5) {
@@ -261,15 +286,38 @@ const SetTeacherGroup = () => {
     const group_9 = students.filter((student) => {return student.group.includes('ეკა ონაშვილი - 11:00')}).map((student, index) => {console.log(student)})
     return <>
       <Select {...register("teachers", { required: true })} error={errors.teachers} id="teachers" name="teachers" value={localStorage.getItem("TeacherTime")} onChange={getTime} style={{textAlign: "start"}}>
-        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნუგზარ მახათაძე"} disabled={(25 - group_1.length) <= 0} value='14:15'>14:15 - {25 - group_1.length} ადგილი</MenuItem>
-        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნონა ქუშაშვილი"} disabled={(25 - group_2.length) <= 0} value='10:30'>10:30 - {25 - group_2.length} ადგილი</MenuItem>
-        {/* <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნონა ქუშაშვილი"} disabled={(25 - group_3.length) <= 0} value='14:00'>14:00 - {25 - group_3.length} ადგილი</MenuItem> */}
-        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "მაია თევდორაშვილი"} disabled={(25 - group_4.length) <= 0} value='10:45'>10:45 - {25 - group_4.length} ადგილი</MenuItem>
-        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნანა მეტრეველი"} disabled={(25 - group_5.length) <= 0} value='11:00'>11:00 - {25 - group_5.length} ადგილი</MenuItem>
-        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნანა მეტრეველი"} disabled={(25 - group_6.length) <= 0} value='14:30'>14:30 - {25 - group_6.length} ადგილი</MenuItem>
-        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ალექსანდრე ნემსაძე"} disabled={(25 - group_7.length) <= 0} value='11:15'>11:15 - {25 - group_7.length} ადგილი</MenuItem>
-        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "კოტე კუპატაძე"} disabled={(25 - group_8.length) <= 0} value='12:30'>12:30 - {25 - group_8.length} ადგილი</MenuItem>
-        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ეკა ონაშვილი"} disabled={(25 - group_9.length) <= 0} value='11:00'>11:00 - {25 - group_9.length} ადგილი</MenuItem>
+        <MenuItem disabled>
+            <em>ნუგზარ მახათაძე - 14:15 ({25 - group_1.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნუგზარ მახათაძე"} disabled={(25 - group_1.length) <= 0} value='14:15'>14:15</MenuItem>
+        <MenuItem disabled>
+            <em>ნონა ქუშაშვილი - 10:30 ({25 - group_2.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნონა ქუშაშვილი"} disabled={(25 - group_2.length) <= 0} value='10:30'>10:30</MenuItem>
+        <MenuItem disabled>
+            <em>მაია თევდორაშვილი - 10:45 ({25 - group_4.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "მაია თევდორაშვილი"} disabled={(25 - group_4.length) <= 0} value='10:45'>10:45</MenuItem>
+        <MenuItem disabled>
+            <em>ნანა მეტრეველი - 11:00 ({25 - group_5.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნანა მეტრეველი"} disabled={(25 - group_5.length) <= 0} value='11:00'>11:00</MenuItem>
+        <MenuItem disabled>
+            <em>ნანა მეტრეველი - 14:30 ({25 - group_6.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნანა მეტრეველი"} disabled={(25 - group_6.length) <= 0} value='14:30'>14:30</MenuItem>
+        <MenuItem disabled>
+            <em>ალექსანდრე ნემსაძე - 11:15 ({25 - group_7.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ალექსანდრე ნემსაძე"} disabled={(25 - group_7.length) <= 0} value='11:15'>11:15</MenuItem>
+        <MenuItem disabled>
+            <em>კოტე კუპატაძე - 12:30 ({25 - group_8.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "კოტე კუპატაძე"} disabled={(25 - group_8.length) <= 0} value='12:30'>12:30</MenuItem>
+        <MenuItem disabled>
+            <em>ეკა ონაშვილი - 11:00 ({25 - group_9.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ეკა ონაშვილი"} disabled={(25 - group_9.length) <= 0} value='11:00'>11:00</MenuItem>
       </Select>
     </>
   }else if (localStorage.getItem("StudentClass") == 6) {
@@ -293,36 +341,99 @@ const SetTeacherGroup = () => {
     if (localStorage.getItem("subject") == "მათემატიკა") {
       return <>
         <Select {...register("teachers", { required: true })} error={errors.teachers} id="teachers" name="teachers" value={localStorage.getItem("TeacherTime")} onChange={getTime} style={{textAlign: "start"}}>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნუგზარ მახათაძე"} disabled={(25 - group_1.length) <= 0} value='09:00'>09:00 - {25 - group_1.length} ადგილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნუგზარ მახათაძე"} disabled={(25 - group_2.length) <= 0} value='12:30'>12:30 - {25 - group_2.length} ადგილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნონა ქუშაშვილი"} disabled={(25 - group_3.length) <= 0} value='09:00'>09:00 - {25 - group_3.length} ადგილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნონა ქუშაშვილი"} disabled={(25 - group_4.length) <= 0} value='12:30'>12:30 - {25 - group_4.length} ადგილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "გურამ სიხარულიძე"} disabled={(25 - group_5.length) <= 0} value='11:00'>11:00 - {25 - group_5.length} ადგილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "გურამ სიხარულიძე"} disabled={(25 - group_6.length) <= 0} value='14:00'>14:00 - {25 - group_6.length} ადგილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "მედეია გურგენაძე"} disabled={(25 - group_7.length) <= 0} value='13:00'>13:00 - {25 - group_7.length} ადგილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "მაია თევდორაშვილი"} disabled={(25 - group_8.length) <= 0} value='09:15'>09:15 - {25 - group_8.length} ადგილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნანა მეტრეველი"} disabled={(25 - group_9.length) <= 0} value='09:00'>09:00 - {25 - group_9.length} ადგილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნანა მეტრეველი"} disabled={(25 - group_10.length) <= 0} value='12:30'>12:30 - {25 - group_10.length} ადგილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ალექსანდრე ნემსაძე"} disabled={(25 - group_11.length) <= 0} value='09:30'>09:30 - {25 - group_11.length} ადგილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "კოტე კუპატაძე"} disabled={(25 - group_12.length) <= 0} value='09:00'>09:00 - {25 - group_12.length} ადგილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "კოტე კუპატაძე"} disabled={(25 - group_13.length) <= 0} value='14:15'>14:15 - {25 - group_13.length} ადგილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ეკა ონაშვილი"} disabled={(25 - group_14.length) <= 0} value='13:00'>13:00 - {25 - group_14.length} ადგილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ქეთი იოსელიანი"} disabled={(25 - group_15.length) <= 0} value='09:00'>09:00 - {25 - group_15.length} ადგილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ქეთი იოსელიანი"} disabled={(25 - group_16.length) <= 0} value='11:00'>11:00 - {25 - group_16.length} ადგილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ქეთი იოსელიანი"} disabled={(25 - group_17.length) <= 0} value='13:00'>13:00 - {25 - group_17.length} ადგილი</MenuItem>
+          <MenuItem disabled>
+            <em>ნუგზარ მახათაძე - 09:00 ({25 - group_1.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნუგზარ მახათაძე"} disabled={(25 - group_1.length) <= 0} value='09:00'>09:00</MenuItem>
+          <MenuItem disabled>
+            <em>ნუგზარ მახათაძე - 12:30 ({25 - group_2.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნუგზარ მახათაძე"} disabled={(25 - group_2.length) <= 0} value='12:30'>12:30</MenuItem>
+          <MenuItem disabled>
+            <em>ნონა ქუშაშვილი - 09:00 ({25 - group_3.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნონა ქუშაშვილი"} disabled={(25 - group_3.length) <= 0} value='09:00'>09:00</MenuItem>
+          <MenuItem disabled>
+            <em>ნონა ქუშაშვილი - 12:30 ({25 - group_4.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნონა ქუშაშვილი"} disabled={(25 - group_4.length) <= 0} value='12:30'>12:30</MenuItem>
+          <MenuItem disabled>
+            <em>გურამ სიხარულიძე - 11:00 ({25 - group_5.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "გურამ სიხარულიძე"} disabled={(25 - group_5.length) <= 0} value='11:00'>11:00</MenuItem>
+          <MenuItem disabled>
+            <em>გურამ სიხარულიძე - 14:00 ({25 - group_6.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "გურამ სიხარულიძე"} disabled={(25 - group_6.length) <= 0} value='14:00'>14:00</MenuItem>
+          <MenuItem disabled>
+            <em>მედეია გურგენაძე - 13:00 ({25 - group_7.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "მედეია გურგენაძე"} disabled={(25 - group_7.length) <= 0} value='13:00'>13:00</MenuItem>
+          <MenuItem disabled>
+            <em>მაია თევდორაშვილი - 09:15 ({25 - group_8.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "მაია თევდორაშვილი"} disabled={(25 - group_8.length) <= 0} value='09:15'>09:15</MenuItem>
+          <MenuItem disabled>
+            <em>ნანა მეტრეველი - 09:00 ({25 - group_9.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნანა მეტრეველი"} disabled={(25 - group_9.length) <= 0} value='09:00'>09:00</MenuItem>
+          <MenuItem disabled>
+            <em>ნანა მეტრეველი - 12:30 ({25 - group_10.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნანა მეტრეველი"} disabled={(25 - group_10.length) <= 0} value='12:30'>12:30</MenuItem>
+          <MenuItem disabled>
+            <em>ალექსანდრე ნემსაძე - 09:30 ({25 - group_11.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ალექსანდრე ნემსაძე"} disabled={(25 - group_11.length) <= 0} value='09:30'>09:30</MenuItem>
+          <MenuItem disabled>
+            <em>კოტე კუპატაძე - 09:00 ({25 - group_12.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "კოტე კუპატაძე"} disabled={(25 - group_12.length) <= 0} value='09:00'>09:00</MenuItem>
+          <MenuItem disabled>
+            <em>კოტე კუპატაძე - 14:15 ({25 - group_13.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "კოტე კუპატაძე"} disabled={(25 - group_13.length) <= 0} value='14:15'>14:15</MenuItem>
+          <MenuItem disabled>
+            <em>ეკა ონაშვილი - 13:00 ({25 - group_14.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ეკა ონაშვილი"} disabled={(25 - group_14.length) <= 0} value='13:00'>13:00</MenuItem>
+          <MenuItem disabled>
+            <em>ქეთი იოსელიანი - 09:00 ({25 - group_15.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ქეთი იოსელიანი"} disabled={(25 - group_15.length) <= 0} value='09:00'>09:00</MenuItem>
+          <MenuItem disabled>
+            <em>ქეთი იოსელიანი - 11:00 ({25 - group_16.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ქეთი იოსელიანი"} disabled={(25 - group_16.length) <= 0} value='11:00'>11:00</MenuItem>
+          <MenuItem disabled>
+            <em>ქეთი იოსელიანი - 13:00 ({25 - group_17.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ქეთი იოსელიანი"} disabled={(25 - group_17.length) <= 0} value='13:00'>13:00</MenuItem>
         </Select>
       </>
     }
     if (localStorage.getItem("subject") == "წერისა და კითხვის სტრატეგიები") {
       return <>
         <Select {...register("teachers", { required: true })} error={errors.teachers} id="teachers" name="teachers" value={localStorage.getItem("TeacherTime")} onChange={getTime} style={{textAlign: "start"}}>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ქეთი იოსელიანი"} disabled={(25 - group_15.length) <= 0} value='09:00'>09:00 - {25 - group_15.length} ადგილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ქეთი იოსელიანი"} disabled={(25 - group_16.length) <= 0} value='11:00'>11:00 - {25 - group_16.length} ადგილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ქეთი იოსელიანი"} disabled={(25 - group_17.length) <= 0} value='13:00'>13:00 - {25 - group_17.length} ადგილი</MenuItem>
+          <MenuItem disabled>
+            <em>ქეთი იოსელიანი - 09:00 ({25 - group_15.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ქეთი იოსელიანი"} disabled={(25 - group_15.length) <= 0} value='09:00'>09:00</MenuItem>
+          <MenuItem disabled>
+            <em>ქეთი იოსელიანი - 11:00 ({25 - group_16.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ქეთი იოსელიანი"} disabled={(25 - group_16.length) <= 0} value='11:00'>11:00</MenuItem>
+          <MenuItem disabled>
+            <em>ქეთი იოსელიანი - 13:00 ({25 - group_17.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ქეთი იოსელიანი"} disabled={(25 - group_17.length) <= 0} value='13:00'>13:00</MenuItem>
         </Select>
       </>
     }else {
       return <>
+  <ul>
+    <li></li>
+  </ul>
       <Select {...register("teachers", { required: true })} error={errors.teachers} id="teachers" name="teachers" value={localStorage.getItem("TeacherTime")} onChange={getTime} style={{textAlign: "start"}}>
         <MenuItem style={{textAlign: "start"}} disabled>დროების ჩამოტვირთვა ვერ მოხერხდა</MenuItem>
       </Select>
@@ -341,20 +452,47 @@ const SetTeacherGroup = () => {
     if (localStorage.getItem("subject") == "მათემატიკა") {
       return <>
         <Select {...register("teachers", { required: true })} error={errors.teachers} id="teachers" name="teachers" value={localStorage.getItem("TeacherTime")} onChange={getTime} style={{textAlign: "start"}}>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნუგზარ მახათაძე"} disabled={(25 - group_1.length) <= 0} value='10:45'>10:45 - {25 - group_1.length} ადგილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "გურამ სიხარულიძე"} disabled={(25 - group_2.length) <= 0} value='09:30'>09:30 - {25 - group_2.length} ადგილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "გურამ სიხარულიძე"} disabled={(25 - group_3.length) <= 0} value='12:30'>12:30 - {25 - group_3.length} ადგილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ლელა მამულაშვილი"} disabled={(25 - group_4.length) <= 0} value='09:30'>09:30 - {25 - group_4.length} ადგილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ლელა მამულაშვილი"} disabled={(25 - group_5.length) <= 0} value='11:00'>11:00 - {25 - group_5.length} ადგილი</MenuItem>
+          <MenuItem disabled>
+            <em>ნუგზარ მახათაძე - 10:45 ({25 - group_1.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნუგზარ მახათაძე"} disabled={(25 - group_1.length) <= 0} value='10:45'>10:45</MenuItem>
+          <MenuItem disabled>
+            <em>გურამ სიხარულიძე - 09:30 ({25 - group_2.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "გურამ სიხარულიძე"} disabled={(25 - group_2.length) <= 0} value='09:30'>09:30</MenuItem>
+          <MenuItem disabled>
+            <em>გურამ სიხარულიძე - 12:30 ({25 - group_3.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "გურამ სიხარულიძე"} disabled={(25 - group_3.length) <= 0} value='12:30'>12:30</MenuItem>
+          <MenuItem disabled>
+            <em>ლელა მამულაშვილი - 09:30 ({25 - group_4.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ლელა მამულაშვილი"} disabled={(25 - group_4.length) <= 0} value='09:30'>09:30</MenuItem>
+          <MenuItem disabled>
+            <em>ლელა მამულაშვილი - 11:00 ({25 - group_5.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ლელა მამულაშვილი"} disabled={(25 - group_5.length) <= 0} value='11:00'>11:00</MenuItem>
         </Select>
       </>
     }else if (localStorage.getItem("subject") == "ფიზიკა") {
       return <>
         <Select {...register("teachers", { required: true })} error={errors.teachers} id="teachers" name="teachers" value={localStorage.getItem("TeacherTime")} onChange={getTime} style={{textAlign: "start"}}>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "გიორგი კაკაბაძე"} disabled={(25 - group_6.length) <= 0} value='11:00'>11:00 - {25 - group_6.length} ადგილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "გიორგი კაკაბაძე"} disabled={(25 - group_7.length) <= 0} value='12:30'>12:30 - {25 - group_7.length} ადგილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "თემურ გაჩეჩილაძე"} disabled={(25 - group_8.length) <= 0} value='11:00'>11:00 - {25 - group_8.length} ადგილი</MenuItem>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "თემურ გაჩეჩილაძე"} disabled={(25 - group_9.length) <= 0} value='12:30'>12:30 - {25 - group_9.length} ადგილი</MenuItem>
+          <MenuItem disabled>
+            <em>გიორგი კაკაბაძე - 11:00 ({25 - group_6.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "გიორგი კაკაბაძე"} disabled={(25 - group_6.length) <= 0} value='11:00'>11:00</MenuItem>
+          <MenuItem disabled>
+            <em>გიორგი კაკაბაძე - 12:30 ({25 - group_7.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "გიორგი კაკაბაძე"} disabled={(25 - group_7.length) <= 0} value='12:30'>12:30</MenuItem>
+          <MenuItem disabled>
+            <em>თემურ გაჩეჩილაძე - 11:00 ({25 - group_8.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "თემურ გაჩეჩილაძე"} disabled={(25 - group_8.length) <= 0} value='11:00'>11:00</MenuItem>
+          <MenuItem disabled>
+            <em>თემურ გაჩეჩილაძე - 12:30 ({25 - group_9.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "თემურ გაჩეჩილაძე"} disabled={(25 - group_9.length) <= 0} value='12:30'>12:30</MenuItem>
         </Select>
       </>
     }else {
@@ -370,13 +508,19 @@ const SetTeacherGroup = () => {
     if (localStorage.getItem("subject") == "მათემატიკა") {
       return <>
         <Select {...register("teachers", { required: true })} error={errors.teachers} id="teachers" name="teachers" value={localStorage.getItem("TeacherTime")} onChange={getTime} style={{textAlign: "start"}}>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "მედეია გურგენაძე"} disabled={(25 - group_1.length) <= 0} value='11:00'>11:00 - {25 - group_1.length} ადგილი</MenuItem>
+          <MenuItem disabled>
+            <em>მედეია გურგენაძე - 11:00 ({25 - group_1.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "მედეია გურგენაძე"} disabled={(25 - group_1.length) <= 0} value='11:00'>11:00</MenuItem>
         </Select>
       </>
     }else if (localStorage.getItem("subject") == "ფიზიკა") {
       return <>
         <Select {...register("teachers", { required: true })} error={errors.teachers} id="teachers" name="teachers" value={localStorage.getItem("TeacherTime")} onChange={getTime} style={{textAlign: "start"}}>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ესმა ხიზანიშვილი"} disabled={(25 - group_2.length) <= 0} value='09:30'>09:30 - {25 - group_2.length} ადგილი</MenuItem>
+          <MenuItem disabled>
+            <em>ესმა ხიზანიშვილი - 09:30 ({25 - group_2.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ესმა ხიზანიშვილი"} disabled={(25 - group_2.length) <= 0} value='09:30'>09:30</MenuItem>
         </Select>
       </>
     }else {
@@ -392,13 +536,19 @@ const SetTeacherGroup = () => {
     if (localStorage.getItem("subject") == "მათემატიკა") {
       return <>
         <Select {...register("teachers", { required: true })} error={errors.teachers} id="teachers" name="teachers" value={localStorage.getItem("TeacherTime")} onChange={getTime} style={{textAlign: "start"}}>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "მედეია გურგენაძე"} disabled={(25 - group_1.length) <= 0} value='09:00'>09:00 - {25 - group_1.length} ადგილი</MenuItem>
+          <MenuItem disabled>
+            <em>მედეია გურგენაძე - 09:00 ({25 - group_1.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "მედეია გურგენაძე"} disabled={(25 - group_1.length) <= 0} value='09:00'>09:00</MenuItem>
         </Select>
       </>
     }else if (localStorage.getItem("subject") == "ფიზიკა") {
       return <>
         <Select {...register("teachers", { required: true })} error={errors.teachers} id="teachers" name="teachers" value={localStorage.getItem("TeacherTime")} onChange={getTime} style={{textAlign: "start"}}>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნონა თოდუა"} disabled={(25 - group_2.length) <= 0} value='10:30'>10:30 - {25 - group_2.length} ადგილი</MenuItem>
+          <MenuItem disabled>
+            <em>ნონა თოდუა - 10:30 ({25 - group_2.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნონა თოდუა"} disabled={(25 - group_2.length) <= 0} value='10:30'>10:30</MenuItem>
         </Select>
       </>
     }else {
@@ -414,13 +564,19 @@ const SetTeacherGroup = () => {
     if (localStorage.getItem("subject") == "მათემატიკა") {
       return <>
         <Select {...register("teachers", { required: true })} error={errors.teachers} id="teachers" name="teachers" value={localStorage.getItem("TeacherTime")} onChange={getTime} style={{textAlign: "start"}}>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ლელა ტრაპაიძე"} disabled={(25 - group_1.length) <= 0} value='11:00'>11:00 - {25 - group_1.length} ადგილი</MenuItem>
+          <MenuItem disabled>
+            <em>ლელა ტრაპაიძე - 11:00 ({25 - group_1.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ლელა ტრაპაიძე"} disabled={(25 - group_1.length) <= 0} value='11:00'>11:00</MenuItem>
         </Select>
       </>
     }else if (localStorage.getItem("subject") == "ფიზიკა") {
       return <>
         <Select {...register("teachers", { required: true })} error={errors.teachers} id="teachers" name="teachers" value={localStorage.getItem("TeacherTime")} onChange={getTime} style={{textAlign: "start"}}>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "თემურ გაჩეჩილაძე"} disabled={(25 - group_2.length) <= 0} value='09:30'>09:30 - {25 - group_2.length} ადგილი</MenuItem>
+          <MenuItem disabled>
+            <em>თემურ გაჩეჩილაძე - 09:30 ({25 - group_2.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "თემურ გაჩეჩილაძე"} disabled={(25 - group_2.length) <= 0} value='09:30'>09:30</MenuItem>
         </Select>
       </>
     }else {
@@ -436,13 +592,19 @@ const SetTeacherGroup = () => {
     if (localStorage.getItem("subject") == "მათემატიკა") {
       return <>
         <Select {...register("teachers", { required: true })} error={errors.teachers} id="teachers" name="teachers" value={localStorage.getItem("TeacherTime")} onChange={getTime} style={{textAlign: "start"}}>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ლელა ტრაპაიძე"} disabled={(25 - group_1.length) <= 0} value='11:00'>11:00 - {25 - group_1.length} ადგილი</MenuItem>
+          <MenuItem disabled>
+            <em>ლელა ტრაპაიძე - 11:00 ({25 - group_1.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ლელა ტრაპაიძე"} disabled={(25 - group_1.length) <= 0} value='11:00'>11:00</MenuItem>
         </Select>
       </>
     }else if (localStorage.getItem("subject") == "ფიზიკა") {
       return <>
         <Select {...register("teachers", { required: true })} error={errors.teachers} id="teachers" name="teachers" value={localStorage.getItem("TeacherTime")} onChange={getTime} style={{textAlign: "start"}}>
-          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "გიორგი კაკაბაძე"} disabled={(25 - group_2.length) <= 0} value='09:30'>09:30 - {25 - group_2.length} ადგილი</MenuItem>
+          <MenuItem disabled>
+            <em>გიორგი კაკაბაძე - 09:30 ({25 - group_2.length} ადგილი) - <b>ჯგუფის ასარჩევად გთხოვთ აირჩიოთ შესაბამისი მასწავლებელი</b></em>
+          </MenuItem>
+          <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "გიორგი კაკაბაძე"} disabled={(25 - group_2.length) <= 0} value='09:30'>09:30</MenuItem>
         </Select>
       </>
     }else {

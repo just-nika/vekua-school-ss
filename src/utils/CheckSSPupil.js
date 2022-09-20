@@ -2,7 +2,7 @@ import { firestore } from '../firebase/firebase.config';
 
 function CheckPupil(personalNumber) {
     let promise = new Promise((res, rej) => {
-      firestore.collection(`${localStorage.getItem("subject")}`).where("StudentId", "==", `${personalNumber}`).get()
+      firestore.collection(`${localStorage.getItem("subject")}`).where("StudentPersonalNumber", "==", `${personalNumber}`).get()
       .then((querySnapshot) => {
         if(querySnapshot.empty){
           res({

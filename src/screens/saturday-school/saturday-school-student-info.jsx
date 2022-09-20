@@ -31,10 +31,7 @@ export default function StudentInfo() {
     localStorage.setItem("StudentEmail", event.target.value)
   }
 
-  const SubmitStudent = async (data) => {
-    localStorage.setItem("StudentFirstName", data.firstName)
-    localStorage.setItem("StudentLastName", data.lastName)
-    localStorage.setItem("StudentPersonalNumber", data.id)
+  const SubmitStudent = async () => {
     localStorage.setItem("StudentConfirmation", 1)
   }
   const { register, handleSubmit, getValues, formState: { errors } } = useForm();
@@ -79,7 +76,7 @@ export default function StudentInfo() {
               autoComplete="family-name"
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <TextField 
               {...register("Email", {required: true, pattern: /^\S+@\S+$/i})}
               error={errors.MobileNumber}
@@ -118,7 +115,7 @@ export default function StudentInfo() {
               autoComplete="id"
             />
           </Grid>
-          <Button type="submit" variant="contained" color="primary">
+          <Button type="submit" variant="contained" color="primary" onClick={SubmitStudent}>
             <SaveIcon/> <span> </span> <span style={{fontSize: "16px"}}>შენახვა</span>
           </Button>
         </Grid>

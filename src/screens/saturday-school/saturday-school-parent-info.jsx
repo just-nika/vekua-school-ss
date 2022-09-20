@@ -41,13 +41,9 @@ export default function ParentInfo() {
         localStorage.setItem("LawEmail", event.target.value)
     }
 
-    const SubmitParent = async (data) => {
-        localStorage.setItem("LawMobileNumber", data.MobileNumber)
-        localStorage.setItem("LawName", data.lawName)
-        localStorage.setItem("LawLastName", data.lawLastName)
-        localStorage.setItem("LawId", data.lawId)
-        localStorage.setItem("LawAddress", data.address)
+    const SubmitParent = async () => {
         localStorage.setItem("LawConfirmation", 1)
+        alert("a")
     }
     const { register, handleSubmit, getValues, formState: { errors } } = useForm();
     return (
@@ -113,7 +109,7 @@ export default function ParentInfo() {
                             {...register("MobileNumber", { required: true, minLength: 9 })}
                             error={errors.MobileNumber}
                             helperText={
-                            errors.MobileNumber && "გთხოვთ შეიყვანეთ სწორი ნომერი"
+                                errors.MobileNumber && "გთხოვთ შეიყვანეთ სწორი ნომერი"
                             }
                             onChange={MobileNumber}
                             id="MobileNumber"
@@ -121,23 +117,6 @@ export default function ParentInfo() {
                             label="მშობელის/კანონიერი წარმომადგენლის ტელეფონის ნომერი"
                             defaultValue={localStorage.getItem("LawMobileNumber")}
                             type="number"
-                            fullWidth
-                            required
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField 
-                            {...register("Email", {required: true, pattern: /^\S+@\S+$/i})}
-                            error={errors.MobileNumber}
-                            helperText={
-                            errors.MobileNumber && "გთხოვთ შეიყვანეთ სწორი ელექტრონული ფოსტა"
-                            }
-                            onChange={LawEmail}
-                            id="MobileNumber"
-                            name="MobileNumber"
-                            label="მშობელის/კანონიერი წარმომადგენლის ელექტრონული ფოსტა"
-                            defaultValue={localStorage.getItem("LawEmail")}
-                            type="email"
                             fullWidth
                             required
                         />
@@ -160,7 +139,24 @@ export default function ParentInfo() {
                             autoComplete="id"
                         />
                     </Grid>
-                    <Button type="submit" variant="contained" color="primary">
+                    <Grid item xs={12}>
+                        <TextField 
+                            {...register("Email", {required: true, pattern: /^\S+@\S+$/i})}
+                            error={errors.MobileNumber}
+                            helperText={
+                            errors.MobileNumber && "გთხოვთ შეიყვანეთ სწორი ელექტრონული ფოსტა"
+                            }
+                            onChange={LawEmail}
+                            id="MobileNumber"
+                            name="MobileNumber"
+                            label="მშობელის/კანონიერი წარმომადგენლის ელექტრონული ფოსტა"
+                            defaultValue={localStorage.getItem("LawEmail")}
+                            type="email"
+                            fullWidth
+                            required
+                        />
+                    </Grid>
+                    <Button type="submit" variant="contained" color="primary" onClick={SubmitParent}>
                         <SaveIcon/> <span> </span> <span style={{fontSize: "16px"}}>შენახვა</span>
                     </Button>
                 </Grid>

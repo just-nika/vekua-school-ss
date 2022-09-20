@@ -100,7 +100,7 @@ export default function SaturdaySchoolRegistrationNewVersion() {
       }
     }
     if (activeStep == 1) {
-      if (!localStorage.getItem("LawMobileNumber") || !localStorage.getItem("LawName") || !localStorage.getItem("LawLastName") || !localStorage.getItem("LawId") || !localStorage.getItem("LawAddress")) {
+      if (!localStorage.getItem("LawMobileNumber") || !localStorage.getItem("LawName") || !localStorage.getItem("LawLastName") || !localStorage.getItem("LawId") || !localStorage.getItem("LawAddress") || !localStorage.getItem("LawEmail")) {
         swal("შემდეგ გვერდზე ვერ გადახვალთ", "შემდეგ გვერდზე გადასასვლელად აუცილებელია შეავსოთ ყველა ველი", "error");
       }else if (!localStorage.getItem("LawConfirmation")) {
         swal("შემდეგ გვერდზე ვერ გადახვალთ", "შემდეგ გვერდზე გადასასვლელად გთხოვთ შეინახოთ ცვლილება", "warning");
@@ -114,7 +114,35 @@ export default function SaturdaySchoolRegistrationNewVersion() {
       }else if (!localStorage.getItem("StudentConfirmation")) {
         swal("შემდეგ გვერდზე ვერ გადახვალთ", "შემდეგ გვერდზე გადასასვლელად გთხოვთ შეინახოთ ცვლილება", "warning");
       }else {
-        setActiveStep(activeStep + 1);
+        CheckPupil(`${localStorage.getItem("StudentPersonalNumber")}`).then((response) => {
+          if (response.status) {
+            localStorage.removeItem("StudentFirstName")
+            localStorage.removeItem("StudentLastName")
+            localStorage.removeItem("StudentPersonalNumber")
+            localStorage.removeItem("LawName")
+            localStorage.removeItem("LawLastName")
+            localStorage.removeItem("LawId")
+            localStorage.removeItem("LawMobileNumber")
+            localStorage.removeItem("LawAddress")
+            localStorage.removeItem("StudentClass")
+            localStorage.removeItem("subject")
+            localStorage.removeItem("TeacherName")
+            localStorage.removeItem("TeacherTime")
+            localStorage.removeItem("StudentEmail")
+            localStorage.removeItem("LawEmail")
+            localStorage.removeItem("SubjectConfirmation")
+            localStorage.removeItem("LawConfirmation")
+            localStorage.removeItem("StudentConfirmation")
+            window.location.reload()
+            swal(
+              "მოსწავლე უკვე რეგისტრირებულია!",
+              "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია ამ საგანზე, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.",
+              "error"
+            );
+          }else{
+            setActiveStep(activeStep + 1);
+          }
+        })
       }
     }if (activeStep == 3) {
       setActiveStep(activeStep + 1);
@@ -127,7 +155,7 @@ export default function SaturdaySchoolRegistrationNewVersion() {
   const Registration = async () => {
     setLoading(true);
     setSuccess(false);
-    CheckPupil(localStorage.getItem("StudentPersonalNumber")).then((response) => {
+    CheckPupil(`${localStorage.getItem("StudentPersonalNumber")}`).then((response) => {
       if (response.status) {
         setLoading(false);
         localStorage.removeItem("StudentFirstName")
@@ -144,12 +172,16 @@ export default function SaturdaySchoolRegistrationNewVersion() {
         localStorage.removeItem("TeacherTime")
         localStorage.removeItem("StudentEmail")
         localStorage.removeItem("LawEmail")
+        localStorage.removeItem("SubjectConfirmation")
+        localStorage.removeItem("LawConfirmation")
+        localStorage.removeItem("StudentConfirmation")
+        setLoading(false);
+        setSuccess(true);
         return swal(
           "მოსწავლე უკვე რეგისტრირებულია!",
           "მოსწავლე ამ პირადი ნომრით უკვე რეგისტრირებულია ამ საგანზე, თუ თვილით, რომ ეს ტექნიკური ხარვეზია, დაგვიკავშირდით ქვემოთ მოცემულ ელ. ფოსტაზე ან ნომერზე.",
           "error"
         );
-
       }else {
         if (!loading) {
           if (localStorage.getItem("TeacherName") && localStorage.getItem("TeacherTime")) {
@@ -171,6 +203,11 @@ export default function SaturdaySchoolRegistrationNewVersion() {
                 localStorage.removeItem("TeacherTime")
                 localStorage.removeItem("StudentEmail")
                 localStorage.removeItem("LawEmail")
+                localStorage.removeItem("SubjectConfirmation")
+                localStorage.removeItem("LawConfirmation")
+                localStorage.removeItem("StudentConfirmation")
+                setLoading(false);
+                setSuccess(true);
                 return swal(
                   "წარუმატებელი რეგისტრაცია",
                   "თქვენი მონაცემების დამუშავება ვერ მოხერხდა, გთხოვთ შეამოწმოთ ინტერნეტის კავშირი.",
@@ -194,6 +231,11 @@ export default function SaturdaySchoolRegistrationNewVersion() {
                     localStorage.removeItem("TeacherTime")
                     localStorage.removeItem("StudentEmail")
                     localStorage.removeItem("LawEmail")
+                    localStorage.removeItem("SubjectConfirmation")
+                    localStorage.removeItem("LawConfirmation")
+                    localStorage.removeItem("StudentConfirmation")
+                    setLoading(false);
+                    setSuccess(true);
                     return swal(
                       "ამ ჯგუფში რეგისტრაცია ვერ განხორციელდა!",
                       "მოსწავლე ამ ჯგუფში ვერ დარეგისტრირდება ადგილების არ ქონის გამო.",
@@ -259,6 +301,9 @@ export default function SaturdaySchoolRegistrationNewVersion() {
                         localStorage.removeItem("TeacherTime")
                         localStorage.removeItem("StudentEmail")
                         localStorage.removeItem("LawEmail")
+                        localStorage.removeItem("SubjectConfirmation")
+                        localStorage.removeItem("LawConfirmation")
+                        localStorage.removeItem("StudentConfirmation")
                         setLoading(false);
                         setSuccess(true);
                       })
