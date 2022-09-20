@@ -12,6 +12,7 @@ export default function StudentInfo() {
   const [pupilName, setPupilName] = React.useState('');
   const [pupilLastName, setPupilLastName] = React.useState('');
   const [pupilId, setPupilId] = React.useState('');
+  const [studentEmail, setStudentEmail] = React.useState('');
 
   const PupilName = (event) => { 
     setPupilName(event.target.value) 
@@ -24,6 +25,10 @@ export default function StudentInfo() {
   const PupilId = (event) => { 
     setPupilId(event.target.value) 
     localStorage.setItem("StudentPersonalNumber", event.target.value)
+  }
+  const StudentEmail = (event) => { 
+    setStudentEmail(event.target.value) 
+    localStorage.setItem("StudentEmail", event.target.value)
   }
 
   const SubmitStudent = async (data) => {
@@ -72,6 +77,23 @@ export default function StudentInfo() {
               label="მოსწავლის გვარი"
               fullWidth
               autoComplete="family-name"
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField 
+              {...register("Email", {required: true, pattern: /^\S+@\S+$/i})}
+              error={errors.MobileNumber}
+              helperText={
+              errors.MobileNumber && "გთხოვთ შეიყვანეთ სწორი ელექტრონული ფოსტა"
+              }
+              onChange={StudentEmail}
+              id="MobileNumber"
+              name="MobileNumber"
+              label="მოსწავლის ელექტრონული ფოსტა (Teams-ში აქტიური ელ. ფოსტა)"
+              defaultValue={localStorage.getItem("StudentEmail")}
+              type="email"
+              fullWidth
+              required
             />
           </Grid>
           <Grid item xs={12} md={12}>

@@ -188,6 +188,8 @@ export default function SaturdaySchoolRegistrationNewVersion() {
                     localStorage.removeItem("subject")
                     localStorage.removeItem("TeacherName")
                     localStorage.removeItem("TeacherTime")
+                    localStorage.removeItem("StudentEmail")
+                    localStorage.removeItem("TeacherTime")
                     return swal(
                       "ამ ჯგუფში რეგისტრაცია ვერ განხორციელდა!",
                       "მოსწავლე ამ ჯგუფში ვერ დარეგისტრირდება ადგილების არ ქონის გამო.",
@@ -198,11 +200,13 @@ export default function SaturdaySchoolRegistrationNewVersion() {
                       StudentFirstName: `${localStorage.getItem("StudentFirstName")}`,
                       StudentLastName: `${localStorage.getItem("StudentLastName")}`,
                       StudentPersonalNumber: `${localStorage.getItem("StudentPersonalNumber")}`,
+                      StudentEmail: `${localStorage.getItem("StudentEmail")}`,
                       LawName: `${localStorage.getItem("LawName")}`,
                       LawLastName: `${localStorage.getItem("LawLastName")}`,
                       LawId: `${localStorage.getItem("LawId")}`,
                       LawMobileNumber: `${localStorage.getItem("LawMobileNumber")}`,
                       LawAddress: `${localStorage.getItem("LawAddress")}`,
+                      LawEmail: `${localStorage.getItem("LawEmail")}`,
                       StudentClass: `${localStorage.getItem("StudentClass")}`,
                       subject: `${localStorage.getItem("subject")}`,
                       TeacherName: `${localStorage.getItem("TeacherName")}`,
@@ -214,11 +218,13 @@ export default function SaturdaySchoolRegistrationNewVersion() {
                         StudentFirstName: `${localStorage.getItem("StudentFirstName")}`,
                         StudentLastName: `${localStorage.getItem("StudentLastName")}`,
                         StudentPersonalNumber: `${localStorage.getItem("StudentPersonalNumber")}`,
+                        StudentEmail: `${localStorage.getItem("StudentEmail")}`,
                         LawName: `${localStorage.getItem("LawName")}`,
                         LawLastName: `${localStorage.getItem("LawLastName")}`,
                         LawId: `${localStorage.getItem("LawId")}`,
                         LawMobileNumber: `${localStorage.getItem("LawMobileNumber")}`,
                         LawAddress: `${localStorage.getItem("LawAddress")}`,
+                        LawEmail: localStorage.getItem("LawEmail"),
                         StudentClass: `${localStorage.getItem("StudentClass")}`,
                         subject: `${localStorage.getItem("subject")}`,
                         TeacherName: `${localStorage.getItem("TeacherName")}`,

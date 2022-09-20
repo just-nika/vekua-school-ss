@@ -252,7 +252,7 @@ const SetTeacherGroup = () => {
   }else if (localStorage.getItem("StudentClass") == 5) {
     const group_1 = students.filter((student) => {return student.group.includes('ნუგზარ მახათაძე - 14:15')}).map((student, index) => {console.log(student)})
     const group_2 = students.filter((student) => {return student.group.includes('ნონა ქუშაშვილი - 10:30')}).map((student, index) => {console.log(student)})
-    const group_3 = students.filter((student) => {return student.group.includes('ნონა ქუშაშვილი - 14:00')}).map((student, index) => {console.log(student)})
+    // const group_3 = students.filter((student) => {return student.group.includes('ნონა ქუშაშვილი - 14:00')}).map((student, index) => {console.log(student)})
     const group_4 = students.filter((student) => {return student.group.includes('მაია თევდორაშვილი - 10:45')}).map((student, index) => {console.log(student)})
     const group_5 = students.filter((student) => {return student.group.includes('ნანა მეტრეველი - 11:00')}).map((student, index) => {console.log(student)})
     const group_6 = students.filter((student) => {return student.group.includes('ნანა მეტრეველი - 14:30')}).map((student, index) => {console.log(student)})
@@ -263,7 +263,7 @@ const SetTeacherGroup = () => {
       <Select {...register("teachers", { required: true })} error={errors.teachers} id="teachers" name="teachers" value={localStorage.getItem("TeacherTime")} onChange={getTime} style={{textAlign: "start"}}>
         <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნუგზარ მახათაძე"} disabled={(25 - group_1.length) <= 0} value='14:15'>14:15 - {25 - group_1.length} ადგილი</MenuItem>
         <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნონა ქუშაშვილი"} disabled={(25 - group_2.length) <= 0} value='10:30'>10:30 - {25 - group_2.length} ადგილი</MenuItem>
-        <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნონა ქუშაშვილი"} disabled={(25 - group_3.length) <= 0} value='14:00'>14:00 - {25 - group_3.length} ადგილი</MenuItem>
+        {/* <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნონა ქუშაშვილი"} disabled={(25 - group_3.length) <= 0} value='14:00'>14:00 - {25 - group_3.length} ადგილი</MenuItem> */}
         <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "მაია თევდორაშვილი"} disabled={(25 - group_4.length) <= 0} value='10:45'>10:45 - {25 - group_4.length} ადგილი</MenuItem>
         <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნანა მეტრეველი"} disabled={(25 - group_5.length) <= 0} value='11:00'>11:00 - {25 - group_5.length} ადგილი</MenuItem>
         <MenuItem style={{textAlign: "start"}} hidden={localStorage.getItem("TeacherName") != "ნანა მეტრეველი"} disabled={(25 - group_6.length) <= 0} value='14:30'>14:30 - {25 - group_6.length} ადგილი</MenuItem>

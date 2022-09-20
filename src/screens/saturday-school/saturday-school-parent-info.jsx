@@ -14,6 +14,7 @@ export default function ParentInfo() {
     const [lawLastName, setLawLastName] = React.useState('');
     const [lawId, setLawId] = React.useState('');
     const [address, setAddress] = React.useState('');
+    const [lawEmail, setLawEmail] = React.useState('');
 
     const MobileNumber = (event) => { 
         setFatherMobileNumber(event.target.value) 
@@ -34,6 +35,10 @@ export default function ParentInfo() {
     const Address = (event) => { 
         setAddress(event.target.value) 
         localStorage.setItem("LawAddress", event.target.value)
+    }
+    const LawEmail = (event) => { 
+        setLawEmail(event.target.value) 
+        localStorage.setItem("LawEmail", event.target.value)
     }
 
     const SubmitParent = async (data) => {
@@ -116,6 +121,23 @@ export default function ParentInfo() {
                             label="მშობელის/კანონიერი წარმომადგენლის ტელეფონის ნომერი"
                             defaultValue={localStorage.getItem("LawMobileNumber")}
                             type="number"
+                            fullWidth
+                            required
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField 
+                            {...register("Email", {required: true, pattern: /^\S+@\S+$/i})}
+                            error={errors.MobileNumber}
+                            helperText={
+                            errors.MobileNumber && "გთხოვთ შეიყვანეთ სწორი ელექტრონული ფოსტა"
+                            }
+                            onChange={LawEmail}
+                            id="MobileNumber"
+                            name="MobileNumber"
+                            label="მშობელის/კანონიერი წარმომადგენლის ელექტრონული ფოსტა"
+                            defaultValue={localStorage.getItem("LawEmail")}
+                            type="email"
                             fullWidth
                             required
                         />
